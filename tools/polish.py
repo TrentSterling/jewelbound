@@ -597,4 +597,6 @@ html = ''.join(
     line.replace('Gems Together', 'Jewelbound').replace('GEMS TOGETHER', 'JEWELBOUND').replace('gemstogether', 'jewelbound')
     for line in html.splitlines(keepends=True)
 )
+from jewelcraft import apply as apply_jewelcraft
+html = apply_jewelcraft(html)
 DST.write_text(html, encoding='utf-8', newline='\n')

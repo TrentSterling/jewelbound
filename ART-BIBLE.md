@@ -1,4 +1,14 @@
-# Gems Together: art bible and direction
+# Jewelbound: jewelcraft direction
+
+Jewelbound 3.3.8 has its own identity: a midnight obsidian vault, luminous cut
+crystals and restrained antique-gold metalwork. The board is polished and tactile;
+menus use ivory serif headings with clear body type. Keep silhouettes, input
+targets, game rules, effect strength and accessibility intact. Avoid neon
+science-fiction decoration and clutter. The original Gems Together notes below
+remain historical context; this Jewelbound direction supersedes their garden
+setting and branding.
+
+## Gems Together: historical art bible
 
 The rules every patch follows. Tront's calls override research. The deep Tetris Effect / Lumines handoff is recorded in `research/DEEP-RESEARCH-COMBO-SPECTACLE.md`; `research/TETRIS-EFFECT-DEEP-DIVE.md` is the short pass.
 

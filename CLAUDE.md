@@ -8,10 +8,19 @@ to the original Gems Together repository or modify its deployment.
 The source notes below are historical where they specify the old name or URL.
 Jewelbound uses `jewelbound-*` save keys and co-op appId so the experiments stay
 separate. `tools/polish.py` applies these naming changes after the source build.
-Keep the original versioned drop, gameplay, artwork and complete announcer pack
-unchanged. The recorded welcome intentionally still says Gems Together.
+Keep the original versioned drop, gameplay and complete announcer pack unchanged.
+Jewelbound 3.3.8 has its own jewelcraft presentation layer. The two branded welcome
+recordings are skipped without changing any recording bytes.
 Do not import ignored local references or private development assets. Browser
 verification targets https://tront.xyz/jewelbound/ with `#solo=1` or private rooms.
+
+The final build pass is `tools/jewelcraft.py`, with adjacent world, lighting, sky
+and UI sources. Run `python tools/polish.py` to regenerate `index.html`. Keep game
+rules, co-op, save keys and input semantics out of this presentation pass. Its
+typography uses a local system-font atlas inside both GPU backends, including
+photo exports; it needs no remote fonts or new dependencies. The direction is an
+obsidian jewelcraft vault, cut crystals, restrained antique gold and readable
+ivory type. Capture matched receipts with `node tools/jewelcraft-capture.mjs`.
 
 ---
 

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="tront-about-discovery.css">
 <link rel="stylesheet" href="tront-about-shell.css">
 <script src="tront-about-shell.js"></script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08171e"><meta name="description" content="Jewelbound is a free browser co-op match-three game. Play on one shared 3D jewel board in the public room or invite friends to a private room."><title>Jewelbound</title><meta name="author" content="Trent Sterling (Tront)"><link rel="canonical" href="https://tront.xyz/jewelbound/"><meta property="og:type" content="website"><meta property="og:title" content="Jewelbound by Tront"><meta property="og:description" content="Match three with the people you love. A co-op jewel board in the browser: everyone who opens the page plays on the same board, or share a private room code."><meta property="og:url" content="https://tront.xyz/jewelbound/"><meta property="og:image" content="https://tront.xyz/jewelbound/og-image.png?v=3"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Jewelbound by Tront"><meta name="twitter:description" content="Match three with the people you love. A co-op jewel board in the browser: everyone who opens the page plays on the same board, or share a private room code."><meta name="twitter:image" content="https://tront.xyz/jewelbound/og-image.png?v=3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08171e"><meta name="description" content="Jewelbound is a free browser co-op match-three game. Play on one shared 3D jewel board in the public room or invite friends to a private room."><title>Jewelbound</title><meta name="author" content="Trent Sterling (Tront)"><link rel="canonical" href="https://tront.xyz/jewelbound/"><meta property="og:type" content="website"><meta property="og:title" content="Jewelbound by Tront"><meta property="og:description" content="Match three with the people you love. A co-op jewel board in the browser: everyone who opens the page plays on the same board, or share a private room code."><meta property="og:url" content="https://tront.xyz/jewelbound/"><meta property="og:image" content="https://tront.xyz/jewelbound/og-image.png?v=4"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Jewelbound by Tront"><meta name="twitter:description" content="Match three with the people you love. A co-op jewel board in the browser: everyone who opens the page plays on the same board, or share a private room code."><meta name="twitter:image" content="https://tront.xyz/jewelbound/og-image.png?v=4">
 <style>
 :root{color-scheme:dark;--ivory:#eee3c8;--gold:#d4b471;--dim:#91a5aa;--ink:#09171e;--line:#ad8c4c55}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#08151d;color:var(--ivory);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;user-select:none;-webkit-user-select:none}button,input,select{font:inherit}button{color:var(--ivory);cursor:pointer;touch-action:manipulation}button:disabled{opacity:.35;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #78c7d8;outline-offset:4px}#scene{-webkit-touch-callout:none;display:block;width:100%;height:100%;touch-action:none;cursor:auto}#scene.gpu-pointer-active{cursor:none!important}#shade{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,#0510188c 0%,transparent 27%,transparent 76%,#0510184d 100%)}#hud{position:fixed;inset:0;pointer-events:none}button,select,input,.panel{pointer-events:auto}#brand{position:absolute;left:3.5vw;top:4.2vh}#brand .sigil{display:block;margin-bottom:16px;color:var(--gold);opacity:.9}h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(22px,2.1vw,34px);font-weight:400;letter-spacing:.21em;line-height:1.2}#edition{font-size:10px;letter-spacing:.24em;color:#abc0c0;margin-top:10px}#scores{position:absolute;left:3.5vw;top:33vh}label,.eyebrow{display:block;font-size:10px;letter-spacing:.20em;color:var(--dim)}#score{font-family:Georgia,serif;font-size:clamp(32px,3.4vw,54px);font-variant-numeric:tabular-nums;line-height:1.25;margin:6px 0 17px;color:#f6e8c5;text-shadow:0 2px 25px #dabb7640}#best{font-family:Georgia,serif;font-size:20px;color:#bdc8c8;margin-top:3px}#score-rule{height:1px;width:100px;background:linear-gradient(90deg,var(--gold),transparent);margin:25px 0 19px}#moves{color:#a4b7bb;font-size:12px}#combo{position:absolute;right:5vw;top:40vh;width:155px;text-align:center;opacity:0;transition:opacity .5s,transform .4s;transform:translateY(8px)}#combo.active{opacity:1;transform:translateY(0)}#combo-number{font:italic 70px/1.1 Georgia,serif;color:#ffe6ab;text-shadow:0 0 30px #edb44780}#combo-word{letter-spacing:.23em;font-size:11px;color:#cfdee2}#combo-line{margin:18px auto 0;width:95px;height:1px;background:linear-gradient(90deg,transparent,#d9bd76,transparent)}#renderer{position:absolute;right:27px;top:22px;font-size:10px;letter-spacing:.10em;color:#b3c9cb;opacity:.74}#renderer b{color:#91dacb;font-weight:500}#instructions{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.025em;color:#b8c8c9;text-shadow:0 1px 8px #000;white-space:nowrap;transition:opacity 1.2s}#instructions.quiet{opacity:0}#toolbar{position:absolute;bottom:29px;left:50%;transform:translateX(-50%);display:flex;gap:0;white-space:nowrap;background:linear-gradient(180deg,#14272deb,#07131aee);border:1px solid #a68b564d;box-shadow:0 7px 25px #0007,inset 0 1px #e1c89118;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px)}#toolbar button{background:none;border:0;min-height:45px;padding:0 22px;letter-spacing:.03em;font-size:12px;position:relative;transition:background .2s,color .2s}#toolbar button+button:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:#ad8e5040}#toolbar button:hover{background:#cda2541d;color:#ffedbc}#toolbar button.on{color:#8ee4d7;background:#32969216}#credit{position:absolute;left:26px;bottom:25px;font-size:10px;color:#809a9d;letter-spacing:.12em;background:none;border:0;padding:5px}#hint-toast{position:absolute;left:50%;top:13px;transform:translateX(-50%) translateY(-10px);opacity:0;transition:opacity .25s,transform .25s;max-width:70vw;padding:9px 20px;background:#07171ee6;border:1px solid #b7985355;box-shadow:0 6px 24px #0006;color:#ecdfbd;font-size:12px;text-align:center;pointer-events:none}#hint-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}#float-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}.float-score{position:absolute;color:#ffeab3;font:italic 26px Georgia,serif;text-shadow:0 2px 4px #02131a,0 0 14px #e5bc4270;animation:scorefloat 1.05s ease-out forwards;white-space:nowrap}.float-score.special{font-size:32px;letter-spacing:.08em;color:#d9fbff}@keyframes scorefloat{0%{opacity:0;transform:translate(-50%,-30%) scale(.75)}18%{opacity:1;transform:translate(-50%,-65%) scale(1.08)}60%{opacity:1}100%{opacity:0;transform:translate(-50%,-190%) scale(.92)}}
 #loading{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 40%,#16313b,#061118 65%);transition:opacity .6s;pointer-events:auto}#loading.gone{opacity:0;pointer-events:none}#load-inner{text-align:center;width:min(90vw,450px)}#load-inner h2{font:clamp(18px,5.1vw,28px) Georgia,serif;letter-spacing:.10em;font-weight:400;margin:24px 0 16px}#load-inner svg{color:#9cdef0;filter:drop-shadow(0 0 20px #4fbbe755);animation:breathe 2s ease-in-out infinite}#load-status{color:#96b0b7;font-size:12px}#load-bar{height:1px;background:#d5b77535;margin:25px auto;width:160px;overflow:hidden}#load-bar:after{content:"";display:block;width:55%;height:1px;background:#d4ba80;animation:load 1.5s infinite ease-in-out}#fatal-buttons{display:none;margin-top:20px}#fatal-buttons button{background:#18313a;border:1px solid #b59859;padding:9px 16px}#failure-detail{font-size:11px;white-space:pre-wrap;user-select:text;max-height:150px;overflow:auto;color:#cda99e;text-align:left;margin-top:18px}@keyframes breathe{50%{transform:translateY(-7px)}}@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
@@ -19,7 +19,15 @@
 #scene:focus {outline:none}
 #accessibility-status{position:fixed;left:-10000px;width:1px;height:1px;overflow:hidden}
 #coop-code-input{position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0;font-size:16px;}
-</style><style>@media(max-height:640px){#trontAbout.tront-about{top:12px;bottom:auto;left:auto;right:12px;}}</style></head><body>
+</style><style>@media(max-height:640px){#trontAbout.tront-about{top:12px;bottom:auto;left:auto;right:12px;}}</style><style id="jewelcraft-theme">
+html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 42%,#221a32,#070810 70%)}
+#load-inner h2{color:#f5e8c9;letter-spacing:.22em}#load-inner svg{color:#c6afe9;filter:drop-shadow(0 0 24px #8a66bc55)}
+#load-status{color:#c3b9cf}#load-bar:after{background:#d2b785}
+#trontAbout{--about-surface:#10101c!important;--about-accent:#bda77b!important}
+#trontAbout>summary{background:#11111e;border-color:#776447;border-radius:3px;color:#efe7d7}
+#trontAbout>.tront-discovery{background:#10101c;border-color:#776447}
+#trontAbout .tront-discovery__heading h2{font-family:Georgia,serif;font-weight:400;letter-spacing:.04em;color:#f5e8c9}
+</style></head><body>
 <div id="accessibility-status" role="status" aria-live="polite"></div><canvas tabindex="0" id="scene" data-tront-discovery-game-surface aria-label="Interactive 3D match-three jewel board. Use the mouse or touch to swap adjacent jewels. Keyboard: arrow keys and Space."></canvas><div id="shade"></div>
 <div id="hud">
  <header id="brand"><svg class="sigil" width="42" height="48" viewBox="0 0 42 48" fill="none" aria-hidden="true"><path d="M21 2L37 15 32 33 21 46 10 33 5 15 21 2ZM5 15H37L21 46 5 15ZM21 2L14 15 21 33 28 15 21 2ZM10 33H32" stroke="currentColor" stroke-width=".8"/></svg><h1>Jewelbound</h1></header>
@@ -53,7 +61,7 @@
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.7'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.8'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -190,7 +198,7 @@ function trs(pos=[0,0,0],rot=[0,0,0],s=[1,1,1]){
 function transform(m,p,w=1){return [m[0]*p[0]+m[4]*p[1]+m[8]*p[2]+m[12]*w,m[1]*p[0]+m[5]*p[1]+m[9]*p[2]+m[13]*w,m[2]*p[0]+m[6]*p[1]+m[10]*p[2]+m[14]*w];}
 function project(p,m,w,h){const q=transform(m,p),k=m[3]*p[0]+m[7]*p[1]+m[11]*p[2]+m[15];return [(q[0]/k*.5+.5)*w,(.5-q[1]/k*.5)*h,q[2]/k];}
 function color(hex){if(typeof hex!=='string')return hex;const n=parseInt(hex.replace('#',''),16);return [((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255].map(v=>Math.pow(v,2.2));}
-const GEM_COLORS=['#f40838','#1652ff','#0bc979','#a02cf0','#ffc124','#c1e4ff'].map(color);
+const GEM_COLORS=['#ed2458','#3162ed','#18c584','#a149e9','#eebc32','#d0e8ff'].map(color);
 const CELL=.94;
 function cabinetFraming(w,h){
  const tan=Math.tan(21*PI/180),aspect=w/h,base=Math.max(14.7,4.75/(tan*aspect));
@@ -268,18 +276,13 @@ float hash21(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float noise21(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(vec2(3.0)-2.0*f);float a=hash21(i);float b=hash21(i+vec2(1.0,0.0));float c=hash21(i+vec2(0.0,1.0));float d=hash21(i+vec2(1.0,1.0));return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
 vec3 environment(vec3 r){
  r=safeUnit(r);
- float up=clamp(r.y*0.5+0.5,0.0,1.0);
- float horizonBase=clamp(1.0-abs(r.y),0.0,1.0);
- float horizon=horizonBase*horizonBase*horizonBase;
- vec3 sky=mix(vec3(0.010,0.024,0.045),vec3(0.15,0.29,0.36),up);
- sky+=mix(vec3(0.025,0.048,0.070),vec3(0.23,0.11,0.04),horizon)*0.85;
- float softbox=pow(max(dot(r,safeUnit(vec3(-0.75,0.8,1.0))),0.0),34.0);
- float rim=pow(max(dot(r,safeUnit(vec3(1.0,0.35,0.4))),0.0),60.0);
- float window=pow(max(dot(r,safeUnit(vec3(-0.1,1.0,-0.2))),0.0),16.0);
- float strip=pow(max(1.0-abs(dot(r,safeUnit(vec3(0.5,0.25,0.8)))),0.0),75.0)*pow(max(r.y+0.5,0.0),2.0);
- float moon=pow(max(dot(r,safeUnit(vec3(-0.18,0.88,-0.42))),0.0),210.0);
- float aurora=pow(max(1.0-abs(dot(r,safeUnit(vec3(0.12,0.94,0.32)))),0.0),18.0)*pow(max(r.y,0.0),2.2);
- return sky+vec3(3.4,3.2,2.75)*softbox+vec3(0.35,1.3,2.8)*rim+vec3(1.25,0.9,0.4)*window+vec3(0.38,0.55,0.7)*strip+vec3(0.55,0.70,0.88)*moon+vec3(0.06,0.18,0.24)*aurora;
+ float up=clamp(r.y*.5+.5,0.0,1.0);
+ vec3 sky=mix(vec3(.012,.009,.023),vec3(.14,.12,.23),up);
+ float key=pow(max(dot(r,safeUnit(vec3(-.65,.85,1.0))),0.0),26.0);
+ float rim=pow(max(dot(r,safeUnit(vec3(.85,.28,.5))),0.0),48.0);
+ float crown=pow(max(dot(r,safeUnit(vec3(-.2,1.0,-.2))),0.0),20.0);
+ float strip=pow(max(1.0-abs(dot(r,safeUnit(vec3(.4,.25,.85)))),0.0),70.0)*pow(max(r.y+.4,0.0),2.0);
+ return sky+vec3(2.8,2.45,1.85)*key+vec3(.65,.58,1.6)*rim+vec3(.9,.68,.32)*crown+vec3(.3,.34,.55)*strip;
 }
 // V2.6: finite analytic reflection rig. No cubemap capture or temporal history.
 // Fixed lighting is retained underneath, so moving light never blacks out a gem.
@@ -397,8 +400,8 @@ vec3 shade(vec3 pos,vec3 norm,vec3 base,float kind,vec3 lp,vec2 tuv,float energy
    float star=pow(abs(sin(safeAngle(lp.xy)*3.0+lp.z*8.0)),14.0)*max(0.0,1.0-length(lp.xy)*2.0);
    float core=pow(max(0.0,1.0-length(lp.xy)*1.9),2.0);
    float cut=0.22+0.78*pow(abs(sin(dot(n,vec3(8.7,13.6,19.8)))),2.0);
-   col=base*(0.025+ndl*0.16+facet*0.27+core*0.025)+base*internal*(0.30+cut*0.70);
-   col+=e*(0.025+fres*0.42)+vec3(1.0,0.94,0.80)*spec*2.0;
+   col=base*(0.055+ndl*0.20+facet*0.32+core*0.065)+base*internal*(0.26+cut*0.66);
+   col+=e*(0.025+fres*0.42)+vec3(1.0,0.94,0.84)*spec*1.75;
    col+=base*star*0.26;
    col+=mix(base,vec3(1.0,0.86,0.52),0.12)*energy*(0.45+core*1.5);
    col+=vec3(0.35,0.65,0.82)*hover*fres*0.7;
@@ -434,24 +437,23 @@ vec3 shade(vec3 pos,vec3 norm,vec3 base,float kind,vec3 lp,vec2 tuv,float energy
    col+=e*(0.028+fres*0.075)+vec3(spec*0.09);
  }
  float fog=1.0-exp(-max(0.0,length(pos-eye)-18.0)*0.018);
- return mix(col,vec3(0.07,0.14,0.18),fog);
+ return mix(col,vec3(0.010,0.008,0.022),fog);
 }
 vec3 skyColor(vec2 uv,float aspect,float clock){
- float h=uv.y;vec3 col=mix(vec3(0.030,0.060,0.084),vec3(0.005,0.014,0.036),smoothstep(0.17,0.98,h));
- vec2 q=(uv-vec2(0.87,0.54))*vec2(aspect,1.0);float sun=exp(-dot(q,q)*18.0);
- col+=vec3(0.22,0.10,0.035)*sun;
- vec2 moonQ=(uv-vec2(0.25,0.18))*vec2(aspect,1.0);float moon=exp(-dot(moonQ,moonQ)*130.0);
- col+=vec3(0.08,0.12,0.17)*moon;
- float n=noise21(uv*vec2(9.0,11.0)+vec2(clock*0.012,0.0));
- n+=noise21(uv*vec2(22.0,27.0)+vec2(clock*0.018,0.0))*0.5;
- float cloud=smoothstep(0.66,1.13,n)*smoothstep(0.12,0.68,h);
- col+=mix(vec3(0.014,0.028,0.035),vec3(0.10,0.065,0.039),sun)*cloud;
- float haze=smoothstep(0.05,0.38,h)*(1.0-smoothstep(0.38,0.70,h));
- col+=vec3(0.025,0.055,0.070)*haze;
- vec2 starGrid=uv*vec2(520.0*aspect,520.0);vec2 starCell=floor(starGrid);
- float stars=step(0.997,hash21(starCell))*pow(max(0.0,1.0-length(fract(starGrid)-vec2(0.5))*2.0),3.0);
- col+=vec3(0.28,0.35,0.40)*stars*smoothstep(0.50,0.9,h);
- return col;
+ vec2 q=(uv-vec2(.5,.48))*vec2(aspect,1.0);
+ vec3 col=mix(vec3(.010,.007,.021),vec3(.002,.003,.010),smoothstep(.15,.95,uv.y));
+ vec2 violet=q-vec2(-.52,.05);
+ vec2 amber=q-vec2(.62,-.08);
+ col+=vec3(.035,.017,.072)*exp(-dot(violet,violet)*4.2);
+ col+=vec3(.055,.028,.010)*exp(-dot(amber,amber)*5.4);
+ float mist=noise21(uv*vec2(7.0,9.0)+vec2(clock*.004,0.0));
+ float grain=noise21(uv*vec2(22.0,28.0)+vec2(0.0,clock*.003));
+ col+=vec3(.005,.004,.011)*smoothstep(.45,.9,mist+grain*.2);
+ vec2 lattice=uv*vec2(420.0*aspect,420.0);
+ float dust=step(.9992,hash21(floor(lattice)))*pow(max(0.0,1.0-length(fract(lattice)-vec2(.5))*2.0),3.0);
+ col+=vec3(.22,.17,.11)*dust;
+ float vignette=clamp(1.0-dot(q,q)*.27,.35,1.0);
+ return col*vignette;
 }
 vec3 tone(vec3 x){x=clamp(x,vec3(0.0),vec3(256.0));return clamp((x*(2.51*x+vec3(0.03)))/(x*(2.43*x+vec3(0.59))+vec3(0.14)),vec3(0.0),vec3(1.0));}
 `;
@@ -513,13 +515,13 @@ const FX_LASER_GL=`vec3 fxLaser(vec2 uv,float aspect){float lz=min(uRight.w,1.5)
  for(int i=0;i<12;i++){float fi=float(i);float side=i<6?-1.0:1.0;float k=mod(fi,6.0);vec2 o=vec2(0.5+side*(0.36+0.025*k),0.40)*vec2(aspect,1.0);
   float ang=1.5708+side*(-0.10-0.16*k)+sin(t*(0.9+0.21*k)+fi*1.7)*0.42;vec2 d=vec2(cos(ang),sin(ang));vec2 q=P-o;float al=dot(q,d);if(al<0.0)continue;
   float pe=abs(q.x*d.y-q.y*d.x);float w=0.0022+al*0.0035;float core=exp(-pe*pe/(w*w*0.3));float glow=exp(-pe*pe/(w*w*12.0))*0.45;
-  vec3 col=0.55+0.45*cos(6.2831*(fi*0.137+t*0.18+vec3(0.0,0.33,0.67)));acc+=col*(core*1.4+glow)*exp(-al*0.55)*(0.75+0.25*sin(t*9.0+fi));}
+  vec3 col=mix(vec3(1.0,0.68,0.28),vec3(0.60,0.43,1.0),0.5+0.5*sin(fi*1.7));acc+=col*(core*1.4+glow)*exp(-al*0.55)*(0.75+0.25*sin(t*9.0+fi));}
  float haze=exp(-abs(uv.y-0.42)*9.0)*0.12;return (acc+vec3(haze))*lz;}`;
 const FX_LASER_WG=`fn fxLaser(uv:vec2f,aspect:f32)->vec3f{let lz=min(U.right.w,1.5);if(lz<0.002){return vec3f(0.0);}let t=U.params.x;var acc=vec3f(0.0);let P=uv*vec2f(aspect,1.0);
  for(var i=0;i<12;i++){let fi=f32(i);let side=select(1.0,-1.0,i<6);let k=fi%6.0;let o=vec2f(0.5+side*(0.36+0.025*k),0.40)*vec2f(aspect,1.0);
   let ang=1.5708+side*(-0.10-0.16*k)+sin(t*(0.9+0.21*k)+fi*1.7)*0.42;let d=vec2f(cos(ang),sin(ang));let q=P-o;let al=dot(q,d);if(al<0.0){continue;}
   let pe=abs(q.x*d.y-q.y*d.x);let w=0.0022+al*0.0035;let core=exp(-pe*pe/(w*w*0.3));let glow=exp(-pe*pe/(w*w*12.0))*0.45;
-  let col=0.55+0.45*cos(6.2831*(fi*0.137+t*0.18+vec3f(0.0,0.33,0.67)));acc+=col*(core*1.4+glow)*exp(-al*0.55)*(0.75+0.25*sin(t*9.0+fi));}
+  let col=mix(vec3f(1.0,0.68,0.28),vec3f(0.60,0.43,1.0),0.5+0.5*sin(fi*1.7));acc+=col*(core*1.4+glow)*exp(-al*0.55)*(0.75+0.25*sin(t*9.0+fi));}
  let haze=exp(-abs(uv.y-0.42)*9.0)*0.12;return (acc+vec3f(haze))*lz;}`;
 const FX_SKY_GL=`${FX_LASER_GL}vec3 fxSky(vec2 uv,float aspect){float fl=min(uAA.z,1.5);float pu=uAA.w;vec3 tc=fxTint(uLife.w);vec2 q=(uv-vec2(0.5,0.55))*vec2(aspect,1.0);float d=length(q);
  float hz=(uv.y-0.44)*6.5;float aur=exp(-hz*hz)*fl*(0.75+0.25*sin(uv.x*9.0+uForward.w*0.8));float rr=(1.0-min(pu,1.0))*1.35+0.05;float w=(d-rr)*6.0;float wave=exp(-w*w)*pu;
@@ -851,8 +853,8 @@ const PARTICLE_SHARED=`
 vec3 particleColor(vec3 col,vec3 norm,vec2 uv,vec3 data){vec2 q=uv*2.0-vec2(1.0);float kind=data.x;float f=data.y;
  if(kind<0.5){float light=max(dot(normalize(norm),normalize(vec3(-0.6,1.0,1.0))),0.0);return col*(0.45+light*1.8);}
  float a=exp(-dot(q,q)*5.5)*0.45;
- if(kind>11.5&&kind<12.5){float d=(length(q)-0.80)*70.0;a=exp(-d*d)*0.9;}
- else if((kind>1.5&&kind<2.5)||(kind>7.5&&kind<8.5)){float d=(length(q)-0.72)*24.0;a=exp(-d*d)*0.7;}
+ if(kind>11.5&&kind<12.5){float d=(max(abs(q.x),abs(q.y))*0.924+min(abs(q.x),abs(q.y))*0.383-0.80)*70.0;a=exp(-d*d)*0.9;}
+ else if((kind>1.5&&kind<2.5)||(kind>7.5&&kind<8.5)){float d=(max(abs(q.x),abs(q.y))*0.924+min(abs(q.x),abs(q.y))*0.383-0.72)*24.0;a=exp(-d*d)*0.7;}
  else if(kind>6.5&&kind<7.5){a=exp(-q.y*q.y*12.0)*(0.38+0.32*sin((q.x*0.5+0.5)*18.0+f*7.0));}
   else if(kind>3.5&&kind<4.5){a=exp(-q.y*q.y*42.0)*2.7*pow(max(0.0,1.0-abs(q.x)),0.2);}
  else if(kind>9.5&&kind<10.5){a=exp(-q.y*q.y*6.0)*max(1.0-q.x*q.x,0.0)*0.9;}
@@ -1123,70 +1125,93 @@ function buildFloatingIslandUnit(seed=1){
 }
 
 function buildWorld(renderer){
- const g=new Geo(),gold=color('#ba8b4b'),paleGold=color('#e6c77e'),darkGold=color('#695033'),stone=color('#23333b'),black=color('#091821'),cyan=color('#38b4cf'),rng=new SeededRandom(19081);
- // The board is one physical piece, not sixty-four floating UI buttons.
- bevelBox(g,[0,0,-.38],8.50,8.50,.64,stone,0,.13,.22);
- bevelBox(g,[0,0,-.065],7.78,7.78,.16,black,0,.05,.10);
- for(let i=0;i<64;i++){const [x,y]=cellXY(i);bevelBox(g,[x,y,.002],.90,.90,.105,color('#142b38'),0,.035,.055);bevelBox(g,[x,y,.057],.805,.805,.02,color('#091922'),0,.015,.04);
-   // Four tiny polished socket brackets, recessed below the jewel.
-   for(let s=-1;s<=1;s+=2)for(let t=-1;t<=1;t+=2){let c=[x+s*.392,y+t*.392,.077];g.tube([[c[0]-s*.09,c[1],c[2]],c,[c[0],c[1]-t*.09,c[2]]],.0085,darkGold,1,4);}
+ const g=new Geo(),gold=color('#9e8051'),paleGold=color('#ddc995'),darkGold=color('#514431'),stone=color('#121220'),black=color('#070912'),cyan=color('#9a85df'),rng=new SeededRandom(19081);
+ // A jeweller's tray cut from obsidian. The playable aperture and socket anchors
+ // are unchanged: input, previews, and accessibility outlines use real geometry.
+ bevelBox(g,[0,0,-.38],8.56,8.56,.64,stone,0,.18,.29);
+ bevelBox(g,[0,0,-.065],7.78,7.78,.16,black,0,.045,.09);
+ for(let i=0;i<64;i++){
+  const [x,y]=cellXY(i);
+  bevelBox(g,[x,y,.002],.90,.90,.105,color('#1c192b'),0,.028,.06);
+  bevelBox(g,[x,y,.057],.805,.805,.02,color('#090b16'),0,.013,.035);
+  for(let sx of [-1,1])for(let sy of [-1,1]){
+   const c=[x+sx*.392,y+sy*.392,.077];
+   g.tube([[c[0]-sx*.09,c[1],c[2]],c,[c[0],c[1]-sy*.09,c[2]]],.0085,darkGold,1,4);
+  }
  }
- frameRect(g,0,0,8.16,8.16,.01,.29,gold);frameRect(g,0,0,8.44,8.44,-.02,.048,paleGold);frameRect(g,0,0,7.83,7.83,.12,.025,paleGold);
- frameRect(g,0,0,8.14,8.14,.107,.026,vmul(cyan,.44),3);
- // Engraved scrollwork along the brass rails.
- for(let side=0;side<4;side++)for(let k=-3;k<=3;k++){let pts=[];for(let j=0;j<=28;j++){let a=j/28*TAU*1.3,r=.075*(1-j/38);let x=k*1.03+Math.cos(a)*r,y=4.08+Math.sin(a)*r;let p=side===0?[x,y,.166]:side===1?[x,-y,.166]:side===2?[y,x,.166]:[-y,x,.166];pts.push(p);}g.tube(pts,.008,paleGold,1,4);}
- // The lower corner bezels overlap the plinth in XY. Its front is z=.32,
- // which hid the old ring at z=.28. Extend each LOWER mount forward .10,
- // retaining its back at z=.055; move its gem and complete rim together.
- // This is actual supported geometry, not a depth-test/render-order override.
+ frameRect(g,0,0,8.17,8.17,.01,.29,color('#211b2b'),0);
+ frameRect(g,0,0,8.44,8.44,-.02,.026,gold);
+ frameRect(g,0,0,7.83,7.83,.12,.018,paleGold);
+ frameRect(g,0,0,8.14,8.14,.107,.026,vmul(cyan,.28),3);
+ // Inlaid lozenges, separated by generous stretches of unadorned black stone.
+ for(let side=0;side<4;side++)for(let k of [-3,-1.5,0,1.5,3]){
+  const convert=(x,y)=>side===0?[x,y,.166]:side===1?[x,-y,.166]:side===2?[y,x,.166]:[-y,x,.166];
+  g.tube([convert(k-.11,4.08),convert(k,4.13),convert(k+.11,4.08),convert(k,4.03),convert(k-.11,4.08)],.006,gold,1,4);
+ }
  for(let sx of [-1,1])for(let sy of [-1,1]){
-   const relief=sy<0?.10:0,p=[sx*4.10,sy*4.10,.15+relief*.5],corner=new Geo();
-   bevelBox(corner,[0,0,0],.51,.51,.19+relief,gold,1,.05,.06);
-   g.append(corner,trs(p,[0,0,PI/4]));
-   g.append(tintGeo(gemGeometry(1,7),color('#50c5ef')),trs([p[0],p[1],.30+relief],[0,0,.2],[.37,.37,.37]));
-   g.ring([p[0],p[1],.28+relief],.30,.015,paleGold,1,'z',32);
+  const relief=sy<0?.10:0,p=[sx*4.10,sy*4.10,.15+relief*.5],mount=new Geo();
+  bevelBox(mount,[0,0,0],.44,.44,.19+relief,stone,0,.065,.09);
+  g.append(mount,trs(p,[0,0,PI/4]));
+  g.append(tintGeo(gemGeometry(5,7),color('#9f87dc')),trs([p[0],p[1],.30+relief],[0,0,0],[.30,.35,.30]));
+  const z=.28+relief;
+  g.tube([[p[0],p[1]+.30,z],[p[0]+.25,p[1],z],[p[0],p[1]-.30,z],[p[0]-.25,p[1],z],[p[0],p[1]+.30,z]],.012,paleGold,1,5);
  }
- // Layered plinth, feet, and the little central jewel below the board.
- bevelBox(g,[0,-4.48,-.17],8.90,.40,.98,stone,0,.075,.12);bevelBox(g,[0,-4.72,-.20],9.22,.16,1.12,gold,1,.025,.045);
- for(let s of [-1,1]){g.cylinder([s*3.35,-4.96,-.16],.28,.39,.50,stone,0,12);g.cylinder([s*3.35,-5.20,-.16],.42,.46,.08,gold,1,16);}
- g.append(tintGeo(gemGeometry(5,7),color('#63cffa')),trs([0,-4.45,.38],[0,0,0],[.48,.40,.35]));
- for(let s of [-1,1]){g.tube([[s*.48,-4.45,.39],[s*1.45,-4.45,.39],[s*1.65,-4.38,.35],[s*3.98,-4.38,.35]],.013,paleGold,1,4);}
- // Crown astrolabe: its gem and orbit are separate, animated draw batches.
- g.cylinder([0,4.46,-.1],.28,.49,.30,gold,1,12);g.ring([0,4.62,-.04],.43,.033,paleGold,1,'y',56);
- for(let s of [-1,1]){g.tube([[s*1.00,4.23,-.06],[s*.75,4.45,-.05],[s*.46,4.66,-.05]],.025,gold,1,6);}
- // Two brass gimbals on the board's flanks. Moved slightly forward/outward
- // so their lower rings no longer look clipped into the shelf in close-up.
- for(const s of [-1,1]){const x=s*5.36,cy=-.04,cz=.12;g.tube([[s*4.24,-.08,-.03],[s*4.92,-.08,.02],[x,-.34,.07]],.056,gold,1,8);g.ring([x,cy,cz],.58,.024,gold,1,'z',72);g.ring([x,cy,cz],.46,.009,paleGold,1,'z',64);g.ring([x,cy,cz],.40,.021,gold,1,'y',56);g.append(tintGeo(gemGeometry(3,7),color('#43baf0')),trs([x,cy,.17],[.05,0,.03],[.48,.67,.55]));for(let k=0;k<12;k++){let a=k/12*TAU;g.tube([[x+Math.cos(a)*.58,cy+Math.sin(a)*.58,cz],[x+Math.cos(a)*.64,cy+Math.sin(a)*.64,cz]],.013,paleGold,1,4);}}
- // Marble terrace over dark, rippling water.
- g.quad([-90,-5.45,12],[90,-5.45,12],[90,-5.45,-100],[-90,-5.45,-100],color('#123443'),4,[[0,0],[1,0],[1,1],[0,1]]);
- g.cylinder([0,-5.65,-.1],11.4,11.7,.80,color('#17272e'),0,96);g.ring([0,-5.22,-.1],10.95,.035,darkGold,1,'y',128);g.ring([0,-5.21,-.1],9.85,.018,gold,1,'y',128);
- // Monumental garden architecture, built in depth around the board.
- for(const side of [-1,1]){
-   const x=side*6.8,z=-5.2;g.cylinder([x,-4.65,z],.68,.83,1.05,stone,0,16);g.cylinder([x,1.4,z],.38,.48,11.0,color('#39494c'),0,20);
-   for(let y of [-4.05,-3.78,5.98,6.30])g.cylinder([x,y,z],.57,.57,.13,gold,1,20);
-   g.cylinder([x,6.65,z],.73,.49,.62,stone,0,12);
-   for(let k=0;k<10;k++){let a=k/10*TAU;g.tube([[x+Math.cos(a)*.42,-3.65,z+Math.sin(a)*.42],[x+Math.cos(a)*.35,5.95,z+Math.sin(a)*.35]],.012,darkGold,1,4);}
-   const xx=side*8.85,zz=1.2;g.cylinder([xx,1.0,zz],.68,.77,15.5,color('#1b2b30'),0,18);g.cylinder([xx,-4.7,zz],1.05,1.16,1.1,stone,0,12);for(let y of [-4.05,-3.8,5.4,5.62])g.cylinder([xx,y,zz],.86,.86,.13,gold,1,16);
-   // Ivy follows individual winding stems rather than repeated spherical bushes.
-   for(let vine=0;vine<4;vine++){const path=[];for(let j=0;j<55;j++){let y=-4+j*.22,a=j*.19+vine*1.8;const p=[x+Math.cos(a)*(.48+vine*.04),y,z+Math.sin(a)*.48];path.push(p);if(j%2===0){const rot=[rng.next()*.9-.45,Math.sin(a)*.8,side*(.45+rng.next()*1.5)];leaf(g,p,rot,.30+rng.next()*.43,.095+rng.next()*.075,color(['#375845','#4b7051','#64825b'][rng.int(3)]));}}g.tube(path,.018,color('#334332'),5,4);}
-   // Foreground fern-like plants and dark urns.
-   const potx=side*6.55,potz=2.1;g.cylinder([potx,-4.82,potz],.52,.37,.86,stone,0,16);g.ring([potx,-4.38,potz],.53,.032,gold,1,'y',48);
-   for(let b=0;b<9;b++){let angle=(b-4)*.29,len=1.5+rng.next()*.8;const stem=[];for(let j=0;j<12;j++){let t=j/11;let p=[potx+Math.sin(angle)*t*len,-4.42+Math.sin(t*PI*.60)*len,potz+Math.cos(b*1.5)*t*.8];stem.push(p);if(j>1&&j<11)for(const s of [-1,1])leaf(g,p,[.25,b*.47,s*(.65+t*.45)-angle],(.3*(1-t)+.09),.07,color('#497052'));}g.tube(stem,.01,color('#3a573d'),5,3);}
+ // Low, sculpted base; the fine metal edge catches the studio light.
+ bevelBox(g,[0,-4.48,-.17],8.78,.36,.98,stone,0,.08,.15);
+ bevelBox(g,[0,-4.69,-.20],8.95,.10,1.02,gold,1,.022,.05);
+ for(let s of [-1,1]){
+  bevelBox(g,[s*3.35,-5.00,-.16],.64,.54,.68,stone,0,.08,.12);
+  bevelBox(g,[s*3.35,-5.24,-.16],.78,.07,.78,gold,1,.015,.03);
+  g.tube([[s*.40,-4.45,.39],[s*1.1,-4.45,.39],[s*1.3,-4.40,.39],[s*3.95,-4.40,.39]],.009,gold,1,4);
  }
- const arch=[];for(let i=0;i<=100;i++){let a=i/100*PI;arch.push([Math.cos(a)*6.8,.65+Math.sin(a)*6.8,-5.2]);}g.tube(arch,.25,color('#36474a'),0,12);const inner=arch.map(p=>[p[0]*.962,.65+(p[1]-.65)*.962,p[2]+.10]);g.tube(inner,.033,gold,1,8);
- for(let k=1;k<20;k++){let a=k/20*PI;g.tube([[Math.cos(a)*6.44,.65+Math.sin(a)*6.44,-5.05],[Math.cos(a)*7.02,.65+Math.sin(a)*7.02,-5.05]],.025,darkGold,1,4);}
- // Distant floating gardens are now a reusable animated mesh with richer silhouettes.
- const islandUnit=buildFloatingIslandUnit(3401),islandMesh=renderer.createMesh(islandUnit.data(),8),islands=[];
- for(let island=0;island<7;island++){
-   const x=(island-3)*8.0+Math.sin(island*1.7)*2.1,z=-28-rng.next()*18,y=-1.3+rng.next()*3.2,scale=.78+rng.next()*.55;
-   islands.push({base:[x,y,z],scale,bob:.10+rng.next()*.18,speed:.22+rng.next()*.16,twist:.06+rng.next()*.11,pitch:.010+rng.next()*.030,roll:.012+rng.next()*.026,phase:rng.next()*TAU,tint:[.94+rng.next()*.08,.97+rng.next()*.06,1.0]});
+ g.append(tintGeo(gemGeometry(5,7),color('#bf9cdd')),trs([0,-4.45,.38],[0,0,0],[.36,.36,.30]));
+ // Crown and side crystals retain the existing effect emitter locations.
+ g.cylinder([0,4.46,-.1],.20,.37,.30,stone,0,8);
+ for(let s of [-1,1])g.tube([[s*.95,4.23,-.06],[s*.54,4.40,-.05],[s*.30,4.65,-.05]],.017,gold,1,6);
+ for(let s of [-1,1]){
+  const x=s*5.36;
+  bevelBox(g,[x,-.60,.02],.54,.14,.50,stone,0,.04,.08);
+  g.tube([[s*4.24,-.08,-.03],[s*4.85,-.08,.02],[x,-.50,.07]],.025,gold,1,6);
+  g.append(tintGeo(gemGeometry(3,7),color('#b7a0e9')),trs([x,-.04,.17],[.05,0,0],[.40,.95,.40]));
+  g.tube([[x,-.61,.12],[x-.39,-.04,.12],[x,.65,.12],[x+.39,-.04,.12],[x,-.61,.12]],.012,gold,1,5);
  }
- // Crystals growing from the terrace, with different cuts and angles.
- for(let side of [-1,1])for(let j=0;j<7;j++){let a=j*1.9,s=.3+rng.next()*.55;g.append(tintGeo(gemGeometry(j%2?3:5,7),color(j%2?'#639eda':'#6fcfe5')),trs([side*(5.05+rng.next()),-5.10+s*.4,1.8+rng.next()*1.3],[rng.next()*.5-.25,rng.next()*.4,Math.sin(a)*.45],[s*.8,s*1.8,s]));}
+ // Quiet midnight vault: angular masonry and engraved floor, no sea or garden.
+ g.quad([-90,-5.45,12],[90,-5.45,12],[90,-5.45,-100],[-90,-5.45,-100],color('#090911'),0);
+ // A deep interior wall closes the floor's horizon, behind the layered ribs.
+ g.quad([-90,-5.45,-70],[90,-5.45,-70],[90,90,-70],[-90,90,-70],color('#171127'),0);
+ g.cylinder([0,-5.66,-.1],10.8,11.0,.42,color('#13111d'),0,12);
+ for(const r of [8.8,10.4])g.ring([0,-5.44,-.1],r,.012,darkGold,1,'y',96);
+ for(let s of [-1,1]){
+  for(let layer=0;layer<2;layer++){
+   const x=s*(7.1+layer*2.3),z=-6.8-layer*7;
+   bevelBox(g,[x,.3,z],.85,11.5,1.1,color('#1c182a'),0,.16,.18);
+   bevelBox(g,[x,-4.8,z],1.24,1.1,1.42,stone,0,.12,.16);
+   g.tube([[x,-4.1,z+.57],[x,5.8,z+.57]],.012,darkGold,1,4);
+   const a=[[x,-3.5,z],[x,4.0,z],[x*.80,5.7,z],[x*.45,7.1,z],[0,8.0,z]];
+   g.tube(a,.16,color('#292333'),0,5);
+   g.tube(a.map(p=>[p[0],p[1]-.15,p[2]+.17]),.012,darkGold,1,4);
+  }
+  for(let j=0;j<5;j++){
+   const x=s*(6.8+j*.66),z=-6-j*1.7,scale=.55+rng.next()*.60;
+   g.append(tintGeo(gemGeometry(j%2?3:5,7),color(j%2?'#685492':'#414c76')),trs([x,-4.8+scale*.7,z],[.12,s*.16,s*(.1+j*.08)],[scale,scale*(2+j*.22),scale]));
+  }
+  for(let j=0;j<3;j++){
+   const sc=.32+j*.14;
+   g.append(tintGeo(gemGeometry(j%2?3:5,7),color('#8b72b5')),trs([s*(5.8+j*.4),-5.1+sc*.6,2.3-j*.3],[.08,s*.2,s*.2],[sc,sc*1.8,sc]));
+  }
+ }
+ // Slow floating cut-crystal clusters replace the distant garden silhouettes.
+ const cluster=new Geo();
+ for(let i=0;i<5;i++){
+  const x=(i-2)*.38,sc=.5+(i===2?.45:0);
+  cluster.append(tintGeo(gemGeometry(i%2?3:5,7),color(i%2?'#645385':'#546488')),trs([x,-Math.abs(i-2)*.25,0],[0,.3,(i-2)*-.18],[sc,sc*1.75,sc]));
+ }
+ const islandMesh=renderer.createMesh(cluster.data(),8),islands=[];
+ for(let i=0;i<7;i++)islands.push({base:[(i-3)*8,-.7+(i%3)*1.1,-30-(i%2)*8],scale:.7+(i%3)*.2,bob:.09,speed:.13,twist:.035,pitch:.012,roll:.012,phase:i*1.7,tint:[.7,.7,.85]});
  const worldMesh=renderer.createMesh(g.data());renderer.upload(worldMesh,new Float32Array(packedInstance(identity())),1);
  const gemBottoms=[];
  const gemMeshes=Array.from({length:6},(_,i)=>{const vertices=gemGeometry(i).data();let bottom=Infinity;for(let k=1;k<vertices.length;k+=12)bottom=Math.min(bottom,vertices[k]);gemBottoms.push(bottom);return renderer.createMesh(vertices,100);});
- const crown=renderer.createMesh(gemGeometry(1,7).data(),4);
+ const crown=renderer.createMesh(gemGeometry(5,7).data(),4);
  const orbitGeo=new Geo();orbitGeo.ring([0,0,0],.84,.022,gold,1,'y',80);orbitGeo.ring([0,0,0],.75,.009,paleGold,1,'y',80);for(let j=0;j<3;j++){let a=j/3*TAU;orbitGeo.append(gemGeometry(5,7),trs([Math.cos(a)*.84,0,Math.sin(a)*.84],[0,0,0],[.12,.12,.12]));}
  const orbit=renderer.createMesh(orbitGeo.data(),1);
  const haloGeo=new Geo();for(let sx of [-1,1])for(let sy of [-1,1]){let c=[sx*.392,sy*.392,0];haloGeo.tube([[c[0]-sx*.09,c[1],0],c,[c[0],c[1]-sy*.09,0]],.0085,[1,1,1],3,4);}const halos=renderer.createMesh(haloGeo.data(),8);
@@ -1268,8 +1293,10 @@ gl_Position=vec4(p.x/uViewport.x*2.-1.,1.-p.y/uViewport.y*2.,0.,1.);
 vLocal=q;vRect=aRect;vPaint=aPaint;vShape=aShape;vStyle=aStyle;}`;
 const UI_FS_GL=`#version 300 es
 precision highp float;
-in vec2 vLocal;flat in vec4 vRect;flat in vec4 vPaint;flat in vec4 vShape;flat in vec4 vStyle;out vec4 frag;
-void main(){vec2 p=abs(vLocal),h=vRect.zw-vec2(1.5);
+in vec2 vLocal;flat in vec4 vRect;flat in vec4 vPaint;flat in vec4 vShape;flat in vec4 vStyle;out vec4 frag;uniform sampler2D uGlyphAtlas;
+void main(){
+ if(vShape.x>1.5){vec2 uv=vLocal/(vRect.zw*2.0)+vec2(.5);float a=texture(uGlyphAtlas,vStyle.xy+uv*vStyle.zw).a*vPaint.a;frag=vec4(vPaint.rgb*a,a);return;}
+ vec2 p=abs(vLocal),h=vRect.zw-vec2(1.5);
 float box=max(max(p.x-h.x,p.y-h.y),(p.x+p.y-h.x-h.y+vShape.y)*.70710678);
 float line=length(vec2(max(p.x-max(0.,h.x-vShape.y),0.),p.y))-vShape.y;
 float sd=mix(box,line,step(.5,vShape.x));float aa=max(fwidth(sd),.7);float alpha=(1.-smoothstep(-aa*.55,aa*.55,sd))*vPaint.a;
@@ -1277,18 +1304,26 @@ float bevel=(1.-smoothstep(0.,2.4,-sd))*vStyle.x;
 vec3 col=vPaint.rgb*(1.-vLocal.y/max(vRect.w,1.)*vStyle.y);
 col+=vec3(bevel*(.12-.16*vLocal.y/max(vRect.w,1.)));
 frag=vec4(clamp(col,0.,1.)*alpha,alpha);}`;
-const UI_WGSL=`struct U { size:vec2f, pad:vec2f };@group(0) @binding(0) var<uniform> Uv:U;
+const UI_WGSL=`struct U { size:vec2f, pad:vec2f };@group(0) @binding(0) var<uniform> Uv:U; @group(0) @binding(1) var glyphAtlas:texture_2d<f32>; @group(0) @binding(2) var glyphSampler:sampler;
 struct I { @location(0) rect:vec4f,@location(1) paint:vec4f,@location(2) shape:vec4f,@location(3) style:vec4f };
 struct O { @builtin(position) position:vec4f,@location(0) local:vec2f,
 @location(1) @interpolate(flat) rect:vec4f,@location(2) @interpolate(flat) paint:vec4f,
 @location(3) @interpolate(flat) shape:vec4f,@location(4) @interpolate(flat) style:vec4f };
 @vertex fn vs(i:I,@builtin(vertex_index) id:u32)->O {let corners=array<vec2f,6>(vec2f(-1,-1),vec2f(1,-1),vec2f(-1,1),vec2f(-1,1),vec2f(1,-1),vec2f(1,1));let q=corners[id]*i.rect.zw;let p=i.rect.xy+vec2f(q.x*i.shape.z-q.y*i.shape.w,q.x*i.shape.w+q.y*i.shape.z);var o:O;o.position=vec4f(p.x/Uv.size.x*2.-1.,1.-p.y/Uv.size.y*2.,0.,1.);o.local=q;o.rect=i.rect;o.paint=i.paint;o.shape=i.shape;o.style=i.style;return o;}
-@fragment fn fs(i:O)->@location(0) vec4f {let p=abs(i.local);let h=i.rect.zw-vec2f(1.5);let box=max(max(p.x-h.x,p.y-h.y),(p.x+p.y-h.x-h.y+i.shape.y)*.70710678);let line=length(vec2f(max(p.x-max(0.,h.x-i.shape.y),0.),p.y))-i.shape.y;let sd=select(box,line,i.shape.x>.5);let aa=max(fwidth(sd),.7);let alpha=(1.-smoothstep(-aa*.55,aa*.55,sd))*i.paint.a;let bevel=(1.-smoothstep(0.,2.4,-sd))*i.style.x;var col=i.paint.rgb*(1.-i.local.y/max(i.rect.w,1.)*i.style.y);col+=vec3f(bevel*(.12-.16*i.local.y/max(i.rect.w,1.)));return vec4f(clamp(col,vec3f(0),vec3f(1))*alpha,alpha);}`;
+@fragment fn fs(i:O)->@location(0) vec4f {let p=abs(i.local);let h=i.rect.zw-vec2f(1.5);let box=max(max(p.x-h.x,p.y-h.y),(p.x+p.y-h.x-h.y+i.shape.y)*.70710678);let line=length(vec2f(max(p.x-max(0.,h.x-i.shape.y),0.),p.y))-i.shape.y;let sd=select(box,line,i.shape.x>.5);let aa=max(fwidth(sd),.7);
+ if(i.shape.x>1.5){let uv=i.local/(i.rect.zw*2.0)+vec2f(.5);let a=textureSampleLevel(glyphAtlas,glyphSampler,i.style.xy+uv*i.style.zw,0.0).a*i.paint.a;return vec4f(i.paint.rgb*a,a);}
+ let alpha=(1.-smoothstep(-aa*.55,aa*.55,sd))*i.paint.a;let bevel=(1.-smoothstep(0.,2.4,-sd))*i.style.x;var col=i.paint.rgb*(1.-i.local.y/max(i.rect.w,1.)*i.style.y);col+=vec3f(bevel*(.12-.16*i.local.y/max(i.rect.w,1.)));return vec4f(clamp(col,vec3f(0),vec3f(1))*alpha,alpha);}`;
 class UIInk {
  constructor(r){this.r=r;this.capacity=16000;this.data=new Float32Array(this.capacity*16);this.count=0;this.groups=[];this.clipping=null;this.colorCache=new Map();}
- async init(){const r=this.r;
-  if(r.gl){const g=r.gl;this.program=r.program(UI_VS_GL,UI_FS_GL);this.vao=g.createVertexArray();this.buffer=g.createBuffer();g.bindVertexArray(this.vao);g.bindBuffer(g.ARRAY_BUFFER,this.buffer);g.bufferData(g.ARRAY_BUFFER,this.data.byteLength,g.DYNAMIC_DRAW);for(let i=0;i<4;i++){g.enableVertexAttribArray(i);g.vertexAttribPointer(i,4,g.FLOAT,false,64,i*16);g.vertexAttribDivisor(i,1);}g.bindVertexArray(null);}
-  else{const d=r.device;this.buffer=d.createBuffer({size:this.data.byteLength,usage:GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST});this.uniform=d.createBuffer({size:16,usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST});const module=d.createShaderModule({code:UI_WGSL});const info=await module.getCompilationInfo();const errors=info.messages.filter(m=>m.type==='error');if(errors.length)throw Error('UI shader: '+errors.map(m=>m.message).join('\n'));this.pipeline=await d.createRenderPipelineAsync({layout:'auto',vertex:{module,entryPoint:'vs',buffers:[{arrayStride:64,stepMode:'instance',attributes:[0,1,2,3].map(i=>({shaderLocation:i,offset:i*16,format:'float32x4'}))}]},fragment:{module,entryPoint:'fs',targets:[{format:r.format,blend:{color:{srcFactor:'one',dstFactor:'one-minus-src-alpha'},alpha:{srcFactor:'one',dstFactor:'one-minus-src-alpha'}}}]},primitive:{topology:'triangle-list'}});this.group=d.createBindGroup({layout:this.pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:this.uniform}}]});}
+ async init(){const r=this.r;this.prepareTypography();
+  if(r.gl){const g=r.gl;
+ this.atlasTexture=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.atlasTexture);g.texImage2D(g.TEXTURE_2D,0,g.RGBA,g.RGBA,g.UNSIGNED_BYTE,this.glyphCanvas);
+ g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);
+ this.program=r.program(UI_VS_GL,UI_FS_GL);this.vao=g.createVertexArray();this.buffer=g.createBuffer();g.bindVertexArray(this.vao);g.bindBuffer(g.ARRAY_BUFFER,this.buffer);g.bufferData(g.ARRAY_BUFFER,this.data.byteLength,g.DYNAMIC_DRAW);for(let i=0;i<4;i++){g.enableVertexAttribArray(i);g.vertexAttribPointer(i,4,g.FLOAT,false,64,i*16);g.vertexAttribDivisor(i,1);}g.bindVertexArray(null);}
+  else{const d=r.device;
+ this.atlasTexture=d.createTexture({size:[1536,1344],format:'rgba8unorm',usage:GPUTextureUsage.TEXTURE_BINDING|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT});
+ d.queue.copyExternalImageToTexture({source:this.glyphCanvas},{texture:this.atlasTexture},[1536,1344]);
+ this.atlasSampler=d.createSampler({minFilter:'linear',magFilter:'linear'});this.buffer=d.createBuffer({size:this.data.byteLength,usage:GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST});this.uniform=d.createBuffer({size:16,usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST});const module=d.createShaderModule({code:UI_WGSL});const info=await module.getCompilationInfo();const errors=info.messages.filter(m=>m.type==='error');if(errors.length)throw Error('UI shader: '+errors.map(m=>m.message).join('\n'));this.pipeline=await d.createRenderPipelineAsync({layout:'auto',vertex:{module,entryPoint:'vs',buffers:[{arrayStride:64,stepMode:'instance',attributes:[0,1,2,3].map(i=>({shaderLocation:i,offset:i*16,format:'float32x4'}))}]},fragment:{module,entryPoint:'fs',targets:[{format:r.format,blend:{color:{srcFactor:'one',dstFactor:'one-minus-src-alpha'},alpha:{srcFactor:'one',dstFactor:'one-minus-src-alpha'}}}]},primitive:{topology:'triangle-list'}});this.group=d.createBindGroup({layout:this.pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:this.uniform}},{binding:1,resource:this.atlasTexture.createView()},{binding:2,resource:this.atlasSampler}]});}
   return this;
  }
  begin(w,h){this.w=w;this.h=h;this.count=0;this.groups=[];this.clipping=null;this.groupStart=0;this.opacity=1;}
@@ -1300,7 +1335,7 @@ class UIInk {
  poly(points,t,c,a=1){for(let i=0;i<points.length-2;i+=2)this.line(points[i],points[i+1],points[i+2],points[i+3],t,c,a);}
  submit(){this.clip(null);const r=this.r;if(!this.count)return;const data=this.data.subarray(0,this.count*16),sx=r.width/this.w,sy=r.height/this.h;
   const scissor=clip=>{const b=clip||{x:0,y:0,w:this.w,h:this.h},x=Math.max(0,Math.floor(b.x*sx)),y=Math.max(0,Math.floor(b.y*sy)),X=Math.min(r.width,Math.ceil((b.x+b.w)*sx)),Y=Math.min(r.height,Math.ceil((b.y+b.h)*sy));return [x,y,Math.max(0,X-x),Math.max(0,Y-y)];};
-  if(r.gl){const g=r.gl;g.bindFramebuffer(g.FRAMEBUFFER,null);g.viewport(0,0,r.width,r.height);g.disable(g.DEPTH_TEST);g.depthMask(false);g.enable(g.BLEND);g.blendFunc(g.ONE,g.ONE_MINUS_SRC_ALPHA);g.bindVertexArray(this.vao);g.bindBuffer(g.ARRAY_BUFFER,this.buffer);g.bufferSubData(g.ARRAY_BUFFER,0,data);g.useProgram(this.program);g.uniform2f(r.loc(this.program,'uViewport'),this.w,this.h);g.enable(g.SCISSOR_TEST);for(const group of this.groups){const [x,y,w,h]=scissor(group.clip);if(!w||!h)continue;g.scissor(x,r.height-y-h,w,h);for(let i=0;i<4;i++)g.vertexAttribPointer(i,4,g.FLOAT,false,64,group.start*64+i*16);g.drawArraysInstanced(g.TRIANGLES,0,6,group.count);r.drawCalls++;}g.disable(g.SCISSOR_TEST);g.disable(g.BLEND);g.depthMask(true);g.bindVertexArray(null);}
+  if(r.gl){const g=r.gl;g.bindFramebuffer(g.FRAMEBUFFER,null);g.viewport(0,0,r.width,r.height);g.disable(g.DEPTH_TEST);g.depthMask(false);g.enable(g.BLEND);g.blendFunc(g.ONE,g.ONE_MINUS_SRC_ALPHA);g.bindVertexArray(this.vao);g.bindBuffer(g.ARRAY_BUFFER,this.buffer);g.bufferSubData(g.ARRAY_BUFFER,0,data);g.useProgram(this.program);g.activeTexture(g.TEXTURE0);g.bindTexture(g.TEXTURE_2D,this.atlasTexture);g.uniform1i(r.loc(this.program,'uGlyphAtlas'),0);g.uniform2f(r.loc(this.program,'uViewport'),this.w,this.h);g.enable(g.SCISSOR_TEST);for(const group of this.groups){const [x,y,w,h]=scissor(group.clip);if(!w||!h)continue;g.scissor(x,r.height-y-h,w,h);for(let i=0;i<4;i++)g.vertexAttribPointer(i,4,g.FLOAT,false,64,group.start*64+i*16);g.drawArraysInstanced(g.TRIANGLES,0,6,group.count);r.drawCalls++;}g.disable(g.SCISSOR_TEST);g.disable(g.BLEND);g.depthMask(true);g.bindVertexArray(null);}
   else{const d=r.device;d.queue.writeBuffer(this.buffer,0,data);d.queue.writeBuffer(this.uniform,0,new Float32Array([this.w,this.h,0,0]));const encoder=d.createCommandEncoder();const pass=encoder.beginRenderPass({colorAttachments:[{view:r.context.getCurrentTexture().createView(),loadOp:'load',storeOp:'store'}]});pass.setPipeline(this.pipeline);pass.setBindGroup(0,this.group);for(const group of this.groups){const [x,y,w,h]=scissor(group.clip);if(!w||!h)continue;pass.setScissorRect(x,y,w,h);pass.setVertexBuffer(0,this.buffer,group.start*64,group.count*64);pass.draw(6,group.count);r.drawCalls++;}pass.end();d.queue.submit([encoder.finish()]);}
  }
 }
@@ -1380,8 +1415,8 @@ class CabinetUI {
  }
  toggle(id,label,value,x,y,w){this.text(label,x,y+13,15);this.button(id,value?'On':'Off',x+w-74,y,74,39,value);}
  panelLayout(){const w=this.app.cssWidth,h=this.app.cssHeight,pw=Math.min(610,w-24),ph=Math.min(652,h-24),x=(w-pw)/2,y=(h-ph)/2;return {x,y,w:pw,h:ph,body:{x:x+18,y:y+(w<500?146:105),w:pw-36,h:ph-(w<500?181:140)}};}
- drawPanel(){const a=this.app,p=this.ink,m=this.panelLayout();this.panelRect=m;p.box(0,0,a.cssWidth,a.cssHeight,'#010a10',0,.76);this.plaque(m.x,m.y,m.w,m.h,true);
-  this.text('Cabinet controls',m.x+21,m.y+21,21,UI_ART.highlight,'left',m.w-133,.115,true);this.button('close','Back',m.x+m.w-94,m.y+12,76,37);
+ drawPanel(){const a=this.app,p=this.ink,m=this.panelLayout();this.panelRect=m;p.box(0,0,a.cssWidth,a.cssHeight,'#03030b',0,.84);this.plaque(m.x,m.y,m.w,m.h,true);
+  this.text('The atelier',m.x+21,m.y+21,21,UI_ART.highlight,'left',m.w-133,.115,true);this.button('close','Back',m.x+m.w-94,m.y+12,76,37);
   const tabs=[['audio','Audio'],['display','Display'],['beauty','Jewels'],['lab','Effects'],['about','About']],tw=(m.w-(a.cssWidth<500?40:48))/(a.cssWidth<500?3:5);tabs.forEach(([id,label],i)=>this.button('tab-'+id,label,m.x+16+(i%(a.cssWidth<500?3:5))*(tw+4),m.y+59+Math.floor(i/(a.cssWidth<500?3:5))*41,tw,34,this.tab===id));this.lineDivider(m.x+20,m.y+(a.cssWidth<500?142:101),m.w-40);
   p.clip(m.body);const x=m.body.x+6,y=m.body.y+13-this.scroll,w=m.body.w-19;let end=y;
   if(this.tab==='audio'){
@@ -1739,7 +1774,7 @@ class JewelApp {
   for(const [i,kind]of cells){const ac=this.getActor(i);if(!ac||ac.pop||ac.pos[1]>3.67)continue;
    const pos=cellXY(i),armed=kind==='keyboard'&&this.padState?.aAt&&!this.padState.swapped&&this.padState.b[0],pulse=.5+.5*Math.sin(this.time*5),col=color(kind==='hint'?'#70d8ce':kind==='selected'||kind==='keyboard'?armed?'#86e5ed':'#f8d885':'#b5d4d2'),strength=kind==='hint'?.38+.18*pulse:kind==='keyboard'?.75+.4*pulse:.8;
    hover.push(...packedInstance(trs([pos[0],pos[1],.085]),vmul(col,strength),0,3));}
-  r.upload(this.world.halos,new Float32Array(hover),hover.length/24);r.upload(this.world.crown,new Float32Array(packedInstance(trs([0,4.98+Math.sin(this.time)*.03,.05],[.06,Math.sin(this.time*.35)*.35,0],[.90,1.23,.9]),color('#429dff'),this.juice*.32+this.presentation.crownEnergy,7)),1);r.upload(this.world.orbit,new Float32Array(packedInstance(trs([0,4.97,.04],[.16, this.time*.22+this.presentation.crownSpin,.16*Math.sin(this.time*.35)]))),1);
+  r.upload(this.world.halos,new Float32Array(hover),hover.length/24);r.upload(this.world.crown,new Float32Array(packedInstance(trs([0,4.98+Math.sin(this.time)*.03,.05],[.06,Math.sin(this.time*.35)*.35,0],[.90,1.23,.9]),color('#ae8bdd'),this.juice*.32+this.presentation.crownEnergy,7)),1);r.upload(this.world.orbit,new Float32Array(packedInstance(trs([0,4.97,.04],[.16, this.time*.22+this.presentation.crownSpin,.16*Math.sin(this.time*.35)]))),1);
   const islandInstances=[];const idleWorld=this.prefs.motion&&!this.frozen;
   for(const is of this.world.islands){const t=this.time*is.speed+is.phase;const bob=idleWorld?Math.sin(t)*is.bob:0;const yaw=idleWorld?Math.sin(t*.67)*is.twist:0;const pitch=idleWorld?Math.cos(t*.83)*is.pitch:0;const roll=idleWorld?Math.sin(t*.51+1.2)*is.roll:0;islandInstances.push(...packedInstance(trs([is.base[0],is.base[1]+bob,is.base[2]],[pitch,yaw,roll],[is.scale,is.scale,is.scale]),is.tint,0,-1));}
   r.upload(this.world.islandMesh,new Float32Array(islandInstances),this.world.islands.length);
@@ -2528,7 +2563,7 @@ CabinetUI.prototype.drawStage=function(){const a=this.app,p=this.ink,fx=a.fx;if(
   p.line(x+10,y+h,x+w-10,y+h,1,UI_ART.brass,.3);
   this.text('STAGE '+info.n+(info.loop?'  ENCORE':'')+'  '+((fx.visualPhase||0)+1)+'/3',x+10,yy,11,col,'left',w-20,.12,true);this.text(info.name,x+10,yy+15,15,'#ffffff','left',w-20,.14,true);
   p.box(x+8,yy+37,w-16,9,'#071418',4,.95);p.box(x+10,yy+39,w-20,5,col,2,.22);if(f>0)p.box(x+10,yy+39,Math.max(5,(w-20)*f),5,col,2,1);for(const n of [1,2])p.box(x+10+(w-20)*n/3,yy+39,2,5,'#071418',0,1);}
- else if(!a.practice){this.stripAt=null;const bt=this.hits.find(h=>h.id==='coop-open');if(bt&&bt.y+bt.h+64<a.cssHeight){const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=clamp((a.displayScore-info.start)/(info.end-info.start),0,1);this.stripAt=[x,yy,w];this.plaque(x-4,yy-8,w+8,52);
+ else if(!a.practice){this.stripAt=null;const bt=this.hits.find(h=>h.id==='coop-open');if(bt&&bt.y+bt.h+64<a.cssHeight){const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=clamp((a.displayScore-info.start)/(info.end-info.start),0,1);this.stripAt=[x,yy,w];this.plaque(x-4,yy-8,w+8,52);
   this.text('STAGE '+info.n+'  '+info.name,x+4,yy,12,col,'left',w*.62,.12,true);p.box(x+w*.64,yy+4,w*.36-2,8,'#071418',4,.95);p.box(x+w*.64+2,yy+6,(w*.36-6),4,col,2,.22);if(f>0)p.box(x+w*.64+2,yy+6,Math.max(4,(w*.36-6)*f),4,col,2,1);for(const n of [1,2])p.box(x+w*.64+2+(w*.36-6)*n/3,yy+6,2,4,'#071418',0,1);}}
  const o=this.sc;if(!o)return;const age=a.time-o.birth,L=2.6;if(age<0)return;if(age>L){this.sc=null;return;}
  const {cx,cy,bw}=this.boardBox(),inn=clamp(age/.35,0,1),out=clamp((age-(L-.4))/.4,0,1),u=1+2.7*(inn-1)**3+1.7*(inn-1)**2,dx=(1-u)*-bw*.9+out*out*bw*1.1,oc=stageHex(o);
@@ -2801,7 +2836,7 @@ class GemsExpedition {
  enterPhoto(){const a=this.a;if(this.photo)return;this.photo={time:a.time,actors:new Map([...a.actors].map(([id,x])=>[id,expeditionClone(x)])),board:expeditionClone(netBoardSave(a)),stage:a.fx.stageInfo().name,score:a.board.score,yaw:0,pitch:0,zoom:1,wantCapture:false,exporting:false};a.openPanel('photo');}
  async capturePhoto(){
   if(this.saving||!this.photo)return;this.saving=true;const a=this.a,p=this.photo;p.wantCapture=false;
-  try{const width=a.canvas.width,height=a.canvas.height;const blob=await new Promise(resolve=>a.canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('PNG export failed');this.lastPhoto={size:blob.size,width,height};const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='gems-together-'+p.stage.toLowerCase().replace(/ /g,'-')+'-'+p.score+'.png';link.click();setTimeout(()=>URL.revokeObjectURL(url),5000);a.toast('Photo saved');}
+  try{const width=a.canvas.width,height=a.canvas.height;const blob=await new Promise(resolve=>a.canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('PNG export failed');this.lastPhoto={size:blob.size,width,height};const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='jewelbound-'+p.stage.toLowerCase().replace(/ /g,'-')+'-'+p.score+'.png';link.click();setTimeout(()=>URL.revokeObjectURL(url),5000);a.toast('Photo saved');}
   catch(e){a.toast('Photo could not be saved: '+e.message);}finally{p.exporting=false;this.saving=false;}
  }
 }
@@ -3090,7 +3125,7 @@ CabinetUI.prototype.drawPanel=function(){
  this.button('announcer-voice-silver',ANNOUNCER_PACK.profiles.silver.name,x,y,w,46,a.prefs.announcerProfile==='silver');y+=58;
  for(const [i,id,name]of [[0,'founder','Warm founder'],[1,'cave','Cave-inspired clean']])this.button('announcer-voice-'+id,name,x+i*(bw+gap),y,bw,50,a.prefs.announcerProfile.startsWith(id+'-'));y+=73;
  if(chosen.semitones<0){this.text('Pitch depth',x,y,16,UI_ART.highlight);y+=32;const dw=(w-gap*2)/3;for(const [i,depth,label]of [[0,2,'Lower'],[1,4,'Deep'],[2,6,'Extra deep']])this.button('announcer-depth-'+depth,label,x+i*(dw+gap),y,dw,42,chosen.semitones===-depth);y+=65;}else{this.text(chosen.pitchLabel||'Original pitch',x,y,13,UI_ART.dim);y+=35;}
- for(const [key,label]of [['welcome-back','Welcome back'],['dazzling','Big combo'],['team','Team Resonance']]){this.button('announcer-preview-'+key,'Hear: '+label,x,y,w,42);y+=53;}
+ for(const [key,label]of [['brilliant','Crystal voice'],['dazzling','Big combo'],['team','Team Resonance']]){this.button('announcer-preview-'+key,'Hear: '+label,x,y,w,42);y+=53;}
  this.text(n.source?'Speaking...':!a.prefs.announcer?'Announcer off.':a.prefs.muted?'Sound is off.':!a.prefs.announcerVolume?'Voice volume is zero.':'Occasional celebrations; the music keeps playing.',x,y,12,UI_ART.dim,'left',w);y+=37;
  this.maxScroll=Math.max(0,y+this.scroll-m.body.y-m.body.h+12);this.scroll=clamp(this.scroll,0,this.maxScroll);p.clip(null);if(this.maxScroll){const h=m.body.h,th=Math.max(26,h*h/(h+this.maxScroll));p.box(m.x+m.w-12,m.body.y,3,h,UI_ART.enamel,1);p.box(m.x+m.w-14,m.body.y+(h-th)*this.scroll/this.maxScroll,6,th,UI_ART.edge,2);}this.text(this.panelHint(),m.x+21,m.y+m.h-24,11,UI_ART.dim,'left',m.w-42);
 };
@@ -3105,6 +3140,114 @@ CabinetUI.prototype.activate=function(id){
  return announcerActivate.call(this,id);
 };
 
+/* Jewelcraft presentation only. Existing layout, hit targets, focus, scrolling,
+   gamepad navigation and accessibility text remain owned by CabinetUI. */
+Object.assign(UI_ART,{brass:'#746044',edge:'#cbb789',highlight:'#f5e8c9',ink:'#0e0e1a',enamel:'#1a1928',text:'#eee9df',dim:'#b9b4c8',aqua:'#c3b0ee',muted:'#aaa3b6'});
+
+// One local glyph atlas, built synchronously from installed system fonts. It is
+// sampled in the existing GPU UI pass, so photo exports include the full UI.
+// No external font request, dependency, DOM overlay, or per-frame canvas work.
+UIInk.prototype.prepareTypography=function(){
+ const canvas=document.createElement('canvas');canvas.width=1536;canvas.height=1344;
+ const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.textBaseline='alphabetic';
+ this.glyphCanvas=canvas;this.fonts={};
+ for(const [family,font] of [['body','500 64px "Segoe UI", Arial, sans-serif'],['display','400 64px Georgia, "Times New Roman", serif']]){
+  ctx.font=font;const cap=ctx.measureText('H').actualBoundingBoxAscent||46,glyphs={};
+  for(let code=32;code<128;code++){
+   const slot=code-32+(family==='display'?96:0),x=slot%16*96,y=Math.floor(slot/16)*112,ch=String.fromCharCode(code);
+   ctx.fillText(ch,x+12,y+80);
+   glyphs[ch]={advance:ctx.measureText(ch).width/cap,uv:[x/1536,y/1344,96/1536,112/1344]};
+  }
+  this.fonts[family]={cap,glyphs};
+ }
+};
+UIInk.prototype.glyph=function(ch,x,y,h,col,family){
+ const font=this.fonts[family],glyph=font.glyphs[ch]||font.glyphs['?'],s=h/font.cap,w=96*s,H=112*s;
+ if(this.count>=this.capacity)throw Error('UI glyph budget exceeded');
+ this.data.set([x-12*s+w/2,y+h-80*s+H/2,w/2,H/2,...this.rgba(col,1),2,0,1,0,...glyph.uv],this.count*16);this.count++;
+ return (glyph.advance+.035)*h;
+};
+CabinetUI.prototype.measure=function(t,h){
+ const font=this.ink.fonts[h>=20||this.clean(t)===GAME_BRAND.wordmark?'display':'body'];let w=0;
+ for(const ch of this.clean(t))w+=((font.glyphs[ch]||font.glyphs['?']).advance+.035)*h;
+ return Math.max(0,w-.035*h);
+};
+CabinetUI.prototype.text=function(t,x,y,h=15,col=UI_ART.text,align='left',max=Infinity,weight=.1,shadow=false){
+ t=this.clean(t);const family=h>=20||t===GAME_BRAND.wordmark?'display':'body';let width=this.measure(t,h);
+ if(width>max){h*=max/width;width=max;}
+ if(align==='center')x-=width/2;else if(align==='right')x-=width;
+ const render=(dx,dy,c)=>{let at=x+dx;for(const ch of t){
+  at+=this.ink.glyph(ch,at,y+dy,h,c,family);
+ }};
+ if(shadow)render(0,1,'#020207');render(0,0,col);return width;
+};
+CabinetUI.prototype.plaque=function(x,y,w,h,active=false){
+ const p=this.ink,cut=h>70?12:5;
+ p.box(x-3,y+5,w+6,h+3,'#020207',cut+2,.72);
+ p.box(x,y,w,h,active?'#ad966c':'#746044',cut,1,.16,.04);
+ p.box(x+1,y+1,w-2,h-2,active?'#171421':'#11111d',cut-1,1,.05,.02);
+ p.box(x+4,y+4,w-8,h-8,'#0e0e19',Math.max(2,cut-3),1,.05,.015);
+ p.line(x+14,y+1.5,x+w-14,y+1.5,1,'#e3cca0',.45);
+ if(h>70){
+  for(const sx of [-1,1])for(const sy of [-1,1]){
+   const cx=sx<0?x+10:x+w-10,cy=sy<0?y+10:y+h-10;
+   p.poly([cx,cy+sy*5,cx+sx*5,cy,cx,cy-sy*5,cx-sx*5,cy,cx,cy+sy*5],.75,UI_ART.brass,.65);
+  }
+  p.line(x+13,y+h-6,x+w-13,y+h-6,.8,'#584a3a',.45);
+ }
+};
+CabinetUI.prototype.button=function(id,label,x,y,w,h=42,on=false){
+ const p=this.ink,hot=this.hover===id||this.focus===id,pressed=this.pointer?.id===id,py=y+(pressed?1:0),primary=id==='play';
+ p.box(x,y+3,w,h,'#03030a',4,.85);
+ p.box(x,py,w,h,hot?'#e5cfa2':on||primary?'#a88d60':'#63543f',4,1,.13,.02);
+ p.box(x+1,py+1,w-2,h-2,pressed?'#292235':on?'#322a40':primary?'#3d3025':hot?'#252134':'#191824',3,1,.12,.04);
+ p.line(x+7,py+2,x+w-7,py+2,.75,hot?'#e9d9b3':'#8c7962',.55);
+ if(on){p.line(x+12,py+h-4,x+w-12,py+h-4,1,UI_ART.aqua,.85);}
+ this.text(label,x+w/2,py+(h-15)/2,15,hot?UI_ART.highlight:UI_ART.text,'center',w-17,.09,true);
+ if(this.focus===id){p.box(x+4,py+5,2,h-10,UI_ART.highlight,0);p.box(x+w-6,py+5,2,h-10,UI_ART.highlight,0);}
+ this.hit(id,x,y,w,h,'button',null,label);
+};
+CabinetUI.prototype.lineDivider=function(x,y,w){
+ this.ink.line(x,y,x+w,y,.8,'#8a7356',.42);
+};
+// Fade the new modal surface without moving controls or delaying interaction.
+const jewelcraftOpenPanel=JewelApp.prototype.openPanel;
+JewelApp.prototype.openPanel=function(...args){this.jewelcraftPanelAt=this.time;return jewelcraftOpenPanel.apply(this,args);};
+const jewelcraftPanel=CabinetUI.prototype.drawPanel;
+CabinetUI.prototype.drawPanel=function(){
+ const p=this.ink,old=p.opacity,a=this.app;
+ const reduce=!a.prefs.motion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+ p.opacity=reduce?1:.72+.28*smooth(clamp((a.time-(a.jewelcraftPanelAt??a.time))/.18));
+ try{return jewelcraftPanel.call(this);}finally{p.opacity=old;}
+};
+// Retain every approved recording byte. Branded welcome recordings belong to
+// Gems Together; Jewelbound simply omits those two lines rather than revoicing.
+const jewelcraftSpeech=GemsAnnouncer.prototype.request;
+GemsAnnouncer.prototype.request=function(key,...args){
+ if(key==='welcome'||key==='welcome-back')return false;
+ return jewelcraftSpeech.call(this,key,...args);
+};
+
+// Each existing journey stage has its own cut-crystal sculpture. Selection,
+// unlocks, stage timing, instance placement and reduced-motion behavior stay in
+// GemsExpedition; only the six source meshes are replaced.
+GemsExpedition.prototype.buildProps=function(){
+ const meshes=[];
+ for(let form=0;form<6;form++){
+  const g=new Geo(),c=color(['#bfa078','#57a6bf','#c67446','#9a75cd','#a5bde8','#ca7ea9'][form]),gold=color('#a99065');
+  const crystal=(type,p,s,rot=0)=>g.append(tintGeo(gemGeometry(type,7),c),trs(p,[.08,.18,rot],s));
+  const seal=(r,z)=>g.tube([[0,r,z],[r*.65,0,z],[0,-r,z],[-r*.65,0,z],[0,r,z]],.012,gold,1,5);
+  if(form===0){crystal(5,[0,0,0],[.55,1.15,.5]);seal(.88,.04);}
+  if(form===1){for(let k=0;k<3;k++)crystal(3,[(k-1)*.36,-Math.abs(k-1)*.28,0],[.36,.95,.36],(k-1)*-.12);seal(1.1,-.08);}
+  if(form===2){for(let k=0;k<5;k++){const t=(k-2)*.34;crystal(4,[Math.sin(t)*.55,Math.cos(t)*.2,0],[.36,.85,.35],-t);}g.tube([[-.75,-.4,.05],[0,-.65,.05],[.75,-.4,.05]],.02,gold,1,5);}
+  if(form===3){seal(1.2,-.12);crystal(3,[0,0,0],[.55,1.35,.5]);for(let s of [-1,1])crystal(5,[s*.6,0,0],[.22,.4,.22]);}
+  if(form===4){for(let k=0;k<4;k++){const t=k*PI/2;crystal(5,[Math.sin(t)*.35,Math.cos(t)*.35,0],[.25,.7,.25],-t);}seal(1.0,-.08);}
+  if(form===5){crystal(5,[0,0,0],[.75,1.1,.6]);seal(1.15,-.08);for(let s of [-1,1])g.tube([[s*.48,-.8,0],[s*.9,0,0],[s*.48,.8,0]],.014,gold,1,5);}
+  meshes.push(this.a.renderer.createMesh(g.data(),8));
+ }
+ return {meshes,active:0};
+};
+
 (async function boot(){let stage='GPU renderer';let app=null;try{
  const force=new URLSearchParams(location.search).has('webgl');$('load-status').textContent='Preparing GPU shaders...';
  const renderer=await makeRenderer($('scene'),force);
@@ -3116,7 +3259,7 @@ CabinetUI.prototype.activate=function(id){
  if(renderer.device)await renderer.device.queue.onSubmittedWorkDone();
  if(renderer.gl&&renderer.readError())throw Error('OpenGL reported an error in the first frame.');
  if(renderer.gpuErrors?.length)throw Error(renderer.gpuErrors.join(' / '));
- window.gemsTogether=app;window.__jewel.ready=true;app.start();app.coop.autoJoin();
+ window.jewelbound=app;window.__jewel.ready=true;app.start();app.coop.autoJoin();
  $('loading').classList.add('gone');setTimeout(()=>{if($('loading').classList.contains('gone'))$('loading').style.display='none';},700);
 }catch(e){console.error(e);if(window.__jewel)window.__jewel.ready=false;if(app){app.errors.push(e.stack||e.message);cancelAnimationFrame(app.raf);}
  $('load-status').textContent='Could not initialise '+stage+'.';$('failure-detail').textContent=e.message;$('load-bar').style.display='none';$('fatal-buttons').style.display='block';}})();

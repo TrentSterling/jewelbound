@@ -37,7 +37,7 @@ try{
  for(const p of [A,B])await p.eval(`${J}.app.coop.testPublicRoom=${JSON.stringify(room)};${J}.app.coop.testPublicLimit=1`);
  await A.eval(`${J}.app.coop.joinPublic()`);await until(()=>A.eval(`${J}.app.coop.hosting`),{timeout:30000,label:'isolated public host'});
  await B.eval(`${J}.app.coop.joinPublic()`);await until(()=>B.eval(`${J}.app.coop.synced&&${J}.app.coop.spectator`),{timeout:60000,every:300,label:'spectator admission'});await synced();
- ok('public harness uses random isolated room',await A.eval(`${J}.app.coop.testPublicRoom===${JSON.stringify(room)}`)&&room!=='gemstogether-public-v1');
+ ok('public harness uses random isolated room',await A.eval(`${J}.app.coop.testPublicRoom===${JSON.stringify(room)}`)&&room!=='jewelbound-public-v1');
  ok('real public roster admits one spectator',await A.eval(`${J}.net().players===1&&${J}.net().spectators===1`)&&await B.eval(`${J}.app.coop.spectator`));
  const gems=await B.eval(`${J}.expedition().profile.gems`),fireworks=await B.eval(`${J}.app.fx.stats.fireworks`);
  await A.eval(`${J}.challenge('zen',{seed:43})`);await idle(A);await synced();await move(A,[11,19]);

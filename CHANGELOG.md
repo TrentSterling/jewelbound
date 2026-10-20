@@ -1,3 +1,13 @@
+## 3.3.8 (2026-10-20): Jewelbound jewelcraft
+
+- Rebuild the surroundings as an obsidian vault with cut-crystal sculptures, fine antique-gold bezels, violet inlays and softer material lighting.
+- Restyle the HUD, menus, buttons, loading and About surfaces with ivory serif headings and readable body type. Text remains in the GPU render and photo exports on both backends.
+- Add gentle modal fades respecting reduced motion, faceted payoff rings and warm/lavender rays. Preserve effect strength, timing and comfort controls.
+- Give the compact phone stage and Resonance strip the available screen width.
+- Keep game rules, modes, inputs, co-op, saves and approved audio bytes intact. Skip the two old branded welcomes and update photo filenames.
+- Preserve the original Gems Together repository and deployment. All presentation changes build through the final Jewelbound-only pass in `tools/jewelcraft.py`.
+- Validation: gameplay 22/22; desktop/mobile UI 112/112; progression/private co-op 48/48; network/host migration 15/15; point sharing 10/10; highlight alignment 21/21; stage transitions 16/16; branded-audio boundary 16/16; About contracts 3/3 plus four browser modes. Rules, network code, saves and frozen recordings are unchanged from the fork checkpoint. Physical-device testing remains manual.
+
 ## 2026-10-14: About discovery
 
 - Consolidate the existing About copy and links with the approved game discovery component.
