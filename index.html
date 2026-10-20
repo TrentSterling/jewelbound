@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.8'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.9'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -1365,10 +1365,10 @@ class CabinetUI {
   // Use an unshaken camera for controls. The board's camera impulse never moves a hit target.
   const tan=Math.tan(21*PI/180),aspect=w/h,framing=cabinetFraming(w,h),z=framing.distance;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62,z],[0,0,0],[0,1,0]));const screen=pos=>project(pos,stable,w,h);
   const [left,top]=screen([-3.98,4.02,.15]),[right,bottom]=screen([3.98,-4.1,.15]);this.boardRect={x:left,y:top,w:right-left,h:bottom-top};const wide=framing.wide;this.wide=wide;
-  if(wide){const nw=Math.min(350,(right-left)*.77),nh=h<460?34:43,ny=Math.max(5,top-nh-5);this.plaque(w/2-nw/2,ny,nw,nh);this.text(GAME_BRAND.wordmark,w/2,ny+9,h<460?18:23,UI_ART.highlight,'center',nw-34,.12,true);
+  if(wide){const nw=Math.min(350,(right-left)*.77),nh=h<460?34:43,ny=Math.max(5,top-nh-5);this.titlePlaque(w/2-nw/2,ny,nw,nh,h<460?18:23);
    const sw=Math.min(208,left-54),sx=left-sw-25,sy=h<460?Math.max(8,Math.min(top+(bottom-top)*.28,h-363)):top+(bottom-top)*.28;this.plaque(sx,sy,sw,a.practice?159:257);p.line(sx+sw,sy+72,left-3,sy+72,3,UI_ART.brass);this.text(a.coop?.connected?'Team score':a.auto?'Showcase':a.practice?'Lab score':'Score',sx+17,sy+18,14,UI_ART.dim);this.scoreAt=[sx+17+Math.min(70,sw*.3),sy+64];this.plaqueAt=[sx,sy,sw,159];const sk=1+.16*Math.exp(-(a.time-(this.scoreHit??-9))*11);this.text(Math.round(a.displayScore).toLocaleString('en-US'),sx+17,sy+46-35*(sk-1)*.5,35*sk,UI_ART.highlight,'left',sw-34,.12,true);this.lineDivider(sx+16,sy+96,sw-32);this.text('Best',sx+17,sy+110,12,UI_ART.dim);this.text(a.best.toLocaleString('en-US'),sx+sw-17,sy+108,17,UI_ART.text,'right',sw-80);this.text(a.board.moves+' moves',sx+17,sy+137,11,UI_ART.muted);
   }else{
-   const nw=Math.min(w-28,350),titleY=Math.max(10,top-93);this.plaque(w/2-nw/2,titleY,nw,40);this.text(GAME_BRAND.wordmark,w/2,titleY+11,21,UI_ART.highlight,'center',nw-30,.12,true);
+   const nw=Math.min(w-28,350),titleY=Math.max(10,top-93);this.titlePlaque(w/2-nw/2,titleY,nw,40,21);
    const sw=Math.min(w-28,Math.max(310,right-left)),sy=Math.max(titleY+47,top-42);this.plaque(w/2-sw/2,sy,sw,34);this.text(a.coop?.connected?'Team':a.auto?'Demo':'Score',w/2-sw/2+14,sy+10,12,UI_ART.dim);this.scoreAt=[w/2-40,sy+17];this.plaqueAt=null;const sk=1+.16*Math.exp(-(a.time-(this.scoreHit??-9))*11);this.text(Math.round(a.displayScore).toLocaleString('en-US'),w/2-18,sy+8-18*(sk-1)*.5,18*sk,UI_ART.highlight,'right',sw*.32,.12);this.text('Best',w/2+9,sy+11,11,UI_ART.muted);this.text(a.best.toLocaleString('en-US'),w/2+sw/2-14,sy+10,14,UI_ART.text,'right',sw*.28);
   }
   const gap=7,railW=Math.min(w-24,528),bw=(railW-gap*3)/4,rx=(w-railW)/2,ry=Math.min(h-57,bottom+28);if(a.aaCompare){const cw=(railW-gap*2)/3;this.button('aa-on','AA on',rx,ry,cw,42,!a.aaCompareBypass);this.button('aa-off','AA off',rx+cw+gap,ry,cw,42,a.aaCompareBypass);this.button('aa-done','Done',rx+2*(cw+gap),ry,cw,42);this.text('Frozen frame / '+(a.aaCompareBypass?'AA off':({off:'Off',fxaa:'FXAA',msaa:'4x MSAA',hybrid:'MSAA + FXAA'})[a.effectiveAA]),w/2,Math.min(h-17,ry+55),11,UI_ART.aqua,'center',w-24);}else{this.coopRail(bottom);this.coopBadge();}
@@ -2553,7 +2553,7 @@ CabinetUI.prototype.drawBurst=function(){const a=this.app,p=this.ink,b=this.burs
 CabinetUI.prototype.drawCallout=function(){const a=this.app,o=this.co;if(!o||a.panelOpen)return;const age=a.time-o.birth,L=1.2;if(age<0)return;if(age>L){this.co=null;return;}
  const {cx,cy,bw}=this.boardBox(),c=o.c,s=1+1.5*Math.exp(-age*15),al=Math.min(1,age*18)*clamp((L-age)/.32,0,1),size=bw*(.19+.045*Math.min(c-3,6));
  const shake=c>=5?Math.sin(age*95)*6*Math.exp(-age*7):0,col=c>=9?gemHex(((a.time*10)|0)%6):TIER_COLS[Math.min(c,9)],p=this.ink;
- p.opacity=al;const lift=this.sc&&a.time-this.sc.birth<2.6?bw*.2:0,y=cy-size*.72*s-lift,rise=-(age>.8?(age-.8)*40:0)-lift;
+ p.opacity=al;const lift=0,y=cy-size*.72*s-lift,rise=-(age>.8?(age-.8)*40:0)-lift;
  this.text('x'+c,cx+shake,y+rise+lift,size*s,col,'center',Infinity,.2,true);
  this.text(o.name,cx-shake*.5,cy+size*.36*s+rise,size*.3*Math.max(1,s*.9),'#ffffff','center',bw*1.25,.16,true);p.opacity=1;};
 const stageHex=info=>'#'+info.tint.map(v=>Math.round(clamp(v/170,.35,1)*255).toString(16).padStart(2,'0')).join('');
@@ -2566,9 +2566,8 @@ CabinetUI.prototype.drawStage=function(){const a=this.app,p=this.ink,fx=a.fx;if(
  else if(!a.practice){this.stripAt=null;const bt=this.hits.find(h=>h.id==='coop-open');if(bt&&bt.y+bt.h+64<a.cssHeight){const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=clamp((a.displayScore-info.start)/(info.end-info.start),0,1);this.stripAt=[x,yy,w];this.plaque(x-4,yy-8,w+8,52);
   this.text('STAGE '+info.n+'  '+info.name,x+4,yy,12,col,'left',w*.62,.12,true);p.box(x+w*.64,yy+4,w*.36-2,8,'#071418',4,.95);p.box(x+w*.64+2,yy+6,(w*.36-6),4,col,2,.22);if(f>0)p.box(x+w*.64+2,yy+6,Math.max(4,(w*.36-6)*f),4,col,2,1);for(const n of [1,2])p.box(x+w*.64+2+(w*.36-6)*n/3,yy+6,2,4,'#071418',0,1);}}
  const o=this.sc;if(!o)return;const age=a.time-o.birth,L=2.6;if(age<0)return;if(age>L){this.sc=null;return;}
- const {cx,cy,bw}=this.boardBox(),inn=clamp(age/.35,0,1),out=clamp((age-(L-.4))/.4,0,1),u=1+2.7*(inn-1)**3+1.7*(inn-1)**2,dx=(1-u)*-bw*.9+out*out*bw*1.1,oc=stageHex(o);
- p.opacity=clamp(inn*3,0,1)*(1-out);const Y=cy+bw*.04;p.box(cx-bw*.62+dx,Y,bw*1.24,bw*.34,'#071418',10,.85);p.box(cx-bw*.62+dx,Y,bw*1.24,5,oc,2,1);p.box(cx-bw*.62+dx,Y+bw*.34-5,bw*1.24,5,oc,2,1);
- this.text('STAGE '+o.n+(o.loop?'  ENCORE':''),cx+dx,Y+bw*.035,bw*.07,oc,'center',bw*1.2,.14,true);this.text(o.name,cx+dx*1.15,Y+bw*.13,bw*.14,'#ffffff','center',bw*1.2,.18,true);p.opacity=1;};
+ // Arrival text is rendered by titlePlaque above the board.
+};
 JewelApp.prototype.pollPad=function(){
  const pads=navigator.getGamepads?navigator.getGamepads():[];let g=null;for(const p of pads||[])if(p&&p.connected&&(!g||p.mapping==='standard'&&g.mapping!=='standard'))g=p;
  const now=performance.now(),P=this.padState||(this.padState={b:[],dir:null,next:0,id:null,aAt:0,swapped:false});if(!g){P.id=null;return;}
@@ -3246,6 +3245,39 @@ GemsExpedition.prototype.buildProps=function(){
   meshes.push(this.a.renderer.createMesh(g.data(),8));
  }
  return {meshes,active:0};
+};
+
+/* B001: announce a new stage in the cabinet's existing title plate. The jewel
+   aperture stays visible throughout travel; no new hit target or input path. */
+CabinetUI.prototype.titlePlaque=function(x,y,w,h,brandSize){
+ const a=this.app,p=this.ink,o=this.sc,age=o?a.time-o.birth:-1,L=2.6;
+ const arrival=o&&age>=0&&age<=L&&!a.expedition?.photo;
+ this.titleRect={x,y,w,h};this.stageArrivalRect=arrival?{x,y,w,h}:null;
+ this.plaque(x,y,w,h,!!arrival);
+ if(!arrival){
+  this.text(GAME_BRAND.wordmark,x+w/2,y+(h===40?11:9),brandSize,UI_ART.highlight,'center',w-(h===40?30:34),.12,true);
+  return;
+ }
+ const old=p.opacity,fade=Math.min(1,age/.18)*Math.min(1,(L-age)/.3);
+ // No sliding or scaling: the announcement occupies the same frame at every
+ // age and remains calm with either reduced-motion preference enabled.
+ p.opacity=old*fade;
+ try{
+  const cx=x+w/2,cy=y+h/2,col=stageHex(o),label='STAGE '+o.n+(o.loop?' / ENCORE':'');
+  for(const sx of [-1,1]){
+   const px=cx+sx*(w/2-18);
+   p.poly([px,cy-7,px+5,cy,px,cy+7,px-5,cy,px,cy-7],1,UI_ART.edge,.9);
+   p.line(px,cy-3,px,cy+3,2,col,1);
+  }
+  if(h<40){
+   const compactLabel=(o.loop?'ENCORE ':'STAGE ')+o.n;
+   this.text(compactLabel,cx,y+3,9,col,'center',w-64,.1);
+   this.text(o.name,cx,y+15,14,UI_ART.highlight,'center',w-64,.12,true);
+  }else{
+   this.text(label,cx,y+6,9,col,'center',w-64,.1);
+   this.text(o.name,cx,y+17,20,UI_ART.highlight,'center',w-64,.12,true);
+  }
+ }finally{p.opacity=old;}
 };
 
 (async function boot(){let stage='GPU renderer';let app=null;try{

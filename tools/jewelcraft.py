@@ -51,8 +51,21 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.8'")
-    rep('(async function boot(){', (ROOT/'tools/jewelcraft-ui.js').read_text(encoding='utf-8')+'\n(async function boot(){')
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.9'")
+    # B001: stage arrivals use the existing title plaque. Keep the ordinary stage
+    # HUD, event lifetime, scenery, sound and effects; remove only the board cover.
+    rep("this.plaque(w/2-nw/2,ny,nw,nh);this.text(GAME_BRAND.wordmark,w/2,ny+9,h<460?18:23,UI_ART.highlight,'center',nw-34,.12,true);",
+        "this.titlePlaque(w/2-nw/2,ny,nw,nh,h<460?18:23);")
+    rep("this.plaque(w/2-nw/2,titleY,nw,40);this.text(GAME_BRAND.wordmark,w/2,titleY+11,21,UI_ART.highlight,'center',nw-30,.12,true);",
+        "this.titlePlaque(w/2-nw/2,titleY,nw,40,21);")
+    banner_start=' const {cx,cy,bw}=this.boardBox(),inn=clamp(age/.35,0,1),out=clamp((age-(L-.4))/.4,0,1)'
+    assert html.count(banner_start)==1
+    a=html.index(banner_start)
+    b=html.index('p.opacity=1;};',a)+len('p.opacity=1;};')
+    html=html[:a]+' // Arrival text is rendered by titlePlaque above the board.\n};'+html[b:]
+    rep('const lift=this.sc&&a.time-this.sc.birth<2.6?bw*.2:0,', 'const lift=0,')
+    presentation=(ROOT/'tools/jewelcraft-ui.js').read_text(encoding='utf-8')+'\n'+(ROOT/'tools/jewelcraft-stage.js').read_text(encoding='utf-8')
+    rep('(async function boot(){', presentation+'\n(async function boot(){')
     # Add a sampled glyph branch to each native UI backend. Existing analytic
     # shapes and their clipping/batching are untouched.
     rep('out vec4 frag;\nvoid main(){vec2 p=abs(vLocal)', 'out vec4 frag;uniform sampler2D uGlyphAtlas;\nvoid main(){vec2 p=abs(vLocal)')

@@ -1,3 +1,9 @@
+## 3.3.9 / B001 (2026-10-20): stage arrivals keep the board visible
+
+- Move stage-arrival names into the existing antique-gold title plaque. The brand returns after the same 2.6 seconds; short landscape uses a compact two-line treatment that keeps long encore names readable.
+- Remove the large stage banner covering the board and its combo-label avoidance offset. Stage lighting, particles, music, voice, rules, saves and co-op stay unchanged.
+- Round history and validation: [B001](rounds/2026-10-20-B001.md).
+
 ## 3.3.8 (2026-10-20): Jewelbound jewelcraft
 
 - Rebuild the surroundings as an obsidian vault with cut-crystal sculptures, fine antique-gold bezels, violet inlays and softer material lighting.
