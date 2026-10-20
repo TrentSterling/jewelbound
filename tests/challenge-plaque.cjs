@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'tools/jewelcraft-challenge.js'),'utf8');
 function setup(mode='timed',elapsed=70,moves=3){
- const labels=[],paints=[],fallback=[],ctx=vm.createContext({CabinetUI:class {},GAME_BRAND:{wordmark:'JEWELBOUND'},UI_ART:{highlight:'#fff',dim:'#aaa',brass:'#888'},clamp:(n,a,b)=>Math.max(a,Math.min(b,n))});
+ const labels=[],paints=[],fallback=[],ctx=vm.createContext({CabinetUI:class {},GAME_BRAND:{wordmark:'JEWELBOUND'},EXPEDITION_PUZZLES:[{goal:'targets'},{goal:'blast'},{goal:'prism'},{goal:'chain'}],UI_ART:{highlight:'#fff',dim:'#aaa',brass:'#888'},clamp:(n,a,b)=>Math.max(a,Math.min(b,n))});
  ctx.CabinetUI.prototype.titlePlaque=function(...args){fallback.push(args);};vm.runInContext(source,ctx);
  const ui=new ctx.CabinetUI();Object.assign(ui,{app:{time:8,board:{moves},expedition:{run:{mode,elapsed,limit:mode==='timed'?120:30}}},ink:{line:(...a)=>paints.push(a),box:(x,y,w,h)=>paints.push([x,y,x+w,y+h])},plaque:()=>{},text:(...a)=>labels.push(a),hits:[]});
  return {ui,labels,paints,fallback};
@@ -27,6 +27,16 @@ test('compact and full counters stay within the existing title and add no target
 });
 test('real one-, two- and three-move puzzle budgets remain legible counters',()=>{
  for(const limit of [1,2,3]){const {ui,labels}=setup('puzzle',0,0);ui.app.expedition.run.limit=limit;ui.titlePlaque(10,20,166,34,18);assert.ok(labels.some(x=>x[0]===String(limit)&&x[3]===20));}
+});
+test('all puzzle win conditions remain visible after the toast, without changing state or targets',()=>{
+ const goals=[['CLEAR MARKED GEMS','CLEAR','MARKED'],['FORGE A BLAST GEM','FORGE','BLAST'],['FORGE A PRISM','FORGE','PRISM'],['REACH A 5-WAVE CHAIN','5-WAVE','CHAIN']];
+ for(let puzzle=0;puzzle<4;puzzle++)for(const [w,h] of [[350,40],[350,43],[213.8,34],[166,34]]){
+  const {ui,labels}=setup('puzzle',0,0);ui.app.time=200;ui.toastUntil=0;ui.app.expedition.run.puzzle=puzzle;const before=JSON.stringify(ui.app);
+  ui.titlePlaque(10,20,w,h,23);const words=labels.map(l=>l[0]);
+  for(const word of w<250?goals[puzzle].slice(1):goals[puzzle].slice(0,1))assert.ok(words.includes(word));
+  for(const [,x,y,size] of labels)assert.ok(y>=20&&y+size<=20+h);
+  assert.equal(JSON.stringify(ui.app),before);assert.equal(ui.hits.length,0);
+ }
 });
 test('short-screen secondary status clears the board and bottom controls',()=>{
  const {ui}=setup();Object.assign(ui.app,{cssWidth:844,cssHeight:320});ui.plaqueAt=[73,8,208,159];ui.boardRect={x:305,y:45,w:230,h:230};ui.hits=[{id:'hint',x:12,y:263,w:111,h:42}];

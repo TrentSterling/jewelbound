@@ -22,7 +22,9 @@ Stage arrivals appear in the cabinet's title plaque, keeping the gems visible wh
 
 Timed and move-limited challenges also show a large remaining-time or moves counter in the cabinet title, with the detailed status still visible below.
 
-Built by Tront for Jennifer. Current version: 3.3.10.
+Puzzle goals stay visible beside the moves counter, so the next task is clear even after the opening notice fades.
+
+Built by Tront for Jennifer. Current version: 3.3.11.
 
 ## Tech
 

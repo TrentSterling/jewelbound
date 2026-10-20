@@ -51,7 +51,7 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.10'")
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.11'")
     # B001: stage arrivals use the existing title plaque. Keep the ordinary stage
     # HUD, event lifetime, scenery, sound and effects; remove only the board cover.
     rep("this.plaque(w/2-nw/2,ny,nw,nh);this.text(GAME_BRAND.wordmark,w/2,ny+9,h<460?18:23,UI_ART.highlight,'center',nw-34,.12,true);",

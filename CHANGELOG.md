@@ -1,3 +1,9 @@
+## 3.3.11 / B003 (2026-10-20): puzzle goals stay visible
+
+- Keep each puzzle's win condition in the existing gold title plaque after its introductory toast expires: marked gems, blast gem, prism or a five-wave chain. The move budget stays beside it.
+- Use two short lines in narrow landscape plaques. Preserve stage-title priority, finished-run titles, controls, game rules, saves, co-op and audio.
+- Round history and validation: [B003](rounds/2026-10-20-B003.md).
+
 ## 3.3.10 / B002 (2026-10-20): readable challenge counters
 
 - Give timed, move-limited, daily and puzzle runs a large counter in the existing gold title plaque. Time uses minutes and seconds; move budgets remain numeric. A quiet progress line and steady amber near the limit add context without flashing.
