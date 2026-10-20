@@ -20,7 +20,9 @@ Each world has its own musical key and chord progression. Gem tones and celebrat
 
 Stage arrivals appear in the cabinet's title plaque, keeping the gems visible while the scenery and music change.
 
-Built by Tront for Jennifer. Current version: 3.3.9.
+Timed and move-limited challenges also show a large remaining-time or moves counter in the cabinet title, with the detailed status still visible below.
+
+Built by Tront for Jennifer. Current version: 3.3.10.
 
 ## Tech
 

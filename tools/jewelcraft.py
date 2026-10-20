@@ -51,7 +51,7 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.9'")
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.10'")
     # B001: stage arrivals use the existing title plaque. Keep the ordinary stage
     # HUD, event lifetime, scenery, sound and effects; remove only the board cover.
     rep("this.plaque(w/2-nw/2,ny,nw,nh);this.text(GAME_BRAND.wordmark,w/2,ny+9,h<460?18:23,UI_ART.highlight,'center',nw-34,.12,true);",
@@ -64,7 +64,11 @@ def apply(html):
     b=html.index('p.opacity=1;};',a)+len('p.opacity=1;};')
     html=html[:a]+' // Arrival text is rendered by titlePlaque above the board.\n};'+html[b:]
     rep('const lift=this.sc&&a.time-this.sc.birth<2.6?bw*.2:0,', 'const lift=0,')
-    presentation=(ROOT/'tools/jewelcraft-ui.js').read_text(encoding='utf-8')+'\n'+(ROOT/'tools/jewelcraft-stage.js').read_text(encoding='utf-8')
+    # B002: retain challenge details, relocating only when short-screen controls
+    # occupy their old position below the score plaque.
+    rep('if(this.plaqueAt){const [x,y,w,h]=this.plaqueAt,compact=a.cssHeight<460,yy=y+h+(compact?100:116);this.text(label,',
+        'if(this.plaqueAt){const {x,y:yy,w,relocated}=this.challengeStatusLayout(),compact=a.cssHeight<460;if(relocated)this.plaque(x-8,yy-8,w+16,54);this.text(label,')
+    presentation='\n'.join((ROOT/('tools/'+name)).read_text(encoding='utf-8') for name in ['jewelcraft-ui.js','jewelcraft-stage.js','jewelcraft-challenge.js'])
     rep('(async function boot(){', presentation+'\n(async function boot(){')
     # Add a sampled glyph branch to each native UI backend. Existing analytic
     # shapes and their clipping/batching are untouched.

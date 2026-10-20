@@ -1,3 +1,9 @@
+## 3.3.10 / B002 (2026-10-20): readable challenge counters
+
+- Give timed, move-limited, daily and puzzle runs a large counter in the existing gold title plaque. Time uses minutes and seconds; move budgets remain numeric. A quiet progress line and steady amber near the limit add context without flashing.
+- Preserve secondary status and ghost details; on very short landscape screens, move those lines above the controls so they remain readable. Stage announcements, rules, controls, saves and co-op stay unchanged.
+- Round history and validation: [B002](rounds/2026-10-20-B002.md).
+
 ## 3.3.9 / B001 (2026-10-20): stage arrivals keep the board visible
 
 - Move stage-arrival names into the existing antique-gold title plaque. The brand returns after the same 2.6 seconds; short landscape uses a compact two-line treatment that keeps long encore names readable.
