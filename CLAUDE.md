@@ -1,3 +1,20 @@
+# Jewelbound fork instructions
+
+This repository is `TrentSterling/jewelbound`, an independent copy of Gems Together
+at `a611b47464c360a323ed4d41b7146321c3fdf009`. Publish only this repository's `main`
+root with GitHub Pages, at https://tront.xyz/jewelbound/. Never push fork changes
+to the original Gems Together repository or modify its deployment.
+
+The source notes below are historical where they specify the old name or URL.
+Jewelbound uses `jewelbound-*` save keys and co-op appId so the experiments stay
+separate. `tools/polish.py` applies these naming changes after the source build.
+Keep the original versioned drop, gameplay, artwork and complete announcer pack
+unchanged. The recorded welcome intentionally still says Gems Together.
+Do not import ignored local references or private development assets. Browser
+verification targets https://tront.xyz/jewelbound/ with `#solo=1` or private rooms.
+
+---
+
 # CLAUDE.md, Gems Together
 
 Co-op match-three (one HTML file, own GPU renderer: WebGPU with WebGL2 fallback, Trystero/WebRTC co-op). Live at https://tront.xyz/gemstogether/ (public repo `TrentSterling/gemstogether`, Pages from `main` root, https enforced). ChatGPT writes the drops; this repo hosts them. Built by Tront for Jennifer.

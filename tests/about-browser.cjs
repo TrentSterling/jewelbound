@@ -11,7 +11,7 @@ fs.mkdirSync(output,{recursive:true});
 const types = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webp':'image/webp','.png':'image/png','.wasm':'application/wasm'};
 async function waitForGame(page) {
   const ready = {
-    gemstogether:()=>window.__jewel?.ready,
+    jewelbound:()=>window.__jewel?.ready,
     deadends:()=>window.DEAD_ENDS && !document.getElementById('playBtn').disabled,
     tinytreads:()=>!!window.POCKET,
     breakmass:()=>window.BREAKMASS && getComputedStyle(document.getElementById('loading')).display==='none',
@@ -26,7 +26,7 @@ async function waitForGame(page) {
 }
 async function resumedPlay(page) {
   await waitForGame(page);
-  if(repository==='gemstogether') {
+  if(repository==='jewelbound') {
     const move=await page.evaluate(()=>__jewel.state().legalMoves[0]);
     const points=await page.evaluate(m=>m.map(i=>__jewel.project(i)),move);
     const before=await page.evaluate(()=>__jewel.state().moves);
@@ -109,11 +109,11 @@ const server = http.createServer((req,res)=>{
         }
       });
       if(mode==='save-data')await context.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true},configurable:true}));
-      if(repository==='gemstogether'&&process.env.CI)await context.addInitScript(()=>{
+      if(repository==='jewelbound'&&process.env.CI)await context.addInitScript(()=>{
         // Exercise the shipped render-scale/AA preferences on the software GPU.
         // Default-quality WebGPU and the 22-check game gate run on local hardware.
         // All real input, layout, media, fullscreen and audio assertions remain.
-        localStorage.setItem('gemstogether-settings-v1',JSON.stringify({quality:0.5,aaMode:'off',particles:false}));
+        localStorage.setItem('jewelbound-settings-v1',JSON.stringify({quality:0.5,aaMode:'off',particles:false}));
       });
       if(repository==='vibespace'&&mode==='desktop')await context.addInitScript(()=>{
         const lock=Element.prototype.requestPointerLock;
@@ -127,7 +127,7 @@ const server = http.createServer((req,res)=>{
       page.on('request',r=>{if(/\.mp4(?:\?|$)/.test(r.url()))mp4.push(r.url());});
       page.on('pageerror',e=>errors.push(e.message));
       const gameUrl=new URL(base);
-      if(repository==='gemstogether'){
+      if(repository==='jewelbound'){
         gameUrl.hash='solo=1';
         // The normal WebGPU path is covered by the local 22-check release gate.
         // Hosted CI has software graphics; exercise the shipped WebGL fallback.

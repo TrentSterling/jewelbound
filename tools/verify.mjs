@@ -1,6 +1,6 @@
 // Release gate: real GPU Chrome, solo boot (#solo=1 so the harness never joins the public room),
 // real pointer drag swap, About pill clear of the GPU buttons, phone viewport, Settings panel.
-//   node tools/verify.mjs [file-or-url] [expected-version]  (also run against https://tront.xyz/gemstogether/)
+//   node tools/verify.mjs [file-or-url] [expected-version]  (also run against https://tront.xyz/jewelbound/)
 import {launch, sleep, until} from './cdp.mjs';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -39,7 +39,7 @@ try {
   ok('legal moves exist', s.legalMoves.length > 0, String(s.legalMoves.length));
   ok('solo: not in public room', !JSON.stringify(await page.eval(`${J}.net()`)).includes('"connected":true'));
   const html = await page.eval('document.documentElement.outerHTML');
-  ok('canonical + og meta', html.includes('rel="canonical" href="https://tront.xyz/gemstogether/"') && html.includes('og-image.png?v='));
+  ok('canonical + og meta', html.includes('rel="canonical" href="https://tront.xyz/jewelbound/"') && html.includes('og-image.png?v='));
   ok('About block injected', html.includes('tront-about:start') && html.includes('application/ld+json'));
   ok('no em dash in toasts', !html.includes("No moves —"));
 

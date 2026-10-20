@@ -591,4 +591,10 @@ DST.write_text(html, encoding='utf-8', newline='\n')
 
 # Mark the animated game surface for the shared preview resource policy.
 html = html.replace('id="scene"', 'id="scene" data-tront-discovery-game-surface', 1)
+# Fork identity only; keep the selected announcer pack and its transcripts exact.
+html = ''.join(
+    line if line.startswith('const ANNOUNCER_PACK=') else
+    line.replace('Gems Together', 'Jewelbound').replace('GEMS TOGETHER', 'JEWELBOUND').replace('gemstogether', 'jewelbound')
+    for line in html.splitlines(keepends=True)
+)
 DST.write_text(html, encoding='utf-8', newline='\n')

@@ -1,10 +1,12 @@
-# Gems Together
+# Jewelbound
+
+An independent copy of [Gems Together](https://github.com/TrentSterling/gemstogether) at `a611b47464c360a323ed4d41b7146321c3fdf009`, with the complete main-branch history preserved. This starts as the same game (3.3.7): only branding, links, save keys and the co-op namespace differ. The original deployment remains at https://tront.xyz/gemstogether/. Existing audio and artwork are unchanged, so the recorded welcome still says Gems Together.
 
 **Match three with the people you love.**
 
-Play it: **https://tront.xyz/gemstogether/**
+Play it: **https://tront.xyz/jewelbound/**
 
-![Gems Together](og-image.png)
+![Jewelbound](og-image.png)
 
 A co-op match-three game on one shared 3D jewel board. Tap a gem and its neighbour, drag, or use a controller to line up three or more. Cascades chain into combos, and bigger matches forge charged gems: blast gems that detonate their surroundings and prisms that shimmer through the spectrum.
 
@@ -24,7 +26,7 @@ One HTML file. The cabinet, gems and the whole interface render on the GPU (WebG
 
 `python tools/polish.py` builds the single HTML from the original drop plus the hosting extensions. `tools/verify.mjs` checks the original release gate on real GPU Chrome. The feature, network, visual and transition gates are `tools/expedition-audit.mjs`, `tools/expedition-network.mjs`, `tools/expedition-visual.mjs` and `tools/expedition-stage.mjs`. Tests use solo, private rooms or random isolated public rooms.
 
-The visual gate uses mobile emulation at 2x pixel density, actual browser touch events, finger scrolling and portrait/landscape rotation on both renderers. It also checks keyboard and controller menu navigation and input-specific panel guidance. Physical iPhone/Safari, Android and USB-controller playtests remain manual checks. Verify deployment with `node tools/verify.mjs https://tront.xyz/gemstogether/`; an optional third argument sets the expected version when checking an older build.
+The visual gate uses mobile emulation at 2x pixel density, actual browser touch events, finger scrolling and portrait/landscape rotation on both renderers. It also checks keyboard and controller menu navigation and input-specific panel guidance. Physical iPhone/Safari, Android and USB-controller playtests remain manual checks. Verify deployment with `node tools/verify.mjs https://tront.xyz/jewelbound/`; an optional third argument sets the expected version when checking an older build.
 
 This project ships as a browser game on tront.xyz. The announcer pack and exact-clip listening page are documented in [tools/ANNOUNCER.md](tools/ANNOUNCER.md); the earlier engine comparisons are in [tools/VOICE-AUDITIONS.md](tools/VOICE-AUDITIONS.md).
 
