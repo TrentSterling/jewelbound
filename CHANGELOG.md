@@ -1,3 +1,8 @@
+## 3.3.29 / B021 (2026-10-21): clear short-phone result notices
+
+- Show complete fitting achievement notices in the result card's empty text gap when About covers the original toast on short portrait screens.
+- Preserve result content, controls, original timing, fades, announcements and unfit-message fallback. Round history: [B021](rounds/2026-10-21-B021.md).
+
 ## 3.3.28 / B020 (2026-10-21): readable narrow Journey stage names
 
 - Give complete stage names room above their start buttons on narrow screens, using measured glyph bounds and readable sizes when they fit.
