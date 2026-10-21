@@ -1,3 +1,9 @@
+## 3.3.13 / B005 (2026-10-21): clear the bottom row
+
+- Fit the jewel tray between the title and existing controls on short, wide screens, including space for the strongest cascade camera punch. Keep the compact title in its top margin.
+- Use identical framing for the rendered board, picking rays and stable HUD. Ordinary desktop and portrait framing, photo orbit, controls, rules, saves, co-op and audio remain unchanged.
+- Round history and validation: [B005](rounds/2026-10-21-B005.md).
+
 ## 3.3.12 / B004 (2026-10-21): clearer suggested swaps
 
 - Outline the existing hinted crystal pair and add a stationary gold swap marker between them. The pair stays readable after selecting a gem, on small screens and in high-contrast mode.

@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.12'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.13'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -1363,9 +1363,9 @@ class CabinetUI {
  lineDivider(x,y,w){this.ink.line(x,y,x+w,y,1,'#806d49',.45);}
  drawHUD(){const a=this.app,p=this.ink,w=a.cssWidth,h=a.cssHeight;
   // Use an unshaken camera for controls. The board's camera impulse never moves a hit target.
-  const tan=Math.tan(21*PI/180),aspect=w/h,framing=cabinetFraming(w,h),z=framing.distance;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62,z],[0,0,0],[0,1,0]));const screen=pos=>project(pos,stable,w,h);
+  const tan=Math.tan(21*PI/180),aspect=w/h,framing=cabinetFraming(w,h),z=framing.distance,targetY=framing.targetY||0;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62+targetY,z],[0,targetY,0],[0,1,0]));const screen=pos=>project(pos,stable,w,h);
   const [left,top]=screen([-3.98,4.02,.15]),[right,bottom]=screen([3.98,-4.1,.15]);this.boardRect={x:left,y:top,w:right-left,h:bottom-top};const wide=framing.wide;this.wide=wide;
-  if(wide){const nw=Math.min(350,(right-left)*.77),nh=h<460?34:43,ny=Math.max(5,top-nh-5);this.titlePlaque(w/2-nw/2,ny,nw,nh,h<460?18:23);
+  if(wide){const nw=Math.min(350,(right-left)*.77),nh=h<460?34:43,ny=framing.targetY===undefined?Math.max(5,top-nh-5):5;this.titlePlaque(w/2-nw/2,ny,nw,nh,h<460?18:23);
    const sw=Math.min(208,left-54),sx=left-sw-25,sy=h<460?Math.max(8,Math.min(top+(bottom-top)*.28,h-363)):top+(bottom-top)*.28;this.plaque(sx,sy,sw,a.practice?159:257);p.line(sx+sw,sy+72,left-3,sy+72,3,UI_ART.brass);this.text(a.coop?.connected?'Team score':a.auto?'Showcase':a.practice?'Lab score':'Score',sx+17,sy+18,14,UI_ART.dim);this.scoreAt=[sx+17+Math.min(70,sw*.3),sy+64];this.plaqueAt=[sx,sy,sw,159];const sk=1+.16*Math.exp(-(a.time-(this.scoreHit??-9))*11);this.text(Math.round(a.displayScore).toLocaleString('en-US'),sx+17,sy+46-35*(sk-1)*.5,35*sk,UI_ART.highlight,'left',sw-34,.12,true);this.lineDivider(sx+16,sy+96,sw-32);this.text('Best',sx+17,sy+110,12,UI_ART.dim);this.text(a.best.toLocaleString('en-US'),sx+sw-17,sy+108,17,UI_ART.text,'right',sw-80);this.text(a.board.moves+' moves',sx+17,sy+137,11,UI_ART.muted);
   }else{
    const nw=Math.min(w-28,350),titleY=Math.max(10,top-93);this.titlePlaque(w/2-nw/2,titleY,nw,40,21);
@@ -1766,7 +1766,7 @@ class JewelApp {
  startAACompare(){this.aaWasFrozen=this.frozen;this.frozen=true;this.aaCompare=true;this.aaCompareBypass=false;this.ui.toastUntil=0;this.closePanel();}
  finishAACompare(){if(!this.aaCompare)return;this.aaCompare=false;this.aaCompareBypass=false;this.frozen=!!this.aaWasFrozen;$('freeze').checked=this.frozen;this.syncAA();}
  resize(){this.cssWidth=innerWidth;this.cssHeight=innerHeight;const scale=(devicePixelRatio||1)*this.prefs.quality,maxDim=Math.min(4096,this.renderer.gl?this.renderer.gl.getParameter(this.renderer.gl.MAX_RENDERBUFFER_SIZE):this.renderer.device.limits.maxTextureDimension2D);let w=Math.round(this.cssWidth*scale),h=Math.round(this.cssHeight*scale);if(Math.max(w,h)>maxDim){const k=maxDim/Math.max(w,h);w=Math.round(w*k);h=Math.round(h*k);}if(w*h>8294400){const k=Math.sqrt(8294400/(w*h));w=Math.round(w*k);h=Math.round(h*k);}this.renderer.setAA(!this.aaCompareBypass&&(this.prefs.aaMode==='msaa'||this.prefs.aaMode==='hybrid'));this.renderer.resize(w,h);this.syncAA();this.updateCamera();}
- updateCamera(){const aspect=this.cssWidth/this.cssHeight,tan=Math.tan(42/2*PI/180),z=cabinetFraming(this.cssWidth,this.cssHeight).distance;let shake=this.prefs.motion?this.shake:0;const sx=Math.sin(this.time*54)*shake*.026,sy=Math.sin(this.time*43+1)*shake*.022;this.eye=[sx,.62+sy,z*(1-.045*(this.punch||0))];this.target=[0,0,0];this.forward=vnorm(vsub(this.target,this.eye));this.right=vnorm(vcross(this.forward,[0,1,0]));this.up=vcross(this.right,this.forward);this.vp=matMul(perspective(42*PI/180,aspect,.1,150),lookAt(this.eye,this.target,[Math.sin(this.time*33)*shake*.002,1,0]));this.tanFov=tan;}
+ updateCamera(){const framing=cabinetFraming(this.cssWidth,this.cssHeight),targetY=framing.targetY||0,aspect=this.cssWidth/this.cssHeight,tan=Math.tan(42/2*PI/180),z=framing.distance;let shake=this.prefs.motion?this.shake:0;const sx=Math.sin(this.time*54)*shake*.026,sy=Math.sin(this.time*43+1)*shake*.022;this.eye=[sx,.62+targetY+sy,z*(1-.045*(this.punch||0))];this.target=[0,targetY,0];this.forward=vnorm(vsub(this.target,this.eye));this.right=vnorm(vcross(this.forward,[0,1,0]));this.up=vcross(this.right,this.forward);this.vp=matMul(perspective(42*PI/180,aspect,.1,150),lookAt(this.eye,this.target,[Math.sin(this.time*33)*shake*.002,1,0]));this.tanFov=tan;}
  draw(){this.syncAA();this.updateCamera();const cabinetMeshes=this.presentation.build();cabinetMeshes.push(this.living.build());cabinetMeshes.push(...(this.expedition?.meshes()||[]));const r=this.renderer,u=r.uniforms;u.set(this.vp,0);u.set([...this.eye,1],16);u.set([...this.right,0],20);u.set([...this.up,0],24);u.set([this.time,this.juice,this.cssWidth/this.cssHeight,this.tanFov],28);u.set([1.08+this.juice*.035,.70,this.prefs.motion?1:0,1],32);u.set([r.width,r.height,1/r.width,1/r.height],36);u.set([...this.forward,0],40);u.set([(this.effectiveAA==='fxaa'||this.effectiveAA==='hybrid')?this.prefs.aaStrength/100:0,this.prefs.sharpness/100,0,0],44);u.set([this.living.clock,this.living.light,this.living.polish,0],48);this.fx.frame();this.music?.tick();this.pollPad?.();this.fx.uniforms(u);
   const batches=Array.from({length:6},()=>[]),special=[];for(const a of this.actors.values()){if(a.scale[0]<.001)continue;const m=trs(a.pos,a.rotation,a.scale);batches[a.tile.type].push(...packedInstance(m,GEM_COLORS[a.tile.type],a.energy,2,a.hover,a.tile.special,a.seed));}
   batches.forEach((b,i)=>r.upload(this.world.gemMeshes[i],new Float32Array(b),b.length/24));r.upload(this.world.specialMesh,new Float32Array(special),special.length/24);
@@ -2908,7 +2908,7 @@ CoopRoom.prototype.applyEvent=function(m){if(m.type==='start_swap'){this.app.tur
 
 // Photo mode is a local view. The authoritative board and network keep advancing.
 const expeditionCamera=JewelApp.prototype.updateCamera;
-JewelApp.prototype.updateCamera=function(){expeditionCamera.call(this);const p=this.expedition?.photo;if(!p)return;const z=cabinetFraming(this.cssWidth,this.cssHeight).distance*p.zoom;this.eye=[Math.sin(p.yaw)*z,.62+Math.sin(p.pitch)*z,Math.cos(p.yaw)*z];this.forward=vnorm(vsub([0,0,0],this.eye));this.right=vnorm(vcross(this.forward,[0,1,0]));this.up=vcross(this.right,this.forward);this.vp=matMul(perspective(42*PI/180,this.cssWidth/this.cssHeight,.1,150),lookAt(this.eye,[0,0,0],[0,1,0]));};
+JewelApp.prototype.updateCamera=function(){expeditionCamera.call(this);const p=this.expedition?.photo;if(!p)return;const z=jewelcraftOriginalFraming(this.cssWidth,this.cssHeight).distance*p.zoom;this.eye=[Math.sin(p.yaw)*z,.62+Math.sin(p.pitch)*z,Math.cos(p.yaw)*z];this.forward=vnorm(vsub([0,0,0],this.eye));this.right=vnorm(vcross(this.forward,[0,1,0]));this.up=vcross(this.right,this.forward);this.vp=matMul(perspective(42*PI/180,this.cssWidth/this.cssHeight,.1,150),lookAt(this.eye,[0,0,0],[0,1,0]));};
 const expeditionFXFrame=ResonanceFX.prototype.frame;
 ResonanceFX.prototype.frame=function(){const a=this.a;if(a.expedition?.photo)return;expeditionFXFrame.call(this);
  if(this.fieldForm===4&&this.on&&a.prefs.motion&&!a.frozen&&this.beats!==this.shootingBeat&&this.beats%4===0){this.shootingBeat=this.beats;for(let i=0;i<3;i++)a.world.sparks.emit([-16-i*1.1,6.5+i*.8,-7-i*.4],[16,-4.5,0],[1.3,1.55,2],.12-i*.02,a.time+i*.12,1.7,10,i*13+.5,-.2);}
@@ -3357,6 +3357,25 @@ CabinetUI.prototype.drawHintPair=function(){
 const jewelcraftHintDecor=CabinetUI.prototype.expeditionDecor;
 // Existing selection, marked-target and high-contrast cues retain top priority.
 CabinetUI.prototype.expeditionDecor=function(){this.drawHintPair();return jewelcraftHintDecor.call(this);};
+
+/* B005: keep the playable tray above the unchanged compact control rail.
+   The real camera, its picking rays and the stable HUD share this framing. */
+const jewelcraftOriginalFraming=cabinetFraming;
+let jewelcraftFramingCache;
+cabinetFraming=function(w,h){
+ if(jewelcraftFramingCache?.w===w&&jewelcraftFramingCache.h===h)return jewelcraftFramingCache.value;
+ const original=jewelcraftOriginalFraming(w,h);let value=original;
+ if(original.wide&&h<460&&h>=180){
+  // Reserve the existing 34px title at y5, then a small clear gutter above
+  // the existing 42px controls at h-57. Keep control sizes and input semantics.
+  const top=44,bottom=h-69,span=Math.max(64,bottom-top),tan=Math.tan(21*PI/180);
+  // Include the tray rim and the existing maximum 5.4% cascade camera punch.
+  const distance=Math.max(original.distance,4.55*h/(tan*span));
+  const targetY=((top+bottom)/2-h/2)*2*tan*distance/h;
+  value={...original,distance,targetY};
+ }
+ jewelcraftFramingCache={w,h,value};return value;
+};
 
 (async function boot(){let stage='GPU renderer';let app=null;try{
  const force=new URLSearchParams(location.search).has('webgl');$('load-status').textContent='Preparing GPU shaders...';

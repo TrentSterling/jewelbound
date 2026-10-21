@@ -51,7 +51,19 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.12'")
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.13'")
+    # B005: one shared camera target keeps scene, picking and stable HUD aligned.
+    rep('framing=cabinetFraming(w,h),z=framing.distance;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62,z],[0,0,0],[0,1,0]));',
+        'framing=cabinetFraming(w,h),z=framing.distance,targetY=framing.targetY||0;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62+targetY,z],[0,targetY,0],[0,1,0]));')
+    rep('updateCamera(){const aspect=this.cssWidth/this.cssHeight,tan=Math.tan(42/2*PI/180),z=cabinetFraming(this.cssWidth,this.cssHeight).distance;',
+        'updateCamera(){const framing=cabinetFraming(this.cssWidth,this.cssHeight),targetY=framing.targetY||0,aspect=this.cssWidth/this.cssHeight,tan=Math.tan(42/2*PI/180),z=framing.distance;')
+    rep('this.eye=[sx,.62+sy,z*(1-.045*(this.punch||0))];this.target=[0,0,0];',
+        'this.eye=[sx,.62+targetY+sy,z*(1-.045*(this.punch||0))];this.target=[0,targetY,0];')
+    # Photo mode has its own orbit and export layout, without the play controls.
+    rep('const z=cabinetFraming(this.cssWidth,this.cssHeight).distance*p.zoom;',
+        'const z=jewelcraftOriginalFraming(this.cssWidth,this.cssHeight).distance*p.zoom;')
+    rep('nh=h<460?34:43,ny=Math.max(5,top-nh-5);',
+        'nh=h<460?34:43,ny=framing.targetY===undefined?Math.max(5,top-nh-5):5;')
     # B001: stage arrivals use the existing title plaque. Keep the ordinary stage
     # HUD, event lifetime, scenery, sound and effects; remove only the board cover.
     rep("this.plaque(w/2-nw/2,ny,nw,nh);this.text(GAME_BRAND.wordmark,w/2,ny+9,h<460?18:23,UI_ART.highlight,'center',nw-34,.12,true);",
@@ -68,7 +80,7 @@ def apply(html):
     # occupy their old position below the score plaque.
     rep('if(this.plaqueAt){const [x,y,w,h]=this.plaqueAt,compact=a.cssHeight<460,yy=y+h+(compact?100:116);this.text(label,',
         'if(this.plaqueAt){const {x,y:yy,w,relocated}=this.challengeStatusLayout(),compact=a.cssHeight<460;if(relocated)this.plaque(x-8,yy-8,w+16,54);this.text(label,')
-    presentation='\n'.join((ROOT/('tools/'+name)).read_text(encoding='utf-8') for name in ['jewelcraft-ui.js','jewelcraft-stage.js','jewelcraft-challenge.js','jewelcraft-hint.js'])
+    presentation='\n'.join((ROOT/('tools/'+name)).read_text(encoding='utf-8') for name in ['jewelcraft-ui.js','jewelcraft-stage.js','jewelcraft-challenge.js','jewelcraft-hint.js','jewelcraft-framing.js'])
     rep('(async function boot(){', presentation+'\n(async function boot(){')
     # Add a sampled glyph branch to each native UI backend. Existing analytic
     # shapes and their clipping/batching are untouched.
