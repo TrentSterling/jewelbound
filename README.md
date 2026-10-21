@@ -28,7 +28,9 @@ Hint outlines the suggested crystal pair and shows a small gold swap marker, inc
 
 Short landscape screens fit the whole jewel tray above the controls, keeping the bottom row visible through cascades.
 
-Built by Tront for Jennifer. Current version: 3.3.13.
+Completed challenges use a horizontal result card on compact landscape screens when it can fit clear of the controls, with readable scores and full-height continuation buttons.
+
+Built by Tront for Jennifer. Current version: 3.3.14.
 
 ## Tech
 

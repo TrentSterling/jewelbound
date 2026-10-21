@@ -1,3 +1,9 @@
+## 3.3.14 / B006 (2026-10-21): room for challenge results
+
+- Give finished challenges a horizontal obsidian-and-gold result card on compact landscape screens. Keep scores, totals and 42px continuation buttons readable, and fit the full card above the existing control targets.
+- Preserve original result values, action IDs, host authority, saves and rules. Portrait, desktop and screens without enough clear space retain their original card.
+- Round history and validation: [B006](rounds/2026-10-21-B006.md).
+
 ## 3.3.13 / B005 (2026-10-21): clear the bottom row
 
 - Fit the jewel tray between the title and existing controls on short, wide screens, including space for the strongest cascade camera punch. Keep the compact title in its top margin.
