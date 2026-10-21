@@ -1,3 +1,8 @@
+## 3.3.27 / B019 (2026-10-21): readable narrow settings labels
+
+- Keep complete settings labels clear of their On/Off buttons on narrow phones, using two rows at the original font size when they fit.
+- Preserve switch targets, values, scrolling, preferences and already readable layouts. Round history: [B019](rounds/2026-10-21-B019.md).
+
 ## 3.3.26 / B018 (2026-10-21): clear short-phone challenge notices
 
 - Keep fitting challenge notices clear of the title and About on short portrait screens, using the reserved footer for the original toast lifetime.
