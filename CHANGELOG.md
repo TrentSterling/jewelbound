@@ -1,3 +1,8 @@
+## 3.3.28 / B020 (2026-10-21): readable narrow Journey stage names
+
+- Give complete stage names room above their start buttons on narrow screens, using measured glyph bounds and readable sizes when they fit.
+- Preserve stage actions, button sizes, row spacing, progression and already fitting layouts. Round history: [B020](rounds/2026-10-21-B020.md).
+
 ## 3.3.27 / B019 (2026-10-21): readable narrow settings labels
 
 - Keep complete settings labels clear of their On/Off buttons on narrow phones, using two rows at the original font size when they fit.
