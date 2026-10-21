@@ -1,0 +1,30 @@
+// B012: completed-run actions retain host authority across compact private players.
+import assert from 'node:assert/strict';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {launch,until,sleep} from './cdp.mjs';
+const [target='index.html',label='local']=process.argv.slice(2),base=/^https?:/.test(target)?target:pathToFileURL(resolve(target)).href,out=resolve('tools/out/rounds/B012/coop-'+label);mkdirSync(out,{recursive:true});
+let A,B,passed=false;const checks=[],ok=(name,v)=>{assert.ok(v,name);checks.push({name,utc:new Date().toISOString()});console.log('PASS '+name);};
+const tap=async(p,x,y)=>{await p.call('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1,radiusX:5,radiusY:5}]});await p.call('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await sleep(100);};
+const button=async(p,id)=>{const q=await p.eval(`__jewel.ui().hits.find(h=>h.id===${JSON.stringify(id)})`);assert.ok(q,id);await tap(p,q.x+q.w/2,q.y+q.h/2);};
+const synced=()=>until(async()=>await A.eval('__jewel.app.phase==="idle"')&&await B.eval('__jewel.app.phase==="idle"')&&await A.eval('__jewel.net().hash')===await B.eval('__jewel.net().hash'),{timeout:60000});
+try{
+ A=await launch({port:9864,width:321,height:320,mobile:true});await A.goto(base+'#solo=1');await until(()=>A.eval('!!window.__jewel?.ready'),{timeout:60000});await A.eval('__jewel.app.expedition.dismissTour();__jewel.app.openPanel("coop");__jewel.app.ui.activate("coop-host")');const code=await until(()=>A.eval('__jewel.net().code'));
+ B=await launch({port:9865,width:460,height:459,mobile:true});await B.goto(base+'?webgl=1#room='+code);await until(()=>B.eval('!!window.__jewel?.ready'),{timeout:60000});await until(async()=>await A.eval('__jewel.net().connected')&&await B.eval('__jewel.net().connected&&__jewel.app.coop.synced'),{timeout:60000});
+ for(const [name,p,backend]of [['host',A,'WebGPU'],['peer',B,'WebGL']]){await p.eval('__jewel.app.expedition.dismissTour();__jewel.app.closePanel()');ok(name+' private room and renderer',await p.eval('!__jewel.app.coop.publicRoom')&&(await p.eval('__jewel.diagnostics().backend')).includes(backend));}
+ await A.eval('__jewel.challenge("timed",{seed:1})');await synced();const pair=await A.eval('__jewel.state().legalMoves[0]');for(const i of pair)await tap(A,...await A.eval(`__jewel.project(${i})`));await until(()=>A.eval('__jewel.state().moves===1'));await synced();ok('actual host swap synchronizes',await A.eval('__jewel.state().score===150')&&await B.eval('__jewel.state().score===150'));
+ await A.eval('__jewel.app.expedition.run.elapsed=120');await until(async()=>await A.eval('__jewel.expedition().run.finished')&&await B.eval('__jewel.expedition().run.finished'),{timeout:60000});await synced();ok('authoritative timed result shared',await A.eval('__jewel.expedition().run.score===150')&&await B.eval('__jewel.expedition().run.score===150'));
+ for(const [name,p]of [['host',A],['peer',B]]){ok(name+' compact card and both continuation actions',await p.eval('!!__jewel.app.ui.narrowResultPlaqueRect&&__jewel.ui().hits.some(h=>h.id==="again")&&__jewel.ui().hits.some(h=>h.id==="exp-endless")'));await p.shot(out+'/'+name+'-result.png');}
+ const finalHash=await B.eval('__jewel.net().hash');
+ await B.call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await until(()=>B.eval('__jewel.app.cssWidth===390'));
+ ok('peer portrait rotation preserves shared results and original card',finalHash===await B.eval('__jewel.net().hash')&&await B.eval('__jewel.expedition().run.finished&&!__jewel.app.ui.narrowResultPlaqueRect&&["again","exp-endless"].every(id=>__jewel.ui().hits.some(h=>h.id===id))'));
+ await B.call('Emulation.setDeviceMetricsOverride',{width:460,height:459,deviceScaleFactor:1,mobile:true});await until(()=>B.eval('__jewel.app.cssWidth===460'));
+ ok('peer landscape return restores readable card without reset',finalHash===await B.eval('__jewel.net().hash')&&await B.eval('__jewel.expedition().run.finished&&!!__jewel.app.ui.narrowResultPlaqueRect'));
+ ok('host and peer authority roles',await A.eval('__jewel.app.expedition.authority===true')&&await B.eval('__jewel.app.expedition.authority===false'));
+ const id=await A.eval('__jewel.expedition().run.id');await B.eval('__jewel.app.ui.toastMessage=""');await button(B,'again');await sleep(350);ok('real peer action rejected and preserves host authority',await A.eval(`__jewel.expedition().run.finished&&__jewel.expedition().run.id===${JSON.stringify(id)}`)&&await B.eval(`__jewel.expedition().run.finished&&__jewel.expedition().run.id===${JSON.stringify(id)}&&__jewel.app.ui.toastMessage.includes('The host chooses the shared challenge')`));
+ await button(A,'again');await until(async()=>await A.eval('!__jewel.expedition().run.finished')&&await B.eval('!__jewel.expedition().run.finished'));await synced();ok('host Play again restarts timed for both',await A.eval('__jewel.expedition().run.mode==="timed"&&__jewel.state().score===0')&&await B.eval('__jewel.expedition().run.mode==="timed"&&__jewel.state().score===0'));
+ await A.eval('__jewel.app.expedition.finish("TIME COMPLETE")');await until(()=>B.eval('__jewel.expedition().run.finished'));await button(A,'exp-endless');await until(()=>B.eval('__jewel.expedition().run.mode==="zen"'));await synced();ok('host Return to endless synchronizes',await A.eval('__jewel.expedition().run.mode==="zen"&&!__jewel.expedition().run.finished')&&await B.eval('!__jewel.expedition().run.finished'));
+ for(const [name,p]of [['host',A],['peer',B]])ok(name+' no runtime errors',(await p.eval('__jewel.diagnostics().errors')).length===0&&!p.logs.some(l=>l.startsWith('EXCEPTION')));passed=true;
+}finally{A?.kill();B?.kill();await sleep(800);writeFileSync(out+'/receipt.json',JSON.stringify({passed,checks},null,2));}
+console.log(checks.length+' passed');

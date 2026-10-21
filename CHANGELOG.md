@@ -1,3 +1,10 @@
+## 3.3.20 / B012 (2026-10-21): readable narrow results
+
+- Give finished runs a wider obsidian-and-gold result card on narrow landscape and square screens with enough clear space. Keep score, totals and the full highlight readable above the existing HUD controls.
+- Preserve both 42px continuation buttons, their complete accessible labels and exact action IDs. Wrap painted labels when needed; retain original rendering outside the fitted scope.
+- Keep high-contrast crystal outlines beneath the fitted result card so they cannot cross its text or buttons.
+- Round history and validation: [B012](rounds/2026-10-21-B012.md).
+
 ## 3.3.19 / B011 (2026-10-21): readable compact challenge details
 
 - Where near-square landscape screens cannot fit the full challenge heading, use a short mode heading and complete, word-wrapped details beside the tray at a fixed readable size.
