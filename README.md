@@ -38,7 +38,9 @@ On short screens, the cabinet title leaves room for About so the challenge count
 
 Narrow landscape screens also give challenge details a readable side plaque when there is enough room, keeping the Play and Journey labels clear.
 
-Built by Tront for Jennifer. Current version: 3.3.17.
+Near-square landscape screens can use shorter mode headings to leave room for full move or ghost values beside the board. Long text keeps its original layout when a readable side plaque cannot fit.
+
+Built by Tront for Jennifer. Current version: 3.3.19.
 
 ## Tech
 

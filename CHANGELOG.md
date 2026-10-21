@@ -1,3 +1,9 @@
+## 3.3.19 / B011 (2026-10-21): readable compact challenge details
+
+- Where near-square landscape screens cannot fit the full challenge heading, use a short mode heading and complete, word-wrapped details beside the tray at a fixed readable size.
+- Keep existing successful layouts, board framing and controls. Decline the new plaque when the complete text or its shadow cannot fit safely.
+- Round history and validation: [B011](rounds/2026-10-21-B011.md).
+
 ## 3.3.18 / B010 (2026-10-21): uncover the narrow landscape tray
 
 - Fit narrow landscape gameplay between the title and two rows of controls. Place complete Score and Best values in the free right side so the bottom jewel row stays visible without making the tray unnecessarily small.

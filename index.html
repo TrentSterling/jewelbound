@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.18'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.19'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -3425,7 +3425,7 @@ CabinetUI.prototype.drawHUD=function(){
 };
 CabinetUI.prototype.challengeInlineStatus=function(label,detail,hasGhost,gs){
  const a=this.app,{cx,bw}=this.boardBox(),b=this.boardRect,caption=hasGhost?'ghost '+gs:detail;
- const fallback=()=>this.text(label+' / '+caption,cx,b.y+b.h+9,11,UI_ART.highlight,'center',bw-8,.12,true);
+ const fallback=()=>{if(!this.challengeFallbackPlaque(label,caption))this.text(label+' / '+caption,cx,b.y+b.h+9,11,UI_ART.highlight,'center',bw-8,.12,true);};
  if(a.cssWidth<360||a.cssWidth<=a.cssHeight||a.cssHeight>=460||a.expedition.run.finished||a.aaCompare)return fallback();
  const narrow=a.cssWidth<420,font=narrow?11:12,lineHeight=narrow?16:17,pad=narrow?6:12;
  const w=Math.min(narrow?116:184,Math.floor(b.x-(narrow?24:32))),inner=w-pad*2;
@@ -3446,6 +3446,36 @@ CabinetUI.prototype.challengeInlineStatus=function(label,detail,hasGhost,gs){
  let yy=y+(narrow?10:12);for(const line of title){this.text(line,x+pad,yy,font,UI_ART.highlight,'left',inner);yy+=lineHeight;}
  this.lineDivider(x+pad,yy+1,inner);yy+=narrow?6:8;
  for(const line of body){this.text(line,x+pad,yy,font,UI_ART.dim,'left',inner);yy+=lineHeight;}
+};
+
+/* B011: narrow-fit screens can have room for details but not the long mode
+   heading. Keep the full caption beside the tray at a fixed, readable size.
+   The title already carries the goal and authoritative remaining count. */
+CabinetUI.prototype.challengeFallbackPlaque=function(label,caption){
+ const a=this.app,r=a.expedition.run,b=this.boardRect;
+ if(!this.narrowScoreRect||!cabinetFraming(a.cssWidth,a.cssHeight).narrowFit||r.finished||a.aaCompare||a.expedition.photo||a.panelOpen||a.practice||a.auto)return false;
+ const names={moves:'Moves',timed:'Timed',daily:'Daily',puzzle:'Puzzle'},heading=names[r.mode];
+ if(!heading)return false;
+ // Reserve a tray-size-dependent gutter for maximum punch/shake, plus the
+ // plaque's 3px shadow and a clear gap. Stable boardRect alone is insufficient.
+ const x=12,w=Math.min(116,Math.floor(b.x-18-b.w*.07)),pad=6,font=11,lineHeight=16,inner=w-pad*2;
+ if(inner<60)return false;
+ const wrap=value=>{const rows=[];let line='';for(const word of String(value).split(' ')){
+  if(this.measure(word,font)>inner)return null;
+  const next=line?line+' '+word:word;
+  if(line&&this.measure(next,font)>inner){rows.push(line);line=word;}else line=next;
+ }if(line)rows.push(line);return rows;};
+ const body=wrap(caption);if(!body||this.measure(heading,font)>inner)return false;
+ const top=Math.max((this.titleRect?.y||10)+(this.titleRect?.h||40)+16,b.y+8);
+ const rail=Math.min(a.cssHeight,...this.hits.filter(t=>['hint','play','journey','demo','sound','settings','coop-open'].includes(t.id)).map(t=>t.y));
+ const h=28+lineHeight*(1+body.length),bottom=rail-12;
+ if(top+h>bottom)return false;
+ const y=clamp(b.y+b.h/2-h/2,top,bottom-h);
+ this.challengeAsideRect={x,y,w,h,compactDetail:true};this.plaque(x,y,w,h);
+ this.text(heading,x+pad,y+10,font,UI_ART.highlight,'left',inner);
+ this.lineDivider(x+pad,y+28,inner);
+ let yy=y+36;for(const line of body){this.text(line,x+pad,yy,font,UI_ART.dim,'left',inner);yy+=lineHeight;}
+ return true;
 };
 
 /* B008: keep the cabinet title and challenge counter clear of About.
