@@ -30,7 +30,9 @@ Short landscape screens fit the whole jewel tray above the controls, keeping the
 
 Completed challenges use a horizontal result card on compact landscape screens when it can fit clear of the controls, with readable scores and full-height continuation buttons.
 
-Built by Tront for Jennifer. Current version: 3.3.14.
+On short landscape screens with room beside the tray, challenge details use a readable gold-edged side plaque instead of shrinking over the controls.
+
+Built by Tront for Jennifer. Current version: 3.3.15.
 
 ## Tech
 

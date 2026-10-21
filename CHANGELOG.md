@@ -1,3 +1,9 @@
+## 3.3.15 / B007 (2026-10-21): readable challenge details
+
+- Give short landscape challenge details a fixed-size, word-wrapped side plaque where it fits clear of the board, title and controls. Preserve the complete remaining-move, time and ghost values.
+- Keep original rendering in portrait, wide layouts, AA comparison and screens without enough space. Preserve rules, saves, co-op, inputs, board framing and audio.
+- Round history and validation: [B007](rounds/2026-10-21-B007.md).
+
 ## 3.3.14 / B006 (2026-10-21): room for challenge results
 
 - Give finished challenges a horizontal obsidian-and-gold result card on compact landscape screens. Keep scores, totals and 42px continuation buttons readable, and fit the full card above the existing control targets.

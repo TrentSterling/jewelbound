@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.14'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.15'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -2920,7 +2920,7 @@ CabinetUI.prototype.expeditionHUD=function(){
  const a=this.app,e=a.expedition,p=this.ink;if(!e||e.photo||a.panelOpen)return;const r=e.run,w=a.cssWidth;
  if(r.mode!=='zen'&&!a.practice){const label=r.mode==='timed'?Math.max(0,Math.ceil(120-r.elapsed))+' seconds':r.mode==='puzzle'?EXPEDITION_PUZZLES[r.puzzle].name:r.mode==='daily'?'DAILY '+r.day:'30-MOVE CHALLENGE',detail=r.mode==='timed'?'Resonance scores double':Math.max(0,r.limit-a.board.moves)+' moves left',gs=e.ghostScore(),d=a.board.score-gs,hasGhost=r.mode==='timed'&&a.prefs.ghost&&e.profile.bests.timed;
   if(this.plaqueAt){const {x,y:yy,w,relocated}=this.challengeStatusLayout(),compact=a.cssHeight<460;if(relocated)this.plaque(x-8,yy-8,w+16,54);this.text(label,x+3,yy,13,UI_ART.highlight,'left',w-6,.12,true);this.text(compact&&hasGhost?'Ghost '+gs+' / '+(d>=0?'+':'')+d:detail,x+3,yy+24,11,UI_ART.dim,'left',w-6);if(hasGhost&&!compact){this.text('Ghost '+gs+' / '+(d>=0?'+':'')+d,x+3,yy+48,11,UI_ART.aqua,'left',w-6);const f=clamp(gs/Math.max(1,e.profile.bests.timed.score),0,1);p.line(x+3,yy+68,x+w-3,yy+68,2,UI_ART.brass,.4);p.box(x+3+(w-6)*f-2,yy+65,4,6,UI_ART.aqua,1,.6);}}
-  else{const {cx,bw}=this.boardBox(),y=this.boardRect.y+this.boardRect.h+9;this.text(label+' / '+(hasGhost?'ghost '+gs:detail),cx,y,11,UI_ART.highlight,'center',bw-8,.12,true);}}
+  else this.challengeInlineStatus(label,detail,hasGhost,gs);}
  if(e.tourVisible&&a.board.moves===0&&r.mode==='zen'&&!a.practice&&!a.gameOver){if(this.plaqueAt){const [x,y,w,h]=this.plaqueAt,yy=y+h+(a.cssHeight<460?100:118);if(a.cssHeight<460){this.text('Tap a gem, then its',x+4,yy,11,UI_ART.highlight,'left',w-8);this.text('neighbour to swap.',x+4,yy+21,11,UI_ART.highlight,'left',w-8);this.hit('exp-dismiss',x,yy,w,42,'button',null,'Dismiss first-run hint');}else{this.plaque(x,yy-10,w,125,true);const end=this.paragraph('Tap a gem, then its neighbour.',x+8,yy,w-16,13,UI_ART.highlight);this.text('Drag and controller also work.',x+8,end+4,10,UI_ART.dim,'left',w-16);this.button('exp-dismiss','Got it',x+7,end+28,w-14,32);}}else{const {cx,bw}=this.boardBox(),y=this.boardRect.y+this.boardRect.h+8;this.text('Tap a gem, then its neighbour',cx,y,11,UI_ART.highlight,'center',bw-8);this.hit('exp-dismiss',cx-bw/2,y-3,bw,20,'button',null,'Dismiss first-run hint');}}
  const ann=e.announcement;if(ann){const age=a.time-ann.at;if(age>=0&&age<ann.duration){const {cx,cy,bw}=this.boardBox(),al=Math.min(1,age*10)*clamp((ann.duration-age)/.4,0,1);p.opacity=al;this.text(ann.label,cx,cy-bw*.28,Math.min(36,bw*.08)*(1+.3*Math.exp(-age*12)),ann.col,'center',bw*1.1,.15,true);p.opacity=1;}}
 };
@@ -3406,6 +3406,36 @@ CabinetUI.prototype.drawGameOver=function(){
  const next=r.mode==='puzzle'&&r.reason==='PUZZLE COMPLETE',bx=split+18,bw=x+W-bx-18;
  this.button(next?'exp-next-puzzle':'again',next?'Next puzzle':'Play again',bx,buttonY,bw,42);
  this.button('exp-endless','Return to endless',bx,buttonY+52,bw,42);
+};
+
+/* B007: compact landscape challenge details use free space beside the board.
+   The original values, board, title, controls and input targets are unchanged. */
+const jewelcraftStatusHUD=CabinetUI.prototype.drawHUD;
+CabinetUI.prototype.drawHUD=function(){
+ this.challengeAsideRect=null;
+ return jewelcraftStatusHUD.call(this);
+};
+CabinetUI.prototype.challengeInlineStatus=function(label,detail,hasGhost,gs){
+ const a=this.app,{cx,bw}=this.boardBox(),b=this.boardRect,caption=hasGhost?'ghost '+gs:detail;
+ const fallback=()=>this.text(label+' / '+caption,cx,b.y+b.h+9,11,UI_ART.highlight,'center',bw-8,.12,true);
+ if(a.cssWidth<420||a.cssWidth<=a.cssHeight||a.cssHeight>=460||a.expedition.run.finished||a.aaCompare)return fallback();
+ const w=Math.min(184,Math.floor(b.x-32)),inner=w-24;
+ if(w<128)return fallback();
+ // Wrap whole words at a fixed 12px cap height instead of shrinking the line.
+ const wrap=value=>{const rows=[];let line='';for(const word of String(value).split(' ')){
+  if(this.measure(word,12)>inner)return null;
+  const next=line?line+' '+word:word;
+  if(line&&this.measure(next,12)>inner){rows.push(line);line=word;}else line=next;
+ }if(line)rows.push(line);return rows;};
+ const title=wrap(label),body=wrap(caption);if(!title||!body)return fallback();
+ const h=32+17*(title.length+body.length),rail=Math.min(a.cssHeight,...this.hits.filter(t=>['hint','play','journey','demo','sound','settings','coop-open'].includes(t.id)).map(t=>t.y));
+ const top=Math.max((this.titleRect?.y||10)+(this.titleRect?.h||40)+54,b.y+8),bottom=rail-12;
+ if(top+h>bottom)return fallback();
+ const x=16,y=clamp(b.y+b.h/2-h/2,top,bottom-h);
+ this.challengeAsideRect={x,y,w,h};this.plaque(x,y,w,h);
+ let yy=y+12;for(const line of title){this.text(line,x+12,yy,12,UI_ART.highlight,'left',inner);yy+=17;}
+ this.lineDivider(x+12,yy+1,inner);yy+=8;
+ for(const line of body){this.text(line,x+12,yy,12,UI_ART.dim,'left',inner);yy+=17;}
 };
 
 (async function boot(){let stage='GPU renderer';let app=null;try{
