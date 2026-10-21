@@ -1,3 +1,9 @@
+## 3.3.18 / B010 (2026-10-21): uncover the narrow landscape tray
+
+- Fit narrow landscape gameplay between the title and two rows of controls. Place complete Score and Best values in the free right side so the bottom jewel row stays visible without making the tray unnecessarily small.
+- Share framing between rendering, picking and the stable HUD; keep original photo orbit, rules, saves, co-op and control actions.
+- Round history and validation: [B010](rounds/2026-10-21-B010.md).
+
 ## 3.3.17 / B009 (2026-10-21): readable narrow-screen challenge details
 
 - Give narrow landscape challenge details a fixed-size side plaque where the full text fits, instead of shrinking them over Play and Journey. Keep the existing board, title, buttons and all input targets.

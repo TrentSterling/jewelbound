@@ -4,7 +4,7 @@ const math=original.slice(original.indexOf('const PI=Math.PI'),original.indexOf(
 const layer=fs.readFileSync(path.join(__dirname,'../tools/jewelcraft-framing.js'),'utf8');
 function fixture(){const c=vm.createContext({});vm.runInContext(math+layer,c);return code=>vm.runInContext(code,c);}
 test('ordinary desktop, portrait and wide boundary retain exact original framing',()=>{
- const run=fixture();for(const [w,h]of [[1280,800],[390,844],[320,568],[844,460],[1920,1080],[480,320],[844,179]]){
+ const run=fixture();for(const [w,h]of [[1280,800],[390,844],[320,568],[844,460],[1920,1080],[480,319],[844,179]]){
   assert.equal(run(`JSON.stringify(cabinetFraming(${w},${h}))===JSON.stringify(jewelcraftOriginalFraming(${w},${h}))`),true,`${w}x${h}`);
  }
 });

@@ -28,6 +28,8 @@ Hint outlines the suggested crystal pair and shows a small gold swap marker, inc
 
 Short landscape screens fit the whole jewel tray above the controls, keeping the bottom row visible through cascades.
 
+Narrow landscape screens place Score and Best beside the tray, leaving space for the crown, all eight jewel rows and the two rows of controls.
+
 Completed challenges use a horizontal result card on compact landscape screens when it can fit clear of the controls, with readable scores and full-height continuation buttons.
 
 On short landscape screens with room beside the tray, challenge details use a readable gold-edged side plaque instead of shrinking over the controls.
