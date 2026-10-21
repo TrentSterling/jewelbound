@@ -1,3 +1,8 @@
+## 3.3.23 / B015 (2026-10-21): puzzle notices clear of the goal
+
+- Fit complete puzzle instructions beside the tray on narrow landscape screens with space, keeping the goal and moves counter visible.
+- Preserve notice lifetime, fade, accessibility announcements, gameplay and original fallbacks. Round history: [B015](rounds/2026-10-21-B015.md).
+
 ## 3.3.22 / B014 (2026-10-21): reachable menu return
 
 - Keep Back and Audio clear of About on short screens, preserving their full target size and original actions.
