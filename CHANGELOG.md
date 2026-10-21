@@ -1,3 +1,8 @@
+## 3.3.21 / B013 (2026-10-21): readable high-contrast results
+
+- Keep crystal outlines and puzzle target marks beneath all normal finished-run cards, including phone portrait, desktop and short landscape. Exposed board outlines remain visible.
+- Preserve card layout, continuation actions and active-play rendering. Round history and validation: [B013](rounds/2026-10-21-B013.md).
+
 ## 3.3.20 / B012 (2026-10-21): readable narrow results
 
 - Give finished runs a wider obsidian-and-gold result card on narrow landscape and square screens with enough clear space. Keep score, totals and the full highlight readable above the existing HUD controls.

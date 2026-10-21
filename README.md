@@ -40,7 +40,7 @@ Narrow landscape screens also give challenge details a readable side plaque when
 
 Near-square landscape screens can use shorter mode headings to leave room for full move or ghost values beside the board. Long text keeps its original layout when a readable side plaque cannot fit.
 
-Built by Tront for Jennifer. Current version: 3.3.20.
+Built by Tront for Jennifer. Current version: 3.3.21.
 
 ## Tech
 

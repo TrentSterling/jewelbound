@@ -33,11 +33,19 @@ test('button label reflow is scoped and restores the existing text function afte
  const f=fixture(),text=f.ui.text;f.ui.drawGameOver();assert.equal(f.ui.text,text);assert.ok(f.texts.filter(t=>['Return to','endless'].includes(t[0])).every(t=>t[3]===12));
  const broken=fixture(),original=broken.ui.text;broken.ui.button=()=>{throw Error('button failure');};assert.throws(()=>broken.ui.drawGameOver(),/button failure/);assert.equal(broken.ui.text,original);
 });
-test('decoration renders once below fitted cards; restart and rotation restore original ordering',()=>{
+test('decoration renders once below all normal results; other surfaces restore original ordering',()=>{
  const f=fixture();f.ui.drawGameOver();f.ui.drawCursor();assert.deepEqual(f.order,['decor','card','cursor']);
  for(const state of ['portrait','unfinished','panel','photo','aa','about','unfit']){
   const g=fixture();g.ui.drawGameOver();g.order.length=0;
   if(state==='portrait')g.ui.app.cssHeight=844;if(state==='unfinished')g.r.finished=false;if(state==='panel')g.ui.app.panelOpen=true;if(state==='photo')g.ui.app.expedition.photo={};if(state==='aa')g.ui.app.aaCompare={};if(state==='about')g.summary.parentElement.open=true;if(state==='unfit')g.r.reason='X'.repeat(100);
-  g.ui.drawGameOver();g.ui.drawCursor();assert.deepEqual(g.order,['original-result','decor','cursor'],state);assert.equal(g.ui.narrowResultPlaqueRect,null);
+  g.ui.drawGameOver();g.ui.drawCursor();assert.deepEqual(g.order,['portrait','about','unfit'].includes(state)?['decor','original-result','cursor']:['original-result','decor','cursor'],state);assert.equal(g.ui.narrowResultPlaqueRect,null);
+ }
+});
+test('finished layouts retain all data, original drawing and exactly one decoration pass on repeated frames',()=>{
+ for(const [w,h]of [[390,844],[1280,800],[568,320],[319,320],[321,300]]){
+  const f=fixture(w,h),run=JSON.stringify(f.r),hits=JSON.stringify(f.ui.hits);
+  for(let i=0;i<3;i++){f.order.length=0;f.ui.drawGameOver();f.ui.drawCursor();assert.deepEqual(f.order,['decor','original-result','cursor']);assert.equal(f.ui.resultDecorUnder,true);}
+  assert.equal(JSON.stringify(f.r),run);assert.equal(JSON.stringify(f.ui.hits),hits);assert.equal(f.boxes.length+f.texts.length+f.buttons.length,0);
+  f.r.finished=false;f.order.length=0;f.ui.drawGameOver();f.ui.drawCursor();assert.deepEqual(f.order,['original-result','decor','cursor']);assert.equal(f.ui.resultDecorUnder,false);
  }
 });

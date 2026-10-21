@@ -3,12 +3,15 @@
 const jewelcraftResultsBeforeNarrow=CabinetUI.prototype.drawGameOver;
 const jewelcraftDecorBeforeNarrow=CabinetUI.prototype.expeditionDecor;
 CabinetUI.prototype.expeditionDecor=function(){
- if(!this.narrowResultPlaqueRect)return jewelcraftDecorBeforeNarrow.call(this);
+ if(!this.resultDecorUnder)return jewelcraftDecorBeforeNarrow.call(this);
 };
 CabinetUI.prototype.drawGameOver=function(){
  const a=this.app,e=a.expedition,r=e?.run;
- this.narrowResultPlaqueRect=null;
- const fallback=()=>jewelcraftResultsBeforeNarrow.call(this);
+ this.narrowResultPlaqueRect=null;this.resultDecorUnder=false;
+ const underlay=()=>{jewelcraftDecorBeforeNarrow.call(this);this.resultDecorUnder=true;};
+ // B013: all normal finished layouts keep crystal outlines and puzzle marks
+ // below the result surface; active play, photo and AA keep their prior order.
+ const fallback=()=>{if(r?.finished&&!a.panelOpen&&!e.photo&&!a.aaCompare)underlay();return jewelcraftResultsBeforeNarrow.call(this);};
  if(!r?.finished||a.panelOpen||e.photo||a.aaCompare||a.cssWidth<320||a.cssWidth>=480||a.cssWidth<a.cssHeight||a.cssHeight>=460)return fallback();
  const rail=Math.min(a.cssHeight,...this.hits.filter(t=>['hint','play','journey','demo','sound','settings','coop-open'].includes(t.id)).map(t=>t.y));
  const summaryElement=document.querySelector('#trontAbout > summary');
@@ -32,8 +35,8 @@ CabinetUI.prototype.drawGameOver=function(){
  // use fixed-size text; unusually large values retain the existing renderer.
  if(!summary||!moments||labels.some(rows=>!rows||rows.length>2)||this.measure(reason,14)>W-24||this.measure(score,28)>scoreW*28/11||bodyY+(summary.length+moments.length-1)*line+font+3>by-2)return fallback();
  // Keep contrast outlines and puzzle marks beneath this opaque result card.
- // Fallback layouts keep their original decoration order in drawCursor.
- jewelcraftDecorBeforeNarrow.call(this);
+ // The same underlay is shared with the other finished layouts above.
+ underlay();
  const p=this.ink;this.resultPlaqueRect=this.narrowResultPlaqueRect={x,y,w:W,h:H};
  p.box(x-6,y-6,W+12,H+12,UI_ART.ink,10,.96);this.plaque(x,y,W,H,true);
  this.text(reason,x+W/2,y+10,14,UI_ART.highlight,'center',W-24,.12,true);
