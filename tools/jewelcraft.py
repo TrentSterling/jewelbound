@@ -51,7 +51,7 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.23'")
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.24'")
     # B005: one shared camera target keeps scene, picking and stable HUD aligned.
     rep('framing=cabinetFraming(w,h),z=framing.distance;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62,z],[0,0,0],[0,1,0]));',
         'framing=cabinetFraming(w,h),z=framing.distance,targetY=framing.targetY||0;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62+targetY,z],[0,targetY,0],[0,1,0]));')
@@ -91,7 +91,9 @@ def apply(html):
         "else this.challengeInlineStatus(label,detail,hasGhost,gs);")
     # B015: retain original toast clocks, fitting and fade; resolve only its drawing.
     rep("this.plaque(tx,ty,tw,32);this.text(text,tx+tw/2,ty+9,13,UI_ART.highlight,'center',tw-20);",'this.playNotice(text,tx,ty,tw);')
-    presentation='\n'.join((ROOT/('tools/'+name)).read_text(encoding='utf-8') for name in ['jewelcraft-ui.js','jewelcraft-stage.js','jewelcraft-challenge.js','jewelcraft-hint.js','jewelcraft-framing.js','jewelcraft-results.js','jewelcraft-status.js','jewelcraft-title-clearance.js','jewelcraft-narrow-score.js','jewelcraft-narrow-results.js','jewelcraft-menu-return.js','jewelcraft-notice.js'])
+    # B016: keep puzzle seals in their own projected cells.
+    rep("p.box(q[0]-3,q[1]+19,6,6,'#ffe27a',2);",'this.drawPuzzleTarget(i,q);')
+    presentation='\n'.join((ROOT/('tools/'+name)).read_text(encoding='utf-8') for name in ['jewelcraft-ui.js','jewelcraft-stage.js','jewelcraft-challenge.js','jewelcraft-hint.js','jewelcraft-framing.js','jewelcraft-results.js','jewelcraft-status.js','jewelcraft-title-clearance.js','jewelcraft-narrow-score.js','jewelcraft-narrow-results.js','jewelcraft-menu-return.js','jewelcraft-notice.js','jewelcraft-target.js'])
     rep('(async function boot(){', presentation+'\n(async function boot(){')
     # Add a sampled glyph branch to each native UI backend. Existing analytic
     # shapes and their clipping/batching are untouched.

@@ -1,3 +1,8 @@
+## 3.3.24 / B016 (2026-10-21): target seals follow the correct gem
+
+- Keep puzzle target seals inside their own projected cells on compact screens, so the mark cannot point to a gem in another row.
+- Preserve gold target contours, fitting desktop seals, game rules and all input targets. Round history: [B016](rounds/2026-10-21-B016.md).
+
 ## 3.3.23 / B015 (2026-10-21): puzzle notices clear of the goal
 
 - Fit complete puzzle instructions beside the tray on narrow landscape screens with space, keeping the goal and moves counter visible.
