@@ -1,3 +1,9 @@
+## 3.3.12 / B004 (2026-10-21): clearer suggested swaps
+
+- Outline the existing hinted crystal pair and add a stationary gold swap marker between them. The pair stays readable after selecting a gem, on small screens and in high-contrast mode.
+- Preserve the original hint choice and lifetime, selection and marked-target priority, input targets, rules, saves, co-op and audio. No new animation, asset or dependency.
+- Round history and validation: [B004](rounds/2026-10-20-B004.md).
+
 ## 3.3.11 / B003 (2026-10-20): puzzle goals stay visible
 
 - Keep each puzzle's win condition in the existing gold title plaque after its introductory toast expires: marked gems, blast gem, prism or a five-wave chain. The move budget stays beside it.

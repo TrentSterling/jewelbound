@@ -24,7 +24,9 @@ Timed and move-limited challenges also show a large remaining-time or moves coun
 
 Puzzle goals stay visible beside the moves counter, so the next task is clear even after the opening notice fades.
 
-Built by Tront for Jennifer. Current version: 3.3.11.
+Hint outlines the suggested crystal pair and shows a small gold swap marker, including when a gem is already selected.
+
+Built by Tront for Jennifer. Current version: 3.3.12.
 
 ## Tech
 
