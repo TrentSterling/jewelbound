@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.25'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.26'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -3728,6 +3728,32 @@ CabinetUI.prototype.challengeInlineStatus=function(label,detail,hasGhost,gs){
  this.challengeFooterLayout={message,rows,font,step,x:16,y,w:inner};
  rows.forEach((row,i)=>this.text(row,a.cssWidth/2,y+i*step,font,UI_ART.highlight,'center',inner,.12,true));
 };
+
+/* B018: keep fitting portrait challenge notices clear of the goal and About.
+   Reuse the reserved footer for the toast's original lifetime and opacity. */
+const jewelcraftBeforePortraitNotice=CabinetUI.prototype.playNotice;
+CabinetUI.prototype.playNotice=function(text,x,y,w){
+ const original=()=>jewelcraftBeforePortraitNotice.call(this,text,x,y,w),a=this.app,r=a.expedition?.run,f=cabinetFraming(a.cssWidth,a.cssHeight),t=this.titleRect;
+ const about=document.querySelector('#trontAbout'),summary=about?.querySelector('summary'),ab=summary?.getBoundingClientRect();
+ if(!f.portraitFooter||!t||!r||!['timed','moves','daily','puzzle'].includes(r.mode)||r.finished||a.panelOpen||a.expedition?.photo||a.aaCompare||a.practice||a.auto||about?.open)return original();
+ const overlaps=q=>q&&x-3<q.x+q.w&&x+w+3>q.x&&y<q.y+q.h&&y+40>q.y;
+ if(!overlaps(t)&&!overlaps(ab&&{x:ab.x,y:ab.y,w:ab.width,h:ab.height}))return original();
+ const message=String(this.toastMessage),font=11,step=15,inner=a.cssWidth-32,rows=[];let line='';
+ for(const word of message.split(' ')){
+  if(this.measure(word,font)>inner)return original();
+  const next=line?line+' '+word:word;
+  if(line&&this.measure(next,font)>inner){rows.push(line);line=word;}else line=next;
+ }
+ if(line)rows.push(line);
+ const top=this.boardRect.y+this.boardRect.h+f.portraitFooter.gap;
+ if(!rows.length||rows.length>2||top+(rows.length-1)*step+font+5>f.portraitFooter.rail-3)return original();
+ this.portraitNoticeLayout={message,rows,font,step,x:16,y:top,w:inner,opacity:this.ink.opacity,original:{text,x,y,w}};
+ rows.forEach((row,i)=>this.text(row,a.cssWidth/2,top+i*step,font,UI_ART.highlight,'center',inner,.12,true));
+};
+const jewelcraftBeforePortraitNoticeHUD=CabinetUI.prototype.drawHUD;
+CabinetUI.prototype.drawHUD=function(...args){this.portraitNoticeLayout=null;return jewelcraftBeforePortraitNoticeHUD.apply(this,args);};
+const jewelcraftBeforePortraitNoticeCaption=CabinetUI.prototype.challengeInlineStatus;
+CabinetUI.prototype.challengeInlineStatus=function(...args){if(!this.portraitNoticeLayout)return jewelcraftBeforePortraitNoticeCaption.apply(this,args);};
 
 (async function boot(){let stage='GPU renderer';let app=null;try{
  const force=new URLSearchParams(location.search).has('webgl');$('load-status').textContent='Preparing GPU shaders...';

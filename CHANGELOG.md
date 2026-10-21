@@ -1,3 +1,8 @@
+## 3.3.26 / B018 (2026-10-21): clear short-phone challenge notices
+
+- Keep fitting challenge notices clear of the title and About on short portrait screens, using the reserved footer for the original toast lifetime.
+- Restore the secondary caption on expiry; preserve full accessible messages, original fades, control targets and longer-message fallbacks. Round history: [B018](rounds/2026-10-21-B018.md).
+
 ## 3.3.25 / B017 (2026-10-21): readable compact-phone challenge captions
 
 - Keep complete challenge text above the original controls on cramped portrait screens, with a fixed readable font and space for camera motion.
