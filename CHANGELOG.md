@@ -1,3 +1,9 @@
+## 3.3.16 / B008 (2026-10-21): keep the counter clear
+
+- Shift and, where necessary, narrow a title that would overlap About on short screens. Preserve counter size, complete values and the title's height; use the actual disclosure bounds for local fonts and viewport changes.
+- Preserve board framing, buttons, About behavior, stage arrivals, saves, co-op and game rules. Clear layouts retain exact original title drawing.
+- Round history and validation: [B008](rounds/2026-10-21-B008.md).
+
 ## 3.3.15 / B007 (2026-10-21): readable challenge details
 
 - Give short landscape challenge details a fixed-size, word-wrapped side plaque where it fits clear of the board, title and controls. Preserve the complete remaining-move, time and ghost values.

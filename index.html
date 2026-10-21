@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.15'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.16'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -3436,6 +3436,26 @@ CabinetUI.prototype.challengeInlineStatus=function(label,detail,hasGhost,gs){
  let yy=y+12;for(const line of title){this.text(line,x+12,yy,12,UI_ART.highlight,'left',inner);yy+=17;}
  this.lineDivider(x+12,yy+1,inner);yy+=8;
  for(const line of body){this.text(line,x+12,yy,12,UI_ART.dim,'left',inner);yy+=17;}
+};
+
+/* B008: keep the cabinet title and challenge counter clear of About.
+   Move only a colliding title; board framing and input targets stay intact. */
+const jewelcraftTitleBeforeAbout=CabinetUI.prototype.titlePlaque;
+CabinetUI.prototype.titlePlaque=function(x,y,w,h,brandSize){
+ const a=this.app;
+ if(a.cssHeight<=640&&!a.expedition?.photo){
+  const summary=document.querySelector('#trontAbout > summary');
+  if(summary&&!summary.parentElement.open){
+   // One read of the stable DOM layout, with no DOM writes in the render loop.
+   // Measuring the real control also handles local fonts and viewport changes.
+   const r=summary.getBoundingClientRect();
+   if(r.width>0&&r.height>0&&x-3<r.right&&x+w+3>r.left&&y<r.bottom&&y+h+8>r.top){
+    const right=Math.min(a.cssWidth-12,r.left-12),width=Math.min(w,right-12);
+    if(width>=166){w=width;x=Math.max(12,Math.min(x,right-w));}
+   }
+  }
+ }
+ return jewelcraftTitleBeforeAbout.call(this,x,y,w,h,brandSize);
 };
 
 (async function boot(){let stage='GPU renderer';let app=null;try{

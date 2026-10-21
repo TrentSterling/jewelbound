@@ -32,7 +32,9 @@ Completed challenges use a horizontal result card on compact landscape screens w
 
 On short landscape screens with room beside the tray, challenge details use a readable gold-edged side plaque instead of shrinking over the controls.
 
-Built by Tront for Jennifer. Current version: 3.3.15.
+On short screens, the cabinet title leaves room for About so the challenge counter stays fully visible.
+
+Built by Tront for Jennifer. Current version: 3.3.16.
 
 ## Tech
 
