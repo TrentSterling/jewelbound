@@ -1,3 +1,9 @@
+## 3.3.22 / B014 (2026-10-21): reachable menu return
+
+- Keep Back and Audio clear of About on short screens, preserving their full target size and original actions.
+- Fit complete menu headings beside the return control while retaining menu body, tabs and scrolling. Noncolliding layouts stay unchanged.
+- Round history and validation: [B014](rounds/2026-10-21-B014.md).
+
 ## 3.3.21 / B013 (2026-10-21): readable high-contrast results
 
 - Keep crystal outlines and puzzle target marks beneath all normal finished-run cards, including phone portrait, desktop and short landscape. Exposed board outlines remain visible.
