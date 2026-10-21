@@ -1,3 +1,9 @@
+## 3.3.17 / B009 (2026-10-21): readable narrow-screen challenge details
+
+- Give narrow landscape challenge details a fixed-size side plaque where the full text fits, instead of shrinking them over Play and Journey. Keep the existing board, title, buttons and all input targets.
+- Preserve the larger side plaques and exact original drawing when available space is insufficient, during AA comparison or after challenge completion.
+- Round history and validation: [B009](rounds/2026-10-21-B009.md).
+
 ## 3.3.16 / B008 (2026-10-21): keep the counter clear
 
 - Shift and, where necessary, narrow a title that would overlap About on short screens. Preserve counter size, complete values and the title's height; use the actual disclosure bounds for local fonts and viewport changes.

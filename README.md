@@ -34,7 +34,9 @@ On short landscape screens with room beside the tray, challenge details use a re
 
 On short screens, the cabinet title leaves room for About so the challenge counter stays fully visible.
 
-Built by Tront for Jennifer. Current version: 3.3.16.
+Narrow landscape screens also give challenge details a readable side plaque when there is enough room, keeping the Play and Journey labels clear.
+
+Built by Tront for Jennifer. Current version: 3.3.17.
 
 ## Tech
 
