@@ -1,3 +1,8 @@
+## 3.3.25 / B017 (2026-10-21): readable compact-phone challenge captions
+
+- Keep complete challenge text above the original controls on cramped portrait screens, with a fixed readable font and space for camera motion.
+- Preserve original control targets and already readable layouts. Round history: [B017](rounds/2026-10-21-B017.md).
+
 ## 3.3.24 / B016 (2026-10-21): target seals follow the correct gem
 
 - Keep puzzle target seals inside their own projected cells on compact screens, so the mark cannot point to a gem in another row.
