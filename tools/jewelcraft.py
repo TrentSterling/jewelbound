@@ -51,7 +51,7 @@ def apply(html):
     rep("window.gemsTogether=app;", "window.jewelbound=app;")
     rep("link.download='gems-together-'", "link.download='jewelbound-'")
     rep('const x=bt.x,w=bt.w,yy=bt.y+bt.h+12,f=', 'const x=16,w=a.cssWidth-32,yy=bt.y+bt.h+12,f=')
-    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.3.29'")
+    rep("wordmark:'JEWELBOUND',version:'3.3.7'", "wordmark:'JEWELBOUND',version:'3.4.0'")
     # B005: one shared camera target keeps scene, picking and stable HUD aligned.
     rep('framing=cabinetFraming(w,h),z=framing.distance;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62,z],[0,0,0],[0,1,0]));',
         'framing=cabinetFraming(w,h),z=framing.distance,targetY=framing.targetY||0;const stable=matMul(perspective(42*PI/180,aspect,.1,150),lookAt([0,.62+targetY,z],[0,targetY,0],[0,1,0]));')

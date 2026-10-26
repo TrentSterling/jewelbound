@@ -61,7 +61,7 @@ html,body{background:#080810}#loading{background:radial-gradient(ellipse at 50% 
    Rebrand release 3.2: keep the V3.1 wire IDs and storage keys stable. They are
    compatibility identifiers, NOT visible branding. This avoids splitting the
    public room or resetting settings/checkpoints on the same origin. */
-const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.3.29'});
+const GAME_BRAND=Object.freeze({name:'Jewelbound',wordmark:'JEWELBOUND',version:'3.4.0'});
 class SeededRandom {
   constructor(seed=0x7b0915){this.state=seed>>>0 || 1;}
   next(){let x=this.state; x^=x<<13; x^=x>>>17; x^=x<<5; this.state=x>>>0; return this.state/4294967296;}
@@ -408,6 +408,8 @@ vec3 shade(vec3 pos,vec3 norm,vec3 base,float kind,vec3 lp,vec2 tuv,float energy
    if(kind<2.5){col=livingJewel(col,base,n,r,rr,lp,pos,v,seed,hover,energy,life);}
    if(special>1.5){vec3 rainbow=vec3(0.5)+0.5*cos(vec3(0.0,2.1,4.2)+vec3(lp.y*9.0+lp.x*6.0+clock));col=mix(col,col*0.45+rainbow*1.15,0.62);col+=vec3(0.25)*fres;}
    if(special>0.5){col=chargedInlay(col,base,lp,footprint,special,life.x,seed,hover,energy);}
+   }else if(kind>9.5&&kind<10.5){
+    col=base*(0.18+0.44*ndl)+e*base*(0.055+fres*0.10)+base*spec*0.35+base*energy*0.5;
    }else if(kind>7.5&&kind<9.5){
     col=base*(0.30+max(energy,0.0)*2.1);
   }else if(kind>0.5&&kind<1.5){
@@ -1428,15 +1430,16 @@ class CabinetUI {
    this.text('Anti-aliasing',x,y+4,16,UI_ART.highlight);const aw=(w-8)/2;[['off','Off'],['fxaa','FXAA'],['msaa','4x MSAA'],['hybrid','MSAA + FXAA']].forEach(([id,label],i)=>this.button('aa-mode-'+id,label,x+(i%2)*(aw+8),y+32+Math.floor(i/2)*46,aw,38,a.prefs.aaMode===id));this.text('Active: '+({off:'Off',fxaa:'FXAA',msaa:'4x MSAA',hybrid:'4x MSAA + FXAA'})[a.effectiveAA],x,y+130,12,UI_ART.aqua);this.slider('aa-strength',a.effectiveAA==='fxaa'||a.effectiveAA==='hybrid'?'FXAA strength':'FXAA strength (inactive)',a.prefs.aaStrength,0,100,5,x,y+159,w,'%');this.slider('sharpness','Sharpness',a.prefs.sharpness,0,50,5,x,y+225,w,'%');this.slider('render-scale','Render scale',a.prefs.quality*100,50,200,5,x,y+291,w,'%');this.text(a.renderer.width+' x '+a.renderer.height+' / '+Math.round(a.aaInfo().actualScale*100)+'% native',x,y+349,12,UI_ART.dim);this.text(!a.renderer.msaaSupported?'4x unavailable. Using FXAA fallback.':Math.abs(a.aaInfo().actualScale-a.prefs.quality)>.01?'Resolution capped for memory.':'Above 100%: supersampling.',x,y+376,12,UI_ART.dim);this.button('aa-compare','Freeze and compare AA',x,y+404,w,42);this.lineDivider(x,y+464,w);
    const yy=y+486;this.text('Render preset',x,yy+13,15);this.button('quality',(({.75:'Light',1:'Balanced',1.4:'Ultra'})[a.prefs.quality]||Math.round(a.prefs.quality*100)+'%')+' >',x+w-126,yy,126,39);this.slider('juice','Juice',a.prefs.juice,50,150,5,x,yy+66,w,'%');this.toggle('motion','Camera motion',!!a.prefs.motion,x,yy+128,w);this.toggle('particles','Particles',!!a.prefs.particles,x,yy+187,w);this.text('Flashes',x,yy+259,15);this.button('flash',({full:'Full',low:'Low',off:'Off'})[a.prefs.flash||'full']+' >',x+w-126,yy+246,126,39);this.text('Out of moves',x,yy+318,15);this.button('end-run',(a.prefs.endRun?'End run':'Reshuffle')+' >',x+w-126,yy+305,126,39);this.lineDivider(x,yy+365,w);this.button('exp-comfort','Input and comfort',x,yy+386,w,42);this.button('fullscreen','Fullscreen',x,yy+439,w,42);this.button('new-board','New board',x,yy+495,w,42);end=yy+566;
   }else if(this.tab==='beauty'){
-   this.text('Living jewels',x,y+3,19,UI_ART.highlight,'left',w,.12,true);
-   this.slider('living-light','Living light',a.prefs.livingLight,0,150,5,x,y+56,w,'%');
-   this.slider('gem-polish','Gem polish',a.prefs.gemPolish,0,150,5,x,y+125,w,'%');
-   this.toggle('idle-motion','Idle motion',!!a.prefs.idleMotion,x,y+190,w);
-   this.lineDivider(x,y+247,w);
-   this.button('beauty-baseline','Original lighting',x,y+267,w,42,a.prefs.livingLight===0&&a.prefs.gemPolish===0);
-   this.button('beauty-restore','Restore living jewels',x,y+321,w,42);
-   this.text('Independent of animation speed.',x,y+384,12,UI_ART.dim,'left',w);
-   this.text('Freeze stops the complete scene.',x,y+411,12,UI_ART.dim,'left',w);end=y+450;
+   this.text('Cabinet and jewels',x,y+3,19,UI_ART.highlight,'left',w,.12,true);
+   this.button('jewelbound-season',a.season==='halloween'?'Halloween vault >':'Classic jewelcraft >',x,y+42,w,42);
+   this.slider('living-light','Living light',a.prefs.livingLight,0,150,5,x,y+124,w,'%');
+   this.slider('gem-polish','Gem polish',a.prefs.gemPolish,0,150,5,x,y+193,w,'%');
+   this.toggle('idle-motion','Idle motion',!!a.prefs.idleMotion,x,y+258,w);
+   this.lineDivider(x,y+315,w);
+   this.button('beauty-baseline','Original lighting',x,y+335,w,42,a.prefs.livingLight===0&&a.prefs.gemPolish===0);
+   this.button('beauty-restore','Restore living jewels',x,y+389,w,42);
+   this.text('Independent of animation speed.',x,y+452,12,UI_ART.dim,'left',w);
+   this.text('Freeze stops the complete scene.',x,y+479,12,UI_ART.dim,'left',w);end=y+518;
   }else if(this.tab==='lab'){
    this.text('Real boards. Real cascades.',x,y,15,UI_ART.aqua);this.button('lab-cascade','Nine-wave cascade',x,y+33,w,42);const bw=(w-9)/2;this.button('lab-prism','Prism test',x,y+88,bw,42);this.button('lab-blast','Blast test',x+bw+9,y+88,bw,42);this.button('lab-match','Match test',x,y+143,bw,42);this.button('lab-forge','Blast forge',x+bw+9,y+143,bw,42);this.button('lab-prismforge','Prism forge',x,y+198,bw,42);this.button('lab-stress','20,000 sparks',x+bw+9,y+198,bw,42);this.slider('anim-speed','Animation speed',a.animSpeed*100,35,150,5,x,y+264,w,'%');this.toggle('freeze','Freeze presentation',a.frozen,x,y+327,w);this.lineDivider(x,y+383,w);
    this.text(a.renderer.name+' / '+a.renderer.width+' x '+a.renderer.height,x,y+405,13,UI_ART.dim);this.text('UI: native GPU vector pass',x,y+433,13,UI_ART.aqua);this.text(Math.round(a.fps)+' fps / '+a.renderer.drawCalls+' draw calls',x,y+461,13,UI_ART.dim);this.text(a.world.sparks.active(a.time)+' sparks / '+a.world.shards.active(a.time)+' shards',x,y+489,13,UI_ART.dim);this.button('backend-restart',a.renderer.gl?'Restart with WebGPU':'Restart with WebGL 2',x,y+521,w,42);end=y+592;
@@ -1778,7 +1781,7 @@ class JewelApp {
   const islandInstances=[];const idleWorld=this.prefs.motion&&!this.frozen;
   for(const is of this.world.islands){const t=this.time*is.speed+is.phase;const bob=idleWorld?Math.sin(t)*is.bob:0;const yaw=idleWorld?Math.sin(t*.67)*is.twist:0;const pitch=idleWorld?Math.cos(t*.83)*is.pitch:0;const roll=idleWorld?Math.sin(t*.51+1.2)*is.roll:0;islandInstances.push(...packedInstance(trs([is.base[0],is.base[1]+bob,is.base[2]],[pitch,yaw,roll],[is.scale,is.scale,is.scale]),is.tint,0,-1));}
   r.upload(this.world.islandMesh,new Float32Array(islandInstances),this.world.islands.length);
-  this.world.sparks.flush();this.world.shards.flush();const meshes=[this.world.worldMesh,this.world.islandMesh,...this.world.gemMeshes,this.world.crown,this.world.orbit,this.world.specialMesh,this.world.halos,...cabinetMeshes];const particles=this.prefs.particles?[...(this.fx.outgoingField?.mesh.count?[this.fx.outgoingField.mesh]:[]),this.fx.field.mesh,this.world.shards.mesh,this.world.sparks.mesh,this.world.ambient.mesh]:[];r.render(meshes,particles);this.frameCount++;if(this.ui)this.ui.draw();
+  this.world.sparks.flush();this.world.shards.flush();const meshes=[this.world.worldMesh,this.world.islandMesh,...this.world.gemMeshes,...(this.season==='halloween'?this.seasonMeshes():[this.world.crown,this.world.orbit]),this.world.specialMesh,this.world.halos,...cabinetMeshes];const particles=this.prefs.particles?[...(this.fx.outgoingField?.mesh.count?[this.fx.outgoingField.mesh]:[]),this.fx.field.mesh,this.world.shards.mesh,this.world.sparks.mesh,this.world.ambient.mesh]:[];r.render(meshes,particles);this.frameCount++;if(this.ui)this.ui.draw();
  }
  updateUI(force=false){if(!force&&this.wallTime-this.lastUI<.12)return;this.lastUI=this.wallTime;$('score').textContent=Math.round(this.displayScore).toLocaleString();$('best').textContent=this.best.toLocaleString();$('moves').textContent=this.board.moves+' move'+(this.board.moves===1?'':'s');$('renderer').innerHTML='<b>'+this.renderer.name.toUpperCase()+'</b>'; 
   if(this.panelOpen){$('stats').textContent=`${this.renderer.name} · ${this.renderer.width} × ${this.renderer.height}\n${Math.round(this.fps)} FPS · ${this.renderer.drawCalls} draw calls\n${this.actors.size} jewels · ${this.world.triangles.toLocaleString()} environment triangles\n${this.world.sparks.active(this.time).toLocaleString()} sparks · ${this.world.shards.active(this.time).toLocaleString()} shards\nState: ${this.phase} · longest cascade: ${this.maxCascadeSeen}\nAudio voices: ${this.audio.voices.length} / 28`;}}
@@ -3904,6 +3907,183 @@ CabinetUI.prototype.drawGameOver=function(...args){
   try{this.ink.opacity=l.opacity;l.rows.forEach((row,i)=>this.text(row,l.cx,l.ys[i],l.font,UI_ART.highlight,'center',l.max));}finally{this.ink.opacity=opacity;}
  }
  return result;
+};
+
+/* Halloween vault: opaque, merged jewellery, local cosmetic preference only.
+   The playable jewels, their contours, co-op state and progression are unchanged. */
+const JEWELBOUND_SEASON_KEY='jewelbound-season-v1';
+function jewelboundSeason(saved=readStorage(JEWELBOUND_SEASON_KEY,null),month=new Date().getMonth()){
+ return saved==='halloween'||saved==='classic'?saved:month===9?'halloween':'classic';
+}
+// Ear-clipped concave faces retain scalloped wing and tooth silhouettes instead
+// of overlapping triangle fans. Each carving is made once at world creation.
+function halloweenFace(g,points,col,kind,z=.0){
+ const area=points.reduce((s,p,i)=>{const q=points[(i+1)%points.length];return s+p[0]*q[1]-q[0]*p[1];},0);
+ const ids=points.map((_,i)=>i);if(area<0)ids.reverse();
+ const cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+ const at=p=>[p[0],p[1],typeof z==='function'?z(p):z];
+ for(let budget=points.length*points.length;ids.length>2&&budget-->0;){
+  let clipped=false;
+  for(let i=0;i<ids.length;i++){
+   const ai=ids[(i+ids.length-1)%ids.length],bi=ids[i],ci=ids[(i+1)%ids.length],a=points[ai],b=points[bi],c=points[ci];
+   if(cross(a,b,c)<=1e-8)continue;
+   if(ids.some(k=>k!==ai&&k!==bi&&k!==ci&&cross(a,b,points[k])>=-1e-8&&cross(b,c,points[k])>=-1e-8&&cross(c,a,points[k])>=-1e-8))continue;
+   g.tri(at(a),at(b),at(c),col,kind);ids.splice(i,1);clipped=true;break;
+  }
+  if(!clipped)throw Error('Invalid Halloween carving contour');
+ }
+ return g;
+}
+function halloweenCarve(g,outline,inside,z,scale=.76){
+ const center=outline.reduce((p,q)=>[p[0]+q[0]/outline.length,p[1]+q[1]/outline.length],[0,0]);
+ const inner=outline.map(p=>[center[0]+(p[0]-center[0])*scale,center[1]+(p[1]-center[1])*scale]);
+ const dark=color('#090813');
+ // Unlit cavity walls cannot reflect a white studio highlight into an eye.
+ for(let i=0;i<outline.length;i++){const j=(i+1)%outline.length,a=outline[i],b=outline[j],c=inner[j],d=inner[i];g.quad([...a,z+.012],[...b,z+.012],[...c,z],[...d,z],dark,8);}
+ halloweenFace(g,inner,inside,8,z);
+}
+function halloweenPumpkin(){
+ const g=new Geo(),amber=color('#ed861f'),dark=color('#171021'),gold=color('#ba9858');
+ const point=(row,i)=>{const t=row/8*PI,a=i/16*TAU,r=Math.sin(t)*(.49+.035*Math.cos(a*8));return [Math.cos(a)*r,Math.cos(t)*.43,Math.sin(a)*r];};
+ for(let j=0;j<8;j++)for(let i=0;i<16;i++){
+  const c=vmul(amber,.78+.22*(i%2));
+  g.quad(point(j,i),point(j,i+1),point(j+1,i+1),point(j+1,i),c,10);
+ }
+ // Deep black-onyx inlays follow the front facets; no alpha or light objects.
+ const ember=color('#381407');
+ for(const s of [-1,1])halloweenCarve(g,[[s*.055,.075],[s*.31,.10],[s*.235,.28]],ember,.553,.64);
+ halloweenCarve(g,[[-.063,-.065],[.063,-.065],[0,.035]],dark,.558,.65);
+ const mouth=[[-.32,-.11],[-.20,-.13],[-.17,-.20],[-.10,-.20],[-.10,-.14],[.04,-.15],[.04,-.215],[.115,-.215],[.15,-.14],[.32,-.11],[.23,-.29],[.11,-.33],[-.09,-.32],[-.23,-.27]];
+ halloweenCarve(g,mouth,ember,.548,.79);
+ // Sparse chased-brass ribs frame the amber lobes without turning it into a cage.
+ for(const s of [-1,1])g.tube([[s*.31,-.27,.30],[s*.42,0,.30],[s*.30,.28,.27]],.008,gold,1,4);
+ g.tube([[0,.38,0],[.035,.57,.015],[.14,.64,.025]],.055,gold,1,5);
+ g.tri([.04,.47,.05],[.29,.52,.06],[.14,.38,.13],color('#668c49'),7);
+ return g;
+}
+function halloweenSkull(){
+ const g=new Geo(),ivory=color('#e4d6bd'),onyx=color('#110e19');
+ const outline=[[-.16,.46],[.16,.46],[.31,.34],[.37,.16],[.32,-.05],[.23,-.15],[.13,-.22],[-.13,-.22],[-.23,-.15],[-.32,-.05],[-.37,.16],[-.31,.34]];
+ const inset=outline.map(([x,y])=>[x*.83,y*.84+.02]);
+ for(let i=0;i<outline.length;i++){const j=(i+1)%outline.length;g.quad([...outline[i],.02],[...outline[j],.02],[...inset[j],.27],[...inset[i],.27],vmul(ivory,i%3===0?.86:1),0);g.quad([...outline[j],-.15],[...outline[i],-.15],[...outline[i],.02],[...outline[j],.02],vmul(ivory,.72),0);}
+ halloweenFace(g,inset,ivory,0,.27);
+ g.box(0,-.255,.07,.34,.16,.23,onyx,8);
+ for(const s of [-1,1]){
+  const eye=[[s*.055,.17],[s*.12,.25],[s*.265,.205],[s*.255,.055],[s*.14,.015],[s*.065,.07]];
+  halloweenCarve(g,eye,onyx,.292,.80);
+  g.tri([s*.24,-.105,.24],[s*.32,.01,.18],[s*.20,-.25,.21],ivory,0);
+ }
+ halloweenCarve(g,[[-.055,-.14],[0,-.035],[.055,-.14],[0,-.17]],onyx,.30,.72);
+ for(const x of [-.14,-.07,0,.07,.14])g.box(x,-.29,.24,.052,.16-Math.abs(x)*.20,.07,ivory,0);
+ g.tube([[-.20,-.33,.13],[-.13,-.41,.15],[.13,-.41,.15],[.20,-.33,.13]],.035,ivory,0,5);
+ return g;
+}
+function halloweenBat(){
+ const g=new Geo(),ink=color('#70518e'),edge=color('#b39b68');
+ const wing=[[.04,.10],[.20,.28],[.44,.43],[.83,.40],[.68,.12],[.58,-.07],[.43,.03],[.34,-.20],[.22,-.06],[.12,-.28],[.045,-.06]];
+ for(const s of [-1,1]){
+  halloweenFace(g,wing.map(([x,y])=>[s*x,y]),ink,10,p=>.035+.07*Math.sin(Math.abs(p[0])*4.5));
+  g.tube(wing.slice(0,4).map(([x,y])=>[s*x,y,.10]),.008,edge,1,4);
+  for(const [x,y] of [[.58,.07],[.34,-.08],[.12,-.20]])g.tube([[s*.08,.13,.12],[s*x,y,.08]],.006,color('#ae85b4'),0,4);
+ }
+ g.append(tintGeo(gemGeometry(3,7),color('#33223e')),trs([0,0,.065],[0,0,0],[.25,.57,.35]));
+ for(const s of [-1,1])g.tri([s*.025,.20,.09],[s*.115,.37,.03],[s*.11,.12,.10],ink,7);
+ return g;
+}
+function buildHalloweenVault(renderer){
+ const g=new Geo(),gold=color('#ac8751'),violet=color('#ad86dc'),green=color('#8cb66b');
+ const pumpkin=halloweenPumpkin(),skull=halloweenSkull(),bat=halloweenBat();
+ const place=(mesh,p,s,rz=0)=>g.append(mesh,trs(p,[0,0,rz],Array.isArray(s)?s:[s,s,s]));
+ // Jewel-cut lantern finials and ivory memento-mori at the original mounts.
+ for(const s of [-1,1]){
+  place(pumpkin,[s*4.12,4.09,.38],.64,s*-.09);
+  place(skull,[s*4.13,-4.08,.46],.73,s*.08);
+  place(pumpkin,[s*5.40,-.02,.45],1.15,s*-.12);
+  g.tube([[s*4.28,-.08,.17],[s*5.03,-.08,.22],[s*5.4,-.57,.24]],.032,gold,1,5);
+  // Amethyst bats perch outside the playable aperture.
+  place(bat,[s*5.05,2.25,.13],.80,s*-.15);
+  place(bat,[s*7.35,1.55,-5],.85,s*.10);
+  // Fine gold cobweb filigree stays strictly outside the tray.
+  const anchor=[s*4.30,3.95,.12];
+  for(let k=0;k<5;k++){
+   const a=k/4*PI/2;
+   g.tube([anchor,[anchor[0]+s*Math.cos(a)*1.12,anchor[1]-Math.sin(a)*1.12,.12]],.007,gold,1,4);
+  }
+  for(const radius of [.35,.66,.98]){
+   const points=[];for(let k=0;k<=8;k++){const a=k/8*PI/2,r=radius*(k%2?.85:1);points.push([anchor[0]+s*Math.cos(a)*r,anchor[1]-Math.sin(a)*r,.13]);}
+   g.tube(points,.006,gold,1,4);
+  }
+  // Three spectral-green crystal candles, built into the lower side pedestals.
+  for(let k=0;k<3;k++){
+   const x=s*(4.75+k*.30),y=-2.6-k*.18;
+   g.cylinder([x,y-.22,.05],.105,.14,.65+k*.16,color('#343046'),0,7);
+   g.cylinder([x,y-.55-k*.08,.05],.19,.23,.10,gold,1,8);
+   place(tintGeo(gemGeometry(5,7),green),[x,y+.19+k*.08,.08],[.24,.43,.24],s*.07);
+  }
+  // Distant pumpkin grotto, recessed behind UI and the cabinet.
+  for(let k=0;k<3;k++)place(pumpkin,[s*(6.1+k*1.1),-4.65+k*.05,-3.8-k*2],.85+k*.24,s*(k-.5)*.2);
+  g.tube([[s*4.27,-3.85,.14],[s*4.45,-3.10,.08],[s*4.33,-2.2,.09],[s*4.53,-1.3,.05]],.035,color('#413748'),0,5);
+  for(let k=0;k<4;k++)place(tintGeo(gemGeometry(5,7),violet),[s*(4.43+k%2*.16),-3.5+k*.55,.12],[.18,.29,.16],s*(.6+k*.15));
+ }
+ // Amber crown with onyx wings; it replaces the original crown only in this theme.
+ const crownGeo=new Geo();
+ crownGeo.append(pumpkin,trs([0,4.72,.15],[0,0,0],[.68,.68,.68]));
+ crownGeo.append(bat,trs([0,4.63,-.15],[0,0,0],[1.65,.86,.8]));
+ place(skull,[0,-4.44,.49],.46);
+ const data=g.data(),crownData=crownGeo.data(),batData=bat.data(),mesh=renderer.createMesh(data,1),crown=renderer.createMesh(crownData,1),flight=renderer.createMesh(batData,12),instance=new Float32Array(packedInstance(identity()));
+ renderer.upload(mesh,instance,1);
+ renderer.upload(crown,instance,1);
+ return {mesh,crown,flight,flightData:new Float32Array(12*24),flightAt:-100,flightTier:0,instance,triangles:(data.length+crownData.length)/36,crownTriangles:crownData.length/36,batTriangles:batData.length/36,bytes:data.byteLength+crownData.byteLength+batData.byteLength,energy:-1};
+}
+const jewelboundOriginalWorld=buildWorld;
+buildWorld=function(renderer){const w=jewelboundOriginalWorld(renderer);w.halloween=buildHalloweenVault(renderer);return w;};
+const jewelboundOriginalPreferences=JewelApp.prototype.applyPreferences;
+JewelApp.prototype.applyPreferences=function(...args){
+ if(!this.season)this.season=jewelboundSeason();
+ return jewelboundOriginalPreferences.apply(this,args);
+};
+JewelApp.prototype.setSeason=function(season){
+ if(!['classic','halloween'].includes(season))return false;
+ if(this.season!==season&&this.world?.halloween){this.world.halloween.flightAt=-100;this.world.halloween.flight.count=0;}
+ this.season=season;writeStorage(JEWELBOUND_SEASON_KEY,season);return true;
+};
+JewelApp.prototype.seasonMeshes=function(){
+ const h=this.world.halloween;if(this.season!=='halloween')return [];
+ // Existing earned crown energy warms cut-amber facets, with no new flash clock.
+ const energy=({off:0,low:.35}[this.prefs.flash]??1)*Math.min(.40,this.presentation.crownEnergy*.20+this.juice*.08);
+ if(energy!==h.energy){h.instance.set(packedInstance(identity(),[1,1,1],energy,-1));this.renderer.upload(h.mesh,h.instance,1);this.renderer.upload(h.crown,h.instance,1);h.energy=energy;}
+ // The existing portrait HUD occludes the crown's middle. Omit it as a whole
+ // rather than leave a fragment between the title and score. Photos keep it.
+ const portrait=this.cssWidth<600&&this.cssHeight>this.cssWidth&&!this.expedition?.photo;
+ const meshes=portrait?[h.mesh]:[h.mesh,h.crown],age=this.time-h.flightAt;
+ if(this.prefs.particles&&this.prefs.motion&&age>=0&&age<2.2){
+  const n=Math.min(6,h.flightTier+1),envelope=Math.min(1,age/.18,(2.2-age)/.4);let count=0;
+  for(const s of [-1,1])for(let k=0;k<n;k++){
+   const t=age+k*.12,sc=(.20+k*.018)*envelope;
+   // Begin above the side HUD cards so repeated cascades cannot hide the flock.
+   const p=[s*(4.72+k*.35+age*.22),2.65+t*.85,.36];
+   const m=trs(p,[0,s*Math.sin(t*10+k)*.35,s*(-.12+.1*Math.sin(t*3))],[sc,sc,sc]);
+   h.flightData.set(packedInstance(m,[1,1,1],0,-1),count++*24);
+  }
+  this.renderer.upload(h.flight,h.flightData.subarray(0,count*24),count);meshes.push(h.flight);
+ }else h.flight.count=0;
+ return meshes;
+};
+const jewelboundSeasonFeed=JewelPresentation.prototype.feed;
+JewelPresentation.prototype.feed=function(center,cascade,mode,points){
+ const result=jewelboundSeasonFeed.call(this,center,cascade,mode,points),a=this.app,h=a.world.halloween;
+ if(a.season==='halloween'&&(cascade>=3||mode==='prism'||mode==='blast')){h.flightAt=a.time;h.flightTier=Math.max(2,Math.min(5,cascade));}
+ return result;
+};
+const jewelboundSeasonReset=JewelPresentation.prototype.reset;
+JewelPresentation.prototype.reset=function(...args){
+ const h=this.app.world?.halloween;if(h){h.flightAt=-100;h.flight.count=0;}
+ return jewelboundSeasonReset.apply(this,args);
+};
+const jewelboundSeasonActivate=CabinetUI.prototype.activate;
+CabinetUI.prototype.activate=function(id,...args){
+ if(id==='jewelbound-season'){this.app.setSeason(this.app.season==='halloween'?'classic':'halloween');return;}
+ return jewelboundSeasonActivate.call(this,id,...args);
 };
 
 (async function boot(){let stage='GPU renderer';let app=null;try{

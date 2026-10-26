@@ -8,6 +8,19 @@ science-fiction decoration and clutter. The original Gems Together notes below
 remain historical context; this Jewelbound direction supersedes their garden
 setting and branding.
 
+## Halloween vault
+
+Seasonal jewellery stays outside the playable aperture: carved amber pumpkins,
+black onyx cavities, ivory skulls, amethyst bats, fine gold webs and muted green
+crystal candles. Keep the original six gem cuts and colours intact. Use distinct
+silhouettes and quiet space between the webs and bats.
+
+Cache opaque geometry in the existing renderer. The seasonal lapidary material
+keeps amber saturated and cavity floors free of white reflections. No new
+textures, transparency, post-processing, light objects or sound. Earned crown
+energy warms the carvings; bounded bat flights remain outside the tray and
+respect motion/particle preferences. Classic is an immediate visual reversion.
+
 ## Gems Together: historical art bible
 
 The rules every patch follows. Tront's calls override research. The deep Tetris Effect / Lumines handoff is recorded in `research/DEEP-RESEARCH-COMBO-SPECTACLE.md`; `research/TETRIS-EFFECT-DEEP-DIVE.md` is the short pass.

@@ -14,13 +14,21 @@ recordings are skipped without changing any recording bytes.
 Do not import ignored local references or private development assets. Browser
 verification targets https://tront.xyz/jewelbound/ with `#solo=1` or private rooms.
 
-The final build pass is `tools/jewelcraft.py`, with adjacent world, lighting, sky
+The jewelcraft build pass is `tools/jewelcraft.py`, with adjacent world, lighting, sky
 and UI sources. Run `python tools/polish.py` to regenerate `index.html`. Keep game
 rules, co-op, save keys and input semantics out of this presentation pass. Its
 typography uses a local system-font atlas inside both GPU backends, including
 photo exports; it needs no remote fonts or new dependencies. The direction is an
 obsidian jewelcraft vault, cut crystals, restrained antique gold and readable
 ivory type. Capture matched receipts with `node tools/jewelcraft-capture.mjs`.
+
+The final seasonal pass is `tools/halloween.py`, injecting
+`tools/jewelcraft-halloween.js`. Its separate `jewelbound-season-v1` preference
+never enters shared co-op configuration. Rebuild through `tools/polish.py`.
+`tests/halloween.cjs` checks preserved source, geometry/flight bounds and local
+theme state. Version 3.4.0 is currently an unreleased candidate: simulated input
+and live-WebAudio gates remain held by the user's current restriction. Direct
+state/render receipts do not complete those unchanged gates.
 
 ---
 

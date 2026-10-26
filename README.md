@@ -6,6 +6,14 @@ An independent branch of [Gems Together](https://github.com/TrentSterling/gemsto
 
 Play it: **https://tront.xyz/jewelbound/**
 
+Halloween vault (3.4.0 candidate) adds carved amber jack-o'-lanterns, ivory skull
+mounts, amethyst bats, gold webs and spectral crystal candles around the original
+board. Earned cascades release a short bat flight outside the playable tray.
+Choose **Settings > Jewels > Halloween vault / Classic jewelcraft** at any time.
+October selects Halloween for players without an explicit preference; your
+selection persists locally in every season. Themes preserve shared boards,
+saves, progression, playable jewel shapes and rules.
+
 ![Jewelbound](og-image.png)
 
 A co-op match-three game on one shared 3D jewel board. Tap a gem and its neighbour, drag, or use a controller to line up three or more. Cascades chain into combos, and bigger matches forge charged gems: blast gems that detonate their surroundings and prisms that shimmer through the spectrum.
