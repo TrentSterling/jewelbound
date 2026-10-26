@@ -13,6 +13,9 @@ Choose **Settings > Jewels > Halloween vault / Classic jewelcraft** at any time.
 October selects Halloween for players without an explicit preference; your
 selection persists locally in every season. Themes preserve shared boards,
 saves, progression, playable jewel shapes and rules.
+On portrait phones, up to six small cascade bats follow the visible outer rails;
+they stay clear of jewels and controls, and disappear with reduced motion or when
+the event ends.
 
 ![Jewelbound](og-image.png)
 

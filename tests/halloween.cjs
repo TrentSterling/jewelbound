@@ -42,3 +42,20 @@ test('earned bat flights stay outside the board, expire, freeze, and respect com
  a.prefs.motion=false;a.seasonMeshes();assert.equal(h.flight.count,0);a.prefs.motion=true;a.prefs.particles=false;a.seasonMeshes();assert.equal(h.flight.count,0);a.prefs.particles=true;a.time=2.21;a.seasonMeshes();assert.equal(h.flight.count,0);
  a.presentation={crownEnergy:1};a.time=1;a.prefs.flash='full';a.seasonMeshes();const full=h.energy;a.prefs.flash='low';a.seasonMeshes();assert.equal(h.energy,full*.35);a.prefs.flash='off';a.seasonMeshes();assert.equal(h.energy,0);
 });
+
+test('phone flights project inside the viewport and outside the live tray through camera punch',()=>{
+ const f=fixture();
+ vm.runInContext(part(html,'const jewelcraftOriginalFraming=cabinetFraming;','/* B006:')+part(html,'const jewelcraftBeforeFooterFraming=cabinetFraming;','const jewelcraftBeforeFooterRail=')+'\nObject.assign(JewelApp.prototype,{'+part(html,' updateCamera(){','\n draw(){')+'});this.projectPoint=(p,a)=>project(p,a.vp,a.cssWidth,a.cssHeight);this.transformPoint=transform;',f.context);
+ const a=new f.JewelApp();Object.assign(a,{renderer:f.renderer,world:{halloween:f.context.make(f.renderer)},prefs:{flash:'off',particles:true,motion:true},presentation:{crownEnergy:0},juice:0,season:'halloween',expedition:{}});
+ const h=a.world.halloween;h.flightAt=0;h.flightTier=5;
+ for(const [w,H] of [[320,568],[320,720],[390,664],[390,844]])for(const punch of [0,1.2])for(const time of [.2,.6,1.2,1.79]){
+  Object.assign(a,{cssWidth:w,cssHeight:H,punch,shake:.85,time});a.updateCamera();a.seasonMeshes();assert.equal(h.flight.count,6,`${w}x${H} visible phone flock`);
+  const c=[[-3.78,4.02,.9],[3.78,4.02,.9],[-3.78,-4.1,.9],[3.78,-4.1,.9]].map(p=>f.context.projectPoint(p,a)),left=Math.min(...c.map(p=>p[0])),right=Math.max(...c.map(p=>p[0])),top=Math.min(...c.map(p=>p[1])),bottom=Math.max(...c.map(p=>p[1]));
+  for(let i=0;i<h.flight.count;i++){
+   const m=h.flight.instances.subarray(i*24,i*24+16),points=[];
+   for(let j=0;j<h.flight.data.length;j+=12){const p=f.context.projectPoint(f.context.transformPoint(m,h.flight.data.subarray(j,j+3)),a);points.push(p);assert(p[0]>=1&&p[0]<=w-1,'bat clipped by viewport');assert(p[0]<left-2||p[0]>right+2,'bat overlaps tray');assert(p[1]>top+12&&p[1]<bottom-12,'bat enters header or controls');}
+   assert(Math.max(...points.map(p=>p[0]))-Math.min(...points.map(p=>p[0]))>=6,'phone silhouette too small');
+  }
+ }
+ a.prefs.motion=false;a.seasonMeshes();assert.equal(h.flight.count,0);a.prefs.motion=true;a.panelOpen=true;a.seasonMeshes();assert.equal(h.flight.count,0);a.panelOpen=false;a.time=2.21;a.seasonMeshes();assert.equal(h.flight.count,0);assert.equal(f.meshes.length,3);
+});

@@ -2,6 +2,7 @@
 
 - Add a reversible Halloween cabinet with faceted amber jack-o-lanterns, carved ivory skulls, amethyst bats, gold web filigree and crystal candles. Keep all six playable jewel silhouettes and colors.
 - Send a bounded flock around the outside of the tray on big cascades and special clears. Respect motion, particles and flash preferences; retain the original feedback in Classic.
+- Fit portrait flights to the visible outer rails at 320/390px, with at most six small bats and no added idle clutter, meshes or render passes.
 - Choose Halloween or Classic in Settings > Jewels. October defaults to Halloween; an explicit choice persists independently of saves, progression and co-op state.
 - Build opaque cached geometry through the existing WebGPU/WebGL2 renderers. Preserve game rules, audio, original assets and source drop.
 - Local candidate only: required browser input and live WebAudio continuity checks remain pending permission. No release or CI bypass.

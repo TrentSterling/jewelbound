@@ -20,6 +20,11 @@ keeps amber saturated and cavity floors free of white reflections. No new
 textures, transparency, post-processing, light objects or sound. Earned crown
 energy warms the carvings; bounded bat flights remain outside the tray and
 respect motion/particle preferences. Classic is an immediate visual reversion.
+Portrait feedback uses at most three small bats per outer rail. Size and place
+them from the current and stable projected jewel aperture, including camera
+punch; preserve visible gutters, score text and controls. Do not fill the board
+with scaled-up desktop ornaments. No transient flock remains on the settled
+board or with reduced motion.
 
 ## Gems Together: historical art bible
 

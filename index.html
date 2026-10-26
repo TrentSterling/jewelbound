@@ -4037,6 +4037,38 @@ function buildHalloweenVault(renderer){
 }
 const jewelboundOriginalWorld=buildWorld;
 buildWorld=function(renderer){const w=jewelboundOriginalWorld(renderer);w.halloween=buildHalloweenVault(renderer);return w;};
+// Invert only the projected z-plane. This keeps the existing opaque bat mesh
+// inside measured phone gutters without a HUD overlay or a new render pass.
+function halloweenScreenPoint(m,w,h,x,y,z){
+ const u=x/w*2-1,v=1-y/h*2,A=m[0]-u*m[3],B=m[4]-u*m[7],C=u*(m[11]*z+m[15])-m[8]*z-m[12];
+ const D=m[1]-v*m[3],E=m[5]-v*m[7],F=v*(m[11]*z+m[15])-m[9]*z-m[13],det=A*E-B*D;
+ return [(C*E-B*F)/det,(A*F-C*D)/det,z];
+}
+function halloweenPhoneFlight(a,h,age,envelope){
+ if(a.panelOpen||a.aaCompare||a.expedition?.run?.finished)return 0;
+ const w=a.cssWidth,H=a.cssHeight,f=cabinetFraming(w,H),y=f.targetY||0;
+ const stable=matMul(perspective(42*PI/180,w/H,.1,150),lookAt([0,.62+y,f.distance],[0,y,0],[0,1,0]));
+ // Union the live and stable tray envelope: shake/punch never move the flock
+ // into a jewel, score plaque or lower control rail. No stale HUD rectangles.
+ const corners=[];for(const m of [a.vp,stable])for(const x of [-3.78,3.78])for(const y of [-4.1,4.02])corners.push(project([x,y,.9],m,w,H));
+ const left=Math.min(...corners.map(p=>p[0])),right=Math.max(...corners.map(p=>p[0]));
+ const top=Math.max(project([-4.02,4.02,.9],a.vp,w,H)[1],project([-4.02,4.02,.9],stable,w,H)[1])+24;
+ const bottom=Math.min(project([4.02,-4.1,.9],a.vp,w,H)[1],project([4.02,-4.1,.9],stable,w,H)[1])-24;
+ const span=bottom-top,n=Math.min(3,h.flightTier);let count=0;
+ if(span<48)return 0;
+ for(const side of [-1,1]){
+  const available=(side<0?left:w-right)-8,width=Math.min(19,available*.83);
+  if(width<7)continue;
+  for(let k=0;k<n;k++){
+   const cx=(side<0?left/2:w-(w-right)/2)+Math.sin(age*5+k)*.6;
+   const cy=bottom-(age/2.2*.65+k*.105)*span,sc=width/1.66*envelope*(.86+k*.07);
+   const p=halloweenScreenPoint(a.vp,w,H,cx,cy,.65),px=halloweenScreenPoint(a.vp,w,H,cx+1,cy,.65),py=halloweenScreenPoint(a.vp,w,H,cx,cy-1,.65);
+   const m=identity();m[0]=(px[0]-p[0])*sc;m[1]=(px[1]-p[1])*sc;m[4]=(py[0]-p[0])*sc;m[5]=(py[1]-p[1])*sc;m[10]=Math.hypot(m[0],m[1])*.35;m.set(p,12);
+   h.flightData.set(packedInstance(m,[1,1,1],0,-1),count++*24);
+  }
+ }
+ return count;
+}
 const jewelboundOriginalPreferences=JewelApp.prototype.applyPreferences;
 JewelApp.prototype.applyPreferences=function(...args){
  if(!this.season)this.season=jewelboundSeason();
@@ -4058,14 +4090,15 @@ JewelApp.prototype.seasonMeshes=function(){
  const meshes=portrait?[h.mesh]:[h.mesh,h.crown],age=this.time-h.flightAt;
  if(this.prefs.particles&&this.prefs.motion&&age>=0&&age<2.2){
   const n=Math.min(6,h.flightTier+1),envelope=Math.min(1,age/.18,(2.2-age)/.4);let count=0;
-  for(const s of [-1,1])for(let k=0;k<n;k++){
+  if(portrait)count=halloweenPhoneFlight(this,h,age,envelope);
+  else for(const s of [-1,1])for(let k=0;k<n;k++){
    const t=age+k*.12,sc=(.20+k*.018)*envelope;
    // Begin above the side HUD cards so repeated cascades cannot hide the flock.
    const p=[s*(4.72+k*.35+age*.22),2.65+t*.85,.36];
    const m=trs(p,[0,s*Math.sin(t*10+k)*.35,s*(-.12+.1*Math.sin(t*3))],[sc,sc,sc]);
    h.flightData.set(packedInstance(m,[1,1,1],0,-1),count++*24);
   }
-  this.renderer.upload(h.flight,h.flightData.subarray(0,count*24),count);meshes.push(h.flight);
+  this.renderer.upload(h.flight,h.flightData.subarray(0,count*24),count);if(count)meshes.push(h.flight);
  }else h.flight.count=0;
  return meshes;
 };
