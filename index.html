@@ -4024,8 +4024,9 @@ function buildHalloweenVault(renderer){
  const pumpkin=halloweenPumpkin(),skull=halloweenSkull(),bat=halloweenBat();
  const place=(mesh,p,s,rz=0)=>g.append(mesh,trs(p,[0,0,rz],Array.isArray(s)?s:[s,s,s]));
  for(const s of [-1,1]){
-  // The four strong corner finials carry the identity even on portrait phones.
-  place(pumpkin,[s*4.32,4.23,.40],.83,s*-.07);
+  // Rail lanterns keep complete faces below the phone score and on-screen
+  // through maximum camera punch; the broad crown carries the desktop hero art.
+  place(pumpkin,[s*4.08,3.40,.40],.48,s*-.07);
   place(skull,[s*4.18,-4.06,.46],.78,s*.065);
   // Articulated obsidian pilaster: all carving stays beyond the playable aperture.
   g.box(s*4.30,.03,-.02,.15,7.35,.24,obsidian,0);
@@ -4055,15 +4056,25 @@ function buildHalloweenVault(renderer){
  }
  const crownGeo=new Geo();
  // Wide, open-wing reliquary. Its crescent keeps a real negative-space opening.
- crownGeo.append(bat,trs([0,4.66,-.20],[0,0,0],[3.05,1.0,.8]));
- const crescent=[[-.18,5.37],[-.52,5.26],[-.76,5.00],[-.79,4.68],[-.59,4.43],[-.29,4.33],[-.10,4.40],[-.38,4.57],[-.46,4.79],[-.35,5.03],[-.10,5.20],[.15,5.24]];
+ crownGeo.append(bat,trs([0,4.97,-.20],[0,0,0],[3.05,.48,.8]));
+ const crescent=[[-.18,5.37],[-.52,5.26],[-.76,5.00],[-.79,4.68],[-.59,4.43],[-.29,4.33],[-.10,4.40],[-.38,4.57],[-.46,4.79],[-.35,5.03],[-.10,5.20],[.15,5.24]].map(([x,y])=>[x,(y-4.85)*.64+5.0]);
  halloweenRelief(crownGeo,crescent,color('#d9b66e'),.02,.10,.92);
- crownGeo.append(pumpkin,trs([0,4.68,.20],[0,0,0],[.72,.72,.72]));
- for(const s of [-1,1])crownGeo.tube([[s*.46,4.42,.27],[s*.37,4.29,.33],[s*.12,4.23,.32]],.025,gold,1,5);
+ crownGeo.append(pumpkin,trs([0,5.0,.20],[0,0,0],[.50,.50,.50]));
+ for(const s of [-1,1])crownGeo.tube([[s*.32,4.86,.27],[s*.27,4.70,.33],[s*.10,4.65,.32]],.025,gold,1,5);
  place(skull,[0,-4.44,.49],.43);
- const data=g.data(),crownData=crownGeo.data(),batData=halloweenBat(false).data(),mesh=renderer.createMesh(data,1),crown=renderer.createMesh(crownData,1),flight=renderer.createMesh(batData,12),instance=new Float32Array(packedInstance(identity()));
+ const data=g.data(),crownData=crownGeo.data(),batData=halloweenBat(false).data();
+ // Bake the shallow relief, then derive flat normals from its final triangles.
+ // Geo.append uses M*n; an anisotropic wing stretch needs these corrected facets.
+ for(let i=0;i<crownData.length;i+=36){
+  for(let k=0;k<3;k++)crownData[i+k*12+2]*=.6;
+  const a=crownData.subarray(i,i+3),b=crownData.subarray(i+12,i+15),c=crownData.subarray(i+24,i+27),n=vnorm(vcross(vsub(b,a),vsub(c,a)));
+  for(let k=0;k<3;k++)crownData.set(n,i+k*12+3);
+ }
+ const mesh=renderer.createMesh(data,1),crown=renderer.createMesh(crownData,1),flight=renderer.createMesh(batData,12),instance=new Float32Array(packedInstance(identity()));
+ const crownBounds={min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};
+ for(let i=0;i<crownData.length;i+=12)for(let k=0;k<3;k++){crownBounds.min[k]=Math.min(crownBounds.min[k],crownData[i+k]);crownBounds.max[k]=Math.max(crownBounds.max[k],crownData[i+k]);}
  renderer.upload(mesh,instance,1);renderer.upload(crown,instance,1);
- return {mesh,crown,flight,flightData:new Float32Array(12*24),flightAt:-100,flightTier:0,instance,triangles:(data.length+crownData.length)/36,crownTriangles:crownData.length/36,batTriangles:batData.length/36,bytes:data.byteLength+crownData.byteLength+batData.byteLength,energy:-1};
+ return {mesh,crown,crownBounds,flight,flightData:new Float32Array(12*24),flightAt:-100,flightTier:0,instance,triangles:(data.length+crownData.length)/36,crownTriangles:crownData.length/36,batTriangles:batData.length/36,bytes:data.byteLength+crownData.byteLength+batData.byteLength,energy:-1};
 }
 
 /* Pure, earned Halloween presentation. No clocks, state, renderer or audio APIs.
@@ -4184,6 +4195,23 @@ function halloweenScreenPoint(m,w,h,x,y,z){
  const D=m[1]-v*m[3],E=m[5]-v*m[7],F=v*(m[11]*z+m[15])-m[9]*z-m[13],det=A*E-B*D;
  return [(C*E-B*F)/det,(A*F-C*D)/det,z];
 }
+// The crown is a complete opaque crest in the stable title's free header band.
+// Fit its cached bounds, countering camera punch without moving any HUD or jewel.
+function halloweenCrownMatrix(a,h){
+ if(a.expedition?.photo)return identity();
+ const w=a.cssWidth,H=a.cssHeight;if(w<600&&H>w)return null;
+ if(!a.vp)return identity();
+ const f=cabinetFraming(w,H),y=f.targetY||0,stable=matMul(perspective(42*PI/180,w/H,.1,150),lookAt([0,.62+y,f.distance],[0,y,0],[0,1,0]));
+ const top=project([-3.98,4.02,.15],stable,w,H)[1];
+ const titleTop=f.wide?(f.targetY===undefined?Math.max(5,top-(H<460?34:43)-5):5):(f.narrowFit?10:Math.max(10,top-93));
+ const available=titleTop-16;if(available<32)return null;
+ const b=h.crownBounds,cx=(b.min[0]+b.max[0])/2,cy=(b.min[1]+b.max[1])/2;
+ const scale=Math.min(350/(b.max[0]-b.min[0]),available/(b.max[1]-b.min[1]));
+ const sx=w/2,sy=8+available/2,p=halloweenScreenPoint(a.vp,w,H,sx,sy,0),px=halloweenScreenPoint(a.vp,w,H,sx+1,sy,0),py=halloweenScreenPoint(a.vp,w,H,sx,sy-1,0);
+ const m=identity();m[0]=(px[0]-p[0])*scale;m[1]=(px[1]-p[1])*scale;m[4]=(py[0]-p[0])*scale;m[5]=(py[1]-p[1])*scale;m[10]=Math.hypot(m[0],m[1]);
+ m[12]=p[0]-m[0]*cx-m[4]*cy;m[13]=p[1]-m[1]*cx-m[5]*cy;m[14]=0;
+ return m;
+}
 function halloweenPhoneFlight(a,h,age,rank){
  if(a.panelOpen||a.aaCompare||a.expedition?.run?.finished)return 0;
  const w=a.cssWidth,H=a.cssHeight,f=cabinetFraming(w,H),y=f.targetY||0;
@@ -4227,11 +4255,12 @@ JewelApp.prototype.seasonMeshes=function(){
  // Reduced motion/particles retain only the pre-existing cabinet warmth.
  const beatEnergy=this.prefs.motion&&this.prefs.particles?halloweenBeatEnergy(age,rank):0;
  const energy=({off:0,low:.35}[this.prefs.flash]??1)*Math.min(.40,Math.max(this.presentation.crownEnergy*.20+this.juice*.08,beatEnergy));
- if(energy!==h.energy){h.instance.set(packedInstance(identity(),[1,1,1],energy,-1));this.renderer.upload(h.mesh,h.instance,1);this.renderer.upload(h.crown,h.instance,1);h.energy=energy;}
+ if(energy!==h.energy){h.instance.set(packedInstance(identity(),[1,1,1],energy,-1));this.renderer.upload(h.mesh,h.instance,1);h.energy=energy;}
  // The existing portrait HUD occludes the crown's middle. Omit it as a whole
  // rather than leave a fragment between the title and score. Photos keep it.
  const portrait=this.cssWidth<600&&this.cssHeight>this.cssWidth&&!this.expedition?.photo;
- const meshes=portrait?[h.mesh]:[h.mesh,h.crown];
+ const crest=halloweenCrownMatrix(this,h),meshes=[h.mesh];
+ if(crest){this.renderer.upload(h.crown,new Float32Array(packedInstance(crest,[1,1,1],energy,-1)),1);meshes.push(h.crown);}
  if(this.prefs.particles&&this.prefs.motion&&age>=0&&age<2.2){
   let count=0;
   if(portrait)count=halloweenPhoneFlight(this,h,age,rank);

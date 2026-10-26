@@ -111,8 +111,9 @@ function buildHalloweenVault(renderer){
  const pumpkin=halloweenPumpkin(),skull=halloweenSkull(),bat=halloweenBat();
  const place=(mesh,p,s,rz=0)=>g.append(mesh,trs(p,[0,0,rz],Array.isArray(s)?s:[s,s,s]));
  for(const s of [-1,1]){
-  // The four strong corner finials carry the identity even on portrait phones.
-  place(pumpkin,[s*4.32,4.23,.40],.83,s*-.07);
+  // Rail lanterns keep complete faces below the phone score and on-screen
+  // through maximum camera punch; the broad crown carries the desktop hero art.
+  place(pumpkin,[s*4.08,3.40,.40],.48,s*-.07);
   place(skull,[s*4.18,-4.06,.46],.78,s*.065);
   // Articulated obsidian pilaster: all carving stays beyond the playable aperture.
   g.box(s*4.30,.03,-.02,.15,7.35,.24,obsidian,0);
@@ -142,13 +143,23 @@ function buildHalloweenVault(renderer){
  }
  const crownGeo=new Geo();
  // Wide, open-wing reliquary. Its crescent keeps a real negative-space opening.
- crownGeo.append(bat,trs([0,4.66,-.20],[0,0,0],[3.05,1.0,.8]));
- const crescent=[[-.18,5.37],[-.52,5.26],[-.76,5.00],[-.79,4.68],[-.59,4.43],[-.29,4.33],[-.10,4.40],[-.38,4.57],[-.46,4.79],[-.35,5.03],[-.10,5.20],[.15,5.24]];
+ crownGeo.append(bat,trs([0,4.97,-.20],[0,0,0],[3.05,.48,.8]));
+ const crescent=[[-.18,5.37],[-.52,5.26],[-.76,5.00],[-.79,4.68],[-.59,4.43],[-.29,4.33],[-.10,4.40],[-.38,4.57],[-.46,4.79],[-.35,5.03],[-.10,5.20],[.15,5.24]].map(([x,y])=>[x,(y-4.85)*.64+5.0]);
  halloweenRelief(crownGeo,crescent,color('#d9b66e'),.02,.10,.92);
- crownGeo.append(pumpkin,trs([0,4.68,.20],[0,0,0],[.72,.72,.72]));
- for(const s of [-1,1])crownGeo.tube([[s*.46,4.42,.27],[s*.37,4.29,.33],[s*.12,4.23,.32]],.025,gold,1,5);
+ crownGeo.append(pumpkin,trs([0,5.0,.20],[0,0,0],[.50,.50,.50]));
+ for(const s of [-1,1])crownGeo.tube([[s*.32,4.86,.27],[s*.27,4.70,.33],[s*.10,4.65,.32]],.025,gold,1,5);
  place(skull,[0,-4.44,.49],.43);
- const data=g.data(),crownData=crownGeo.data(),batData=halloweenBat(false).data(),mesh=renderer.createMesh(data,1),crown=renderer.createMesh(crownData,1),flight=renderer.createMesh(batData,12),instance=new Float32Array(packedInstance(identity()));
+ const data=g.data(),crownData=crownGeo.data(),batData=halloweenBat(false).data();
+ // Bake the shallow relief, then derive flat normals from its final triangles.
+ // Geo.append uses M*n; an anisotropic wing stretch needs these corrected facets.
+ for(let i=0;i<crownData.length;i+=36){
+  for(let k=0;k<3;k++)crownData[i+k*12+2]*=.6;
+  const a=crownData.subarray(i,i+3),b=crownData.subarray(i+12,i+15),c=crownData.subarray(i+24,i+27),n=vnorm(vcross(vsub(b,a),vsub(c,a)));
+  for(let k=0;k<3;k++)crownData.set(n,i+k*12+3);
+ }
+ const mesh=renderer.createMesh(data,1),crown=renderer.createMesh(crownData,1),flight=renderer.createMesh(batData,12),instance=new Float32Array(packedInstance(identity()));
+ const crownBounds={min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};
+ for(let i=0;i<crownData.length;i+=12)for(let k=0;k<3;k++){crownBounds.min[k]=Math.min(crownBounds.min[k],crownData[i+k]);crownBounds.max[k]=Math.max(crownBounds.max[k],crownData[i+k]);}
  renderer.upload(mesh,instance,1);renderer.upload(crown,instance,1);
- return {mesh,crown,flight,flightData:new Float32Array(12*24),flightAt:-100,flightTier:0,instance,triangles:(data.length+crownData.length)/36,crownTriangles:crownData.length/36,batTriangles:batData.length/36,bytes:data.byteLength+crownData.byteLength+batData.byteLength,energy:-1};
+ return {mesh,crown,crownBounds,flight,flightData:new Float32Array(12*24),flightAt:-100,flightTier:0,instance,triangles:(data.length+crownData.length)/36,crownTriangles:crownData.length/36,batTriangles:batData.length/36,bytes:data.byteLength+crownData.byteLength+batData.byteLength,energy:-1};
 }

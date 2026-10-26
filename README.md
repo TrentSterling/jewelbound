@@ -17,8 +17,11 @@ selection persists locally in every season. Themes preserve shared boards,
 saves, progression, playable jewel shapes and rules.
 On portrait phones, up to six small cascade bats follow the visible outer rails;
 they stay clear of jewels and controls, and disappear with reduced motion or when
-the event ends. The latest sculpted pass is CPU-reviewed; browser/GPU validation
-and release remain paused.
+the event ends. The sculpted pass has passed matched Chrome WebGPU/WebGL2 art,
+state and render checks on desktop, portrait phones and short landscape screens.
+The crown fits the title gap and small rail lanterns stay clear of the phone HUD.
+This remains a local candidate: required input and live-audio release checks are
+still held. See the [runtime review](rounds/2026-10-26-Haunted-runtime.md).
 
 ![Jewelbound](og-image.png)
 

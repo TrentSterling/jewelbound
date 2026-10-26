@@ -2,7 +2,8 @@
 
 - Rebuild the seasonal assets as a sculpted haunted reliquary: deeper amber carvings, shaped skull brows/cheeks/jaws, folded bat membranes, an open crescent crown and connected lantern architecture.
 - Design awakening/procession/eclipse cascade tiers with staggered flight, continuous escalation and bounded ember-cavity warmth. Use a lighter flight LOD to retain the geometry budget.
-- Latest pass has CPU asset/source review only; browser/GPU testing is paused after the Firefox incident. Earlier game captures document earlier checkpoints, not this new pass.
+- Fit a shallow crescent-and-bat crown into the actual title gap through camera punch, omitting the whole crest when landscape space is insufficient. Recompute its baked facet normals and seat small rail lanterns below the phone HUD.
+- Validate the sculpted pass with 118 CPU/source tests and matched Chrome WebGPU/WebGL2 captures across four viewports. All eight Classic comparisons are pixel-identical; seeded board states agree. Independent source and actual-render art reviews pass. See [runtime review](rounds/2026-10-26-Haunted-runtime.md).
 - Add a reversible Halloween cabinet with faceted amber jack-o-lanterns, carved ivory skulls, amethyst bats, gold web filigree and crystal candles. Keep all six playable jewel silhouettes and colors.
 - Send a bounded flock around the outside of the tray on big cascades and special clears. Respect motion, particles and flash preferences; retain the original feedback in Classic.
 - Fit portrait flights to the visible outer rails at 320/390px, with at most six small bats and no added idle clutter, meshes or render passes.

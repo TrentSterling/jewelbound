@@ -17,6 +17,7 @@ test('seasonal geometry stays outside the jewel aperture and uses bounded opaque
  for(const {data,max} of f.meshes){assert(data.every(Number.isFinite));for(let i=0;i<data.length;i+=12){const [x,y,z]=data.slice(i,i+3);if(max===1)assert(!(Math.abs(x)<3.78&&Math.abs(y)<3.78&&z>-.5),'ornament crosses playable aperture');assert([0,1,7,8,10,11].includes(data[i+9]),'opaque material only');}}
  assert(vault.batTriangles<=180,'flight LOD retains the reviewed active triangle budget');
  const crown=f.meshes[1].data;for(let i=1;i<crown.length;i+=12)assert(crown[i]<=5.41,'crown fits original world-height envelope');
+ for(let i=0;i<crown.length;i+=36){const a=crown.subarray(i,i+3),b=crown.subarray(i+12,i+15),c=crown.subarray(i+24,i+27),u=b.map((v,k)=>v-a[k]),v=c.map((v,k)=>v-a[k]),n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n);if(len>1e-9)assert(n.reduce((s,v,k)=>s+v*crown[i+3+k],0)/len>.99999,'crown facet normal differs from final geometry');}
 });
 test('October default respects explicit Classic preference and rejects malformed storage',()=>{
  const {context:c}=fixture();assert.equal(c.choose(null,9),'halloween');assert.equal(c.choose(null,10),'classic');assert.equal(c.choose('classic',9),'classic');assert.equal(c.choose('halloween',2),'halloween');assert.equal(c.choose({season:'halloween'},2),'classic');
@@ -74,4 +75,15 @@ test('earned tier integration escalates on one clock, then releases without stat
  a.setSeason('classic');assert.equal(h.beat,null);assert.equal(h.flight.count,0);presentation.feed([0,0,0],6,'match',900);assert.equal(h.beat,null);
  a.setSeason('halloween');presentation.feed([0,0,0],6,'match',900);assert.equal(presentation.reset(),'retained');assert.equal(h.beat,null);assert.equal(h.flightTier,0);
  assert.equal(JSON.stringify([a.board,a.expedition]),state);assert.equal(f.meshes.length,3);
+});
+
+test('complete crown fits above stable desktop title through camera punch and disappears without headroom',()=>{
+ const f=fixture();
+ vm.runInContext(part(html,'const jewelcraftOriginalFraming=cabinetFraming;','/* B006:')+part(html,'const jewelcraftBeforeFooterFraming=cabinetFraming;','const jewelcraftBeforeFooterRail=')+'\nObject.assign(JewelApp.prototype,{'+part(html,' updateCamera(){','\n draw(){')+'});this.projectPoint=(p,a)=>project(p,a.vp,a.cssWidth,a.cssHeight);this.transformPoint=transform;this.stableTitleTop=(w,H)=>{const f=cabinetFraming(w,H),y=f.targetY||0,m=matMul(perspective(42*PI/180,w/H,.1,150),lookAt([0,.62+y,f.distance],[0,y,0],[0,1,0])),top=project([-3.98,4.02,.15],m,w,H)[1];return f.wide?(f.targetY===undefined?Math.max(5,top-(H<460?34:43)-5):5):(f.narrowFit?10:Math.max(10,top-93));};',f.context);
+ const a=new f.JewelApp();Object.assign(a,{renderer:f.renderer,world:{halloween:f.context.make(f.renderer)},prefs:{flash:'off',particles:true,motion:true},presentation:{crownEnergy:0},juice:0,season:'halloween',expedition:{}});const h=a.world.halloween;
+ for(const [w,H] of [[1280,800],[1920,1080],[1024,768],[800,600]])for(const punch of [0,1.2])for(const time of [0,.2,.6,1,1.7]){
+  Object.assign(a,{cssWidth:w,cssHeight:H,punch,shake:.85,time});a.updateCamera();const m=f.context.halloweenCrownMatrix(a,h),top=f.context.stableTitleTop(w,H);if(!m){assert(top<48);continue;}
+  for(let i=0;i<h.crown.data.length;i+=12){const p=f.context.projectPoint(f.context.transformPoint(m,h.crown.data.subarray(i,i+3)),a);assert(p[0]>=4&&p[0]<=w-4,'crown leaves horizontal viewport');assert(p[1]>=4&&p[1]<=top-3,`complete crown enters title/top: ${w}x${H} ${p[1]} vs ${top}`);}
+ }
+ for(const [w,H] of [[844,390],[320,568],[390,844]]){Object.assign(a,{cssWidth:w,cssHeight:H,punch:1.2,shake:.85,time:.7});a.updateCamera();assert.equal(f.context.halloweenCrownMatrix(a,h),null);}
 });

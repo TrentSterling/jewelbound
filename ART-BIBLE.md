@@ -28,10 +28,12 @@ board or with reduced motion.
 
 The sculpted reliquary pass uses stepped amber lips around recessed onyx/ember
 inlays, shaped skull brow/orbit/cheek/jaw masses, and folded bat membranes with
-substantial leading edges. Corner finials must read at 20–28px. Connect ornaments
-through brass cradles and obsidian pilasters; avoid loose repeated prop piles.
-The crescent crown keeps an open void and remains within the original height
-envelope. Surface normals face out on both mirrored sides.
+substantial leading edges. Small rail lanterns must keep complete carved faces
+below the phone HUD even during camera punch. Connect ornaments through brass
+cradles and obsidian pilasters; avoid loose repeated prop piles. The shallow
+crescent crown keeps an open void and fits the stable title gap; omit the whole
+crest when there is insufficient header room. Bake depth shaping into its mesh
+and recompute facet normals from final triangles. Mirrored normals face out.
 
 Cascade tiers are one paired awakening at x3, a staggered procession at x4–5,
 and a wider eclipse at x6+ or blast/prism. Preserve the 2.2-second event clock

@@ -30,9 +30,13 @@ never enters shared co-op configuration. Rebuild through `tools/polish.py`.
 `tests/halloween.cjs` checks preserved source, geometry/flight bounds and local
 theme state. Version 3.4.0 is currently an unreleased candidate: simulated input
 and live-WebAudio gates remain held by the user's current restriction. Direct
-state/render receipts do not complete those unchanged gates. Browser/GPU tests
-are now also paused after the Firefox crash incident. The sculpted reliquary
-pass has CPU asset previews only; do not treat them as in-game visual validation.
+state/render receipts do not complete those unchanged gates. The user approved
+Chrome-only muted headless rendering with no input, focus, pointer lock or audio;
+Firefox remains disabled after the crash incident. Each elevated executor command
+must pass tool approval review, without changing browser sandbox/security flags.
+The sculpted reliquary and viewport corrections passed the bounded actual Chrome
+WebGPU/WebGL2 batch documented in rounds/2026-10-26-Haunted-runtime.md. These
+receipts do not authorize a push, CI run or deployment while release gates are held.
 
 ---
 

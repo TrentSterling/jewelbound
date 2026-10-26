@@ -40,6 +40,23 @@ function halloweenScreenPoint(m,w,h,x,y,z){
  const D=m[1]-v*m[3],E=m[5]-v*m[7],F=v*(m[11]*z+m[15])-m[9]*z-m[13],det=A*E-B*D;
  return [(C*E-B*F)/det,(A*F-C*D)/det,z];
 }
+// The crown is a complete opaque crest in the stable title's free header band.
+// Fit its cached bounds, countering camera punch without moving any HUD or jewel.
+function halloweenCrownMatrix(a,h){
+ if(a.expedition?.photo)return identity();
+ const w=a.cssWidth,H=a.cssHeight;if(w<600&&H>w)return null;
+ if(!a.vp)return identity();
+ const f=cabinetFraming(w,H),y=f.targetY||0,stable=matMul(perspective(42*PI/180,w/H,.1,150),lookAt([0,.62+y,f.distance],[0,y,0],[0,1,0]));
+ const top=project([-3.98,4.02,.15],stable,w,H)[1];
+ const titleTop=f.wide?(f.targetY===undefined?Math.max(5,top-(H<460?34:43)-5):5):(f.narrowFit?10:Math.max(10,top-93));
+ const available=titleTop-16;if(available<32)return null;
+ const b=h.crownBounds,cx=(b.min[0]+b.max[0])/2,cy=(b.min[1]+b.max[1])/2;
+ const scale=Math.min(350/(b.max[0]-b.min[0]),available/(b.max[1]-b.min[1]));
+ const sx=w/2,sy=8+available/2,p=halloweenScreenPoint(a.vp,w,H,sx,sy,0),px=halloweenScreenPoint(a.vp,w,H,sx+1,sy,0),py=halloweenScreenPoint(a.vp,w,H,sx,sy-1,0);
+ const m=identity();m[0]=(px[0]-p[0])*scale;m[1]=(px[1]-p[1])*scale;m[4]=(py[0]-p[0])*scale;m[5]=(py[1]-p[1])*scale;m[10]=Math.hypot(m[0],m[1]);
+ m[12]=p[0]-m[0]*cx-m[4]*cy;m[13]=p[1]-m[1]*cx-m[5]*cy;m[14]=0;
+ return m;
+}
 function halloweenPhoneFlight(a,h,age,rank){
  if(a.panelOpen||a.aaCompare||a.expedition?.run?.finished)return 0;
  const w=a.cssWidth,H=a.cssHeight,f=cabinetFraming(w,H),y=f.targetY||0;
@@ -83,11 +100,12 @@ JewelApp.prototype.seasonMeshes=function(){
  // Reduced motion/particles retain only the pre-existing cabinet warmth.
  const beatEnergy=this.prefs.motion&&this.prefs.particles?halloweenBeatEnergy(age,rank):0;
  const energy=({off:0,low:.35}[this.prefs.flash]??1)*Math.min(.40,Math.max(this.presentation.crownEnergy*.20+this.juice*.08,beatEnergy));
- if(energy!==h.energy){h.instance.set(packedInstance(identity(),[1,1,1],energy,-1));this.renderer.upload(h.mesh,h.instance,1);this.renderer.upload(h.crown,h.instance,1);h.energy=energy;}
+ if(energy!==h.energy){h.instance.set(packedInstance(identity(),[1,1,1],energy,-1));this.renderer.upload(h.mesh,h.instance,1);h.energy=energy;}
  // The existing portrait HUD occludes the crown's middle. Omit it as a whole
  // rather than leave a fragment between the title and score. Photos keep it.
  const portrait=this.cssWidth<600&&this.cssHeight>this.cssWidth&&!this.expedition?.photo;
- const meshes=portrait?[h.mesh]:[h.mesh,h.crown];
+ const crest=halloweenCrownMatrix(this,h),meshes=[h.mesh];
+ if(crest){this.renderer.upload(h.crown,new Float32Array(packedInstance(crest,[1,1,1],energy,-1)),1);meshes.push(h.crown);}
  if(this.prefs.particles&&this.prefs.motion&&age>=0&&age<2.2){
   let count=0;
   if(portrait)count=halloweenPhoneFlight(this,h,age,rank);
