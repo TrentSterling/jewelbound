@@ -1,5 +1,8 @@
 ## 3.4.0 candidate (2026-10-26): Halloween vault
 
+- Rebuild the seasonal assets as a sculpted haunted reliquary: deeper amber carvings, shaped skull brows/cheeks/jaws, folded bat membranes, an open crescent crown and connected lantern architecture.
+- Design awakening/procession/eclipse cascade tiers with staggered flight, continuous escalation and bounded ember-cavity warmth. Use a lighter flight LOD to retain the geometry budget.
+- Latest pass has CPU asset/source review only; browser/GPU testing is paused after the Firefox incident. Earlier game captures document earlier checkpoints, not this new pass.
 - Add a reversible Halloween cabinet with faceted amber jack-o-lanterns, carved ivory skulls, amethyst bats, gold web filigree and crystal candles. Keep all six playable jewel silhouettes and colors.
 - Send a bounded flock around the outside of the tray on big cascades and special clears. Respect motion, particles and flash preferences; retain the original feedback in Classic.
 - Fit portrait flights to the visible outer rails at 320/390px, with at most six small bats and no added idle clutter, meshes or render passes.

@@ -6,16 +6,19 @@ An independent branch of [Gems Together](https://github.com/TrentSterling/gemsto
 
 Play it: **https://tront.xyz/jewelbound/**
 
-Halloween vault (3.4.0 candidate) adds carved amber jack-o'-lanterns, ivory skull
-mounts, amethyst bats, gold webs and spectral crystal candles around the original
-board. Earned cascades release a short bat flight outside the playable tray.
+Halloween vault (3.4.0 candidate) builds a haunted jewel reliquary around the
+original board: lobed amber lanterns with stepped carvings, sculpted ivory skulls,
+folded amethyst bat wings, a crescent crown and connected brass lantern mounts.
+Earned cascades progress through awakening, procession and eclipse flights with
+smooth amber cavity warmth. Stronger clears blend into one bounded beat.
 Choose **Settings > Jewels > Halloween vault / Classic jewelcraft** at any time.
 October selects Halloween for players without an explicit preference; your
 selection persists locally in every season. Themes preserve shared boards,
 saves, progression, playable jewel shapes and rules.
 On portrait phones, up to six small cascade bats follow the visible outer rails;
 they stay clear of jewels and controls, and disappear with reduced motion or when
-the event ends.
+the event ends. The latest sculpted pass is CPU-reviewed; browser/GPU validation
+and release remain paused.
 
 ![Jewelbound](og-image.png)
 

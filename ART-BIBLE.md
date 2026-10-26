@@ -26,6 +26,20 @@ punch; preserve visible gutters, score text and controls. Do not fill the board
 with scaled-up desktop ornaments. No transient flock remains on the settled
 board or with reduced motion.
 
+The sculpted reliquary pass uses stepped amber lips around recessed onyx/ember
+inlays, shaped skull brow/orbit/cheek/jaw masses, and folded bat membranes with
+substantial leading edges. Corner finials must read at 20–28px. Connect ornaments
+through brass cradles and obsidian pilasters; avoid loose repeated prop piles.
+The crescent crown keeps an open void and remains within the original height
+envelope. Surface normals face out on both mirrored sides.
+
+Cascade tiers are one paired awakening at x3, a staggered procession at x4–5,
+and a wider eclipse at x6+ or blast/prism. Preserve the 2.2-second event clock
+through upgrades; blend rank over 180ms instead of restarting flight motion.
+Opaque cavity material 11 uses existing bounded mesh energy, with no light,
+bloom, alpha stack or new pass. Flight uses a 168-triangle LOD while mounted
+hero bats retain the richer 308-triangle mesh.
+
 ## Gems Together: historical art bible
 
 The rules every patch follows. Tront's calls override research. The deep Tetris Effect / Lumines handoff is recorded in `research/DEEP-RESEARCH-COMBO-SPECTACLE.md`; `research/TETRIS-EFFECT-DEEP-DIVE.md` is the short pass.

@@ -23,12 +23,16 @@ obsidian jewelcraft vault, cut crystals, restrained antique gold and readable
 ivory type. Capture matched receipts with `node tools/jewelcraft-capture.mjs`.
 
 The final seasonal pass is `tools/halloween.py`, injecting
-`tools/jewelcraft-halloween.js`. Its separate `jewelbound-season-v1` preference
+`tools/jewelcraft-haunted-assets.js` (native procedural meshes),
+`tools/jewelcraft-haunt-beats.js` (pure earned beat curves) and
+`tools/jewelcraft-halloween.js` (integration). Its separate `jewelbound-season-v1` preference
 never enters shared co-op configuration. Rebuild through `tools/polish.py`.
 `tests/halloween.cjs` checks preserved source, geometry/flight bounds and local
 theme state. Version 3.4.0 is currently an unreleased candidate: simulated input
 and live-WebAudio gates remain held by the user's current restriction. Direct
-state/render receipts do not complete those unchanged gates.
+state/render receipts do not complete those unchanged gates. Browser/GPU tests
+are now also paused after the Firefox crash incident. The sculpted reliquary
+pass has CPU asset previews only; do not treat them as in-game visual validation.
 
 ---
 

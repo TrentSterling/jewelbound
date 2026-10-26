@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{execFileSync}=require('node:child_process');
-const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8'),source=fs.readFileSync(path.join(root,'tools/jewelcraft-halloween.js'),'utf8');
+const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8'),source=['jewelcraft-haunted-assets.js','jewelcraft-haunt-beats.js','jewelcraft-halloween.js'].map(p=>fs.readFileSync(path.join(root,'tools',p),'utf8')).join('\n');
 const part=(text,a,b)=>{const i=text.indexOf(a),j=text.indexOf(b,i+a.length);assert(i>=0&&j>i,a);return text.slice(i,j);};
 function fixture(){
  const writes=[],meshes=[],uploads=[];
@@ -14,7 +14,8 @@ function fixture(){
 test('seasonal geometry stays outside the jewel aperture and uses bounded opaque meshes',()=>{
  const f=fixture(),vault=f.context.make(f.renderer);
  assert.equal(f.meshes.length,3);assert(vault.triangles<8000);assert(vault.bytes<1200000);
- for(const {data,max} of f.meshes){assert(data.every(Number.isFinite));for(let i=0;i<data.length;i+=12){const [x,y,z]=data.slice(i,i+3);if(max===1)assert(!(Math.abs(x)<3.78&&Math.abs(y)<3.78&&z>-.5),'ornament crosses playable aperture');assert([0,1,7,8,10].includes(data[i+9]),'opaque material only');}}
+ for(const {data,max} of f.meshes){assert(data.every(Number.isFinite));for(let i=0;i<data.length;i+=12){const [x,y,z]=data.slice(i,i+3);if(max===1)assert(!(Math.abs(x)<3.78&&Math.abs(y)<3.78&&z>-.5),'ornament crosses playable aperture');assert([0,1,7,8,10,11].includes(data[i+9]),'opaque material only');}}
+ assert(vault.batTriangles<=180,'flight LOD retains the reviewed active triangle budget');
  const crown=f.meshes[1].data;for(let i=1;i<crown.length;i+=12)assert(crown[i]<=5.41,'crown fits original world-height envelope');
 });
 test('October default respects explicit Classic preference and rejects malformed storage',()=>{
@@ -49,13 +50,28 @@ test('phone flights project inside the viewport and outside the live tray throug
  const a=new f.JewelApp();Object.assign(a,{renderer:f.renderer,world:{halloween:f.context.make(f.renderer)},prefs:{flash:'off',particles:true,motion:true},presentation:{crownEnergy:0},juice:0,season:'halloween',expedition:{}});
  const h=a.world.halloween;h.flightAt=0;h.flightTier=5;
  for(const [w,H] of [[320,568],[320,720],[390,664],[390,844]])for(const punch of [0,1.2])for(const time of [.2,.6,1.2,1.79]){
-  Object.assign(a,{cssWidth:w,cssHeight:H,punch,shake:.85,time});a.updateCamera();a.seasonMeshes();assert.equal(h.flight.count,6,`${w}x${H} visible phone flock`);
+  Object.assign(a,{cssWidth:w,cssHeight:H,punch,shake:.85,time});a.updateCamera();a.seasonMeshes();assert(h.flight.count>=2&&h.flight.count<=6,`${w}x${H} bounded visible phone flock`);if(time>=.6)assert.equal(h.flight.count,6,'staggered phone flock completes entry');
   const c=[[-3.78,4.02,.9],[3.78,4.02,.9],[-3.78,-4.1,.9],[3.78,-4.1,.9]].map(p=>f.context.projectPoint(p,a)),left=Math.min(...c.map(p=>p[0])),right=Math.max(...c.map(p=>p[0])),top=Math.min(...c.map(p=>p[1])),bottom=Math.max(...c.map(p=>p[1]));
   for(let i=0;i<h.flight.count;i++){
    const m=h.flight.instances.subarray(i*24,i*24+16),points=[];
    for(let j=0;j<h.flight.data.length;j+=12){const p=f.context.projectPoint(f.context.transformPoint(m,h.flight.data.subarray(j,j+3)),a);points.push(p);assert(p[0]>=1&&p[0]<=w-1,'bat clipped by viewport');assert(p[0]<left-2||p[0]>right+2,'bat overlaps tray');assert(p[1]>top+12&&p[1]<bottom-12,'bat enters header or controls');}
-   assert(Math.max(...points.map(p=>p[0]))-Math.min(...points.map(p=>p[0]))>=6,'phone silhouette too small');
+   if(time>=.6&&time<=1.2)assert(Math.max(...points.map(p=>p[0]))-Math.min(...points.map(p=>p[0]))>=6,'held phone silhouette too small');
   }
  }
  a.prefs.motion=false;a.seasonMeshes();assert.equal(h.flight.count,0);a.prefs.motion=true;a.panelOpen=true;a.seasonMeshes();assert.equal(h.flight.count,0);a.panelOpen=false;a.time=2.21;a.seasonMeshes();assert.equal(h.flight.count,0);assert.equal(f.meshes.length,3);
+});
+
+test('earned tier integration escalates on one clock, then releases without state or resource growth',()=>{
+ const f=fixture(),a=new f.JewelApp();Object.assign(a,{renderer:f.renderer,world:{halloween:f.context.make(f.renderer)},prefs:{flash:'full',particles:true,motion:true},presentation:{crownEnergy:0},juice:0,cssWidth:1280,cssHeight:800,season:'halloween',time:10,board:{seed:43,moves:5},expedition:{profile:{gems:200}}});
+ const presentation=new f.context.JewelPresentation();presentation.app=a;const h=a.world.halloween,state=JSON.stringify([a.board,a.expedition]);
+ assert.equal(presentation.feed([0,0,0],3,'match',300),'retained');assert.equal(h.beat.rank,1);assert.equal(h.flightAt,10);
+ a.time=10.3;presentation.feed([0,0,0],4,'match',600);assert.equal(h.beat.rank,2);assert.equal(h.flightAt,10);
+ a.time=10.6;presentation.feed([0,0,0],6,'match',900);assert.equal(h.beat.rank,3);assert.equal(h.flightAt,10);
+ a.time=10.9;a.seasonMeshes();assert.equal(h.flight.count,12);assert(h.energy>0&&h.energy<=.4);const fixed=Array.from(h.flight.instances);a.seasonMeshes();assert.deepEqual(Array.from(h.flight.instances),fixed);
+ const event=h.beat;presentation.feed([0,0,0],3,'match',300);assert.equal(h.beat,event);assert.equal(h.flightAt,10);
+ a.prefs.motion=false;a.seasonMeshes();assert.equal(h.flight.count,0);assert.equal(h.energy,0);a.prefs.motion=true;a.prefs.flash='off';a.seasonMeshes();assert.equal(h.energy,0);
+ a.time=12.3;a.seasonMeshes();assert.equal(h.flight.count,0);presentation.feed([0,0,0],1,'blast',100);assert.equal(h.flightAt,12.3);assert.equal(h.beat.rank,3);
+ a.setSeason('classic');assert.equal(h.beat,null);assert.equal(h.flight.count,0);presentation.feed([0,0,0],6,'match',900);assert.equal(h.beat,null);
+ a.setSeason('halloween');presentation.feed([0,0,0],6,'match',900);assert.equal(presentation.reset(),'retained');assert.equal(h.beat,null);assert.equal(h.flightTier,0);
+ assert.equal(JSON.stringify([a.board,a.expedition]),state);assert.equal(f.meshes.length,3);
 });

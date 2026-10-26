@@ -6,10 +6,13 @@ def apply(html):
         nonlocal html
         assert html.count(old)==1, (old[:80],html.count(old))
         html=html.replace(old,new)
-    rep('(async function boot(){',(ROOT/'tools/jewelcraft-halloween.js').read_text(encoding='utf-8')+'\n(async function boot(){')
+    seasonal='\n'.join((ROOT/'tools'/name).read_text(encoding='utf-8') for name in ['jewelcraft-haunted-assets.js','jewelcraft-haunt-beats.js','jewelcraft-halloween.js'])
+    rep('(async function boot(){',seasonal+'\n(async function boot(){')
     # A saturated lapidary finish for seasonal carvings only. Both shader
     # backends are generated from this shared source; playable gems stay kind 2.
-    rep('   }else if(kind>7.5&&kind<9.5){', '''   }else if(kind>9.5&&kind<10.5){
+    rep('   }else if(kind>7.5&&kind<9.5){', '''   }else if(kind>10.5&&kind<11.5){
+    col=base*(0.006+energy*0.65);
+   }else if(kind>9.5&&kind<10.5){
     col=base*(0.18+0.44*ndl)+e*base*(0.055+fres*0.10)+base*spec*0.35+base*energy*0.5;
    }else if(kind>7.5&&kind<9.5){''')
     rep('this.world.worldMesh,this.world.islandMesh,...this.world.gemMeshes,this.world.crown,this.world.orbit,',
