@@ -8,6 +8,40 @@ science-fiction decoration and clutter. The original Gems Together notes below
 remain historical context; this Jewelbound direction supersedes their garden
 setting and branding.
 
+## Halloween vault
+
+Seasonal jewellery stays outside the playable aperture: carved amber pumpkins,
+black onyx cavities, ivory skulls, amethyst bats, fine gold webs and muted green
+crystal candles. Keep the original six gem cuts and colours intact. Use distinct
+silhouettes and quiet space between the webs and bats.
+
+Cache opaque geometry in the existing renderer. The seasonal lapidary material
+keeps amber saturated and cavity floors free of white reflections. No new
+textures, transparency, post-processing, light objects or sound. Earned crown
+energy warms the carvings; bounded bat flights remain outside the tray and
+respect motion/particle preferences. Classic is an immediate visual reversion.
+Portrait feedback uses at most three small bats per outer rail. Size and place
+them from the current and stable projected jewel aperture, including camera
+punch; preserve visible gutters, score text and controls. Do not fill the board
+with scaled-up desktop ornaments. No transient flock remains on the settled
+board or with reduced motion.
+
+The sculpted reliquary pass uses stepped amber lips around recessed onyx/ember
+inlays, shaped skull brow/orbit/cheek/jaw masses, and folded bat membranes with
+substantial leading edges. Small rail lanterns must keep complete carved faces
+below the phone HUD even during camera punch. Connect ornaments through brass
+cradles and obsidian pilasters; avoid loose repeated prop piles. The shallow
+crescent crown keeps an open void and fits the stable title gap; omit the whole
+crest when there is insufficient header room. Bake depth shaping into its mesh
+and recompute facet normals from final triangles. Mirrored normals face out.
+
+Cascade tiers are one paired awakening at x3, a staggered procession at x4–5,
+and a wider eclipse at x6+ or blast/prism. Preserve the 2.2-second event clock
+through upgrades; blend rank over 180ms instead of restarting flight motion.
+Opaque cavity material 11 uses existing bounded mesh energy, with no light,
+bloom, alpha stack or new pass. Flight uses a 168-triangle LOD while mounted
+hero bats retain the richer 308-triangle mesh.
+
 ## Gems Together: historical art bible
 
 The rules every patch follows. Tront's calls override research. The deep Tetris Effect / Lumines handoff is recorded in `research/DEEP-RESEARCH-COMBO-SPECTACLE.md`; `research/TETRIS-EFFECT-DEEP-DIVE.md` is the short pass.

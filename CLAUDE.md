@@ -14,13 +14,31 @@ recordings are skipped without changing any recording bytes.
 Do not import ignored local references or private development assets. Browser
 verification targets https://tront.xyz/jewelbound/ with `#solo=1` or private rooms.
 
-The final build pass is `tools/jewelcraft.py`, with adjacent world, lighting, sky
+The jewelcraft build pass is `tools/jewelcraft.py`, with adjacent world, lighting, sky
 and UI sources. Run `python tools/polish.py` to regenerate `index.html`. Keep game
 rules, co-op, save keys and input semantics out of this presentation pass. Its
 typography uses a local system-font atlas inside both GPU backends, including
 photo exports; it needs no remote fonts or new dependencies. The direction is an
 obsidian jewelcraft vault, cut crystals, restrained antique gold and readable
 ivory type. Capture matched receipts with `node tools/jewelcraft-capture.mjs`.
+
+The final seasonal pass is `tools/halloween.py`, injecting
+`tools/jewelcraft-haunted-assets.js` (native procedural meshes),
+`tools/jewelcraft-haunt-beats.js` (pure earned beat curves) and
+`tools/jewelcraft-halloween.js` (integration). Its separate `jewelbound-season-v1` preference
+never enters shared co-op configuration. Rebuild through `tools/polish.py`.
+`tests/halloween.cjs` checks preserved source, geometry/flight bounds and local
+theme state. The user now approves isolated muted headless Chrome simulated input
+and headless pointer-lock tests, plus existing muted CI WebAudio initialization.
+Never use physical mouse/keyboard control, cursor warping, desktop focus changes,
+audible playback or Firefox. Direct state/render receipts do not substitute for
+the release gates. Use the owned headless launcher in tools/cdp.mjs: it retains
+diagnostics, rejects headed/focus requests and fails on unconfirmed child exit.
+Each elevated executor command must pass tool approval review without changing
+browser sandbox/security flags. Keep shared GPU claims and verify exact-profile
+cleanup. The sculpted pass has actual Chrome WebGPU/WebGL2 art review; publication
+is authorized after local release gates and exact-commit CI pass, followed by live
+verification at the existing Jewelbound destination.
 
 ---
 
