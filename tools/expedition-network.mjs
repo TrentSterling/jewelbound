@@ -52,4 +52,4 @@ try{
  ok('promoted host can keep playing',await B.eval(`${J}.state().moves===2`));
  for(const p of [A,B])ok('no network feature errors',(await p.eval(`${J}.diagnostics()`)).errors.length===0&&!p.logs.some(x=>x.startsWith('EXCEPTION')));
 }catch(err){fail++;console.error(err.stack);if(A)console.log('A LOGS',A.logs.slice(-8));if(B)console.log('B LOGS',B.logs.slice(-8));}
-finally{A?.kill();B?.kill();writeFileSync(out+'/network-results.json',JSON.stringify({pass,fail,receipts},null,2));console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;}
+finally{for(const result of await Promise.allSettled([A?.kill(),B?.kill()]))if(result.status==='rejected'){fail++;console.error(result.reason);}writeFileSync(out+'/network-results.json',JSON.stringify({pass,fail,receipts},null,2));console.log(`${pass} passed, ${fail} failed`);process.exitCode=fail?1:0;}

@@ -1,4 +1,4 @@
-## 3.4.0 candidate (2026-10-26): Halloween vault
+## 3.4.0 (2026-10-27): Halloween vault
 
 - Rebuild the seasonal assets as a sculpted haunted reliquary: deeper amber carvings, shaped skull brows/cheeks/jaws, folded bat membranes, an open crescent crown and connected lantern architecture.
 - Design awakening/procession/eclipse cascade tiers with staggered flight, continuous escalation and bounded ember-cavity warmth. Use a lighter flight LOD to retain the geometry budget.
@@ -9,7 +9,7 @@
 - Fit portrait flights to the visible outer rails at 320/390px, with at most six small bats and no added idle clutter, meshes or render passes.
 - Choose Halloween or Classic in Settings > Jewels. October defaults to Halloween; an explicit choice persists independently of saves, progression and co-op state.
 - Build opaque cached geometry through the existing WebGPU/WebGL2 renderers. Preserve game rules, audio, original assets and source drop.
-- Local candidate only: required browser input and live WebAudio continuity checks remain pending permission. No release or CI bypass.
+- Keep release automation isolated and muted: retain Chrome launch/exit logs, avoid desktop focus changes, await owned cleanup and fail if termination is unconfirmed. Existing gameplay and CI assertions remain intact.
 
 ## 3.3.29 / B021 (2026-10-21): clear short-phone result notices
 

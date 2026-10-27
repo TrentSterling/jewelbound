@@ -28,15 +28,17 @@ The final seasonal pass is `tools/halloween.py`, injecting
 `tools/jewelcraft-halloween.js` (integration). Its separate `jewelbound-season-v1` preference
 never enters shared co-op configuration. Rebuild through `tools/polish.py`.
 `tests/halloween.cjs` checks preserved source, geometry/flight bounds and local
-theme state. Version 3.4.0 is currently an unreleased candidate: simulated input
-and live-WebAudio gates remain held by the user's current restriction. Direct
-state/render receipts do not complete those unchanged gates. The user approved
-Chrome-only muted headless rendering with no input, focus, pointer lock or audio;
-Firefox remains disabled after the crash incident. Each elevated executor command
-must pass tool approval review, without changing browser sandbox/security flags.
-The sculpted reliquary and viewport corrections passed the bounded actual Chrome
-WebGPU/WebGL2 batch documented in rounds/2026-10-26-Haunted-runtime.md. These
-receipts do not authorize a push, CI run or deployment while release gates are held.
+theme state. The user now approves isolated muted headless Chrome simulated input
+and headless pointer-lock tests, plus existing muted CI WebAudio initialization.
+Never use physical mouse/keyboard control, cursor warping, desktop focus changes,
+audible playback or Firefox. Direct state/render receipts do not substitute for
+the release gates. Use the owned headless launcher in tools/cdp.mjs: it retains
+diagnostics, rejects headed/focus requests and fails on unconfirmed child exit.
+Each elevated executor command must pass tool approval review without changing
+browser sandbox/security flags. Keep shared GPU claims and verify exact-profile
+cleanup. The sculpted pass has actual Chrome WebGPU/WebGL2 art review; publication
+is authorized after local release gates and exact-commit CI pass, followed by live
+verification at the existing Jewelbound destination.
 
 ---
 

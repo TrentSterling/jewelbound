@@ -6,7 +6,7 @@ An independent branch of [Gems Together](https://github.com/TrentSterling/gemsto
 
 Play it: **https://tront.xyz/jewelbound/**
 
-Halloween vault (3.4.0 candidate) builds a haunted jewel reliquary around the
+Halloween vault (3.4.0) builds a haunted jewel reliquary around the
 original board: lobed amber lanterns with stepped carvings, sculpted ivory skulls,
 folded amethyst bat wings, a crescent crown and connected brass lantern mounts.
 Earned cascades progress through awakening, procession and eclipse flights with
@@ -20,8 +20,8 @@ they stay clear of jewels and controls, and disappear with reduced motion or whe
 the event ends. The sculpted pass has passed matched Chrome WebGPU/WebGL2 art,
 state and render checks on desktop, portrait phones and short landscape screens.
 The crown fits the title gap and small rail lanterns stay clear of the phone HUD.
-This remains a local candidate: required input and live-audio release checks are
-still held. See the [runtime review](rounds/2026-10-26-Haunted-runtime.md).
+Release qualification also checks isolated headless input, muted WebAudio and
+private co-op. See the [runtime review](rounds/2026-10-26-Haunted-runtime.md).
 
 ![Jewelbound](og-image.png)
 
@@ -57,7 +57,7 @@ Narrow landscape screens also give challenge details a readable side plaque when
 
 Near-square landscape screens can use shorter mode headings to leave room for full move or ghost values beside the board. Long text keeps its original layout when a readable side plaque cannot fit.
 
-Built by Tront for Jennifer. Current version: 3.3.29.
+Built by Tront for Jennifer. Current version: 3.4.0.
 
 ## Tech
 
